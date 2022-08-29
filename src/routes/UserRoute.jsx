@@ -4,13 +4,23 @@ import ButtonText from '../components/ButtonText/ButtonText';
 import Tasks from '../tasks/Tasks/Tasks';
 
 const UserRoute = () => {
-  const [openModal, setOpenModal] = useState(null);
+  const [checked, setChecked] = useState(false);
+  const onCheckHandler = () => {
+    setChecked(true);
+  };
 
   return (
     <Content>
       user
-      <Tasks />
-      <ButtonText title="Check" primary />
+      <Tasks
+        checked={checked}
+        setChecked={setChecked}
+      />
+      <ButtonText
+        title={checked ? 'Checked' : 'Check'}
+        primary={!checked}
+        onClick={onCheckHandler}
+      />
     </Content>
   );
 };

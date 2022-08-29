@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
-const Checkbox = ({ checked, onChange, correct }) => {
+const Checkbox = ({
+  checked, onChange, correct, withOpacity,
+}) => {
   const handleClick = useCallback(() => {
     onChange(!checked);
   }, [checked]);
   return (
-    <Container checked={checked} onClick={handleClick} correct={correct}>
+    <Container checked={checked} onClick={handleClick} correct={correct} withOpacity={withOpacity}>
       {checked && <FontAwesomeIcon icon={faCheck} />}
     </Container>
   );
@@ -41,6 +43,8 @@ const Container = styled.div`
   font-size: 23px;
 
   cursor: pointer;
+
+  opacity: ${({ withOpacity }) => (withOpacity ? 0.5 : 1)};
 `;
 
 export default Checkbox;

@@ -2,13 +2,16 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { filter } from 'lodash';
 import RadioButton from '../../components/RadioButton/RadioButton';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import IconButton from '../../components/IconButton/IconButton';
 import { tasksSlice } from '../../store/tasksSlice';
 
 const SelectTask = ({
-  title, questions, creator, index: taskIndex,
+  title, questions, creator, index: taskIndex, checked,
 }) => {
   const [userAnswers, setUserAnswers] = useState(
     () => questions.map(
@@ -21,7 +24,7 @@ const SelectTask = ({
   const dispatch = useDispatch();
 
   const onCheckboxHandler = (questionIndex, answerIndex) => (value) => {
-    if (creator) return;
+    if (checked || creator) return;
 
     setUserAnswers((state) => state.map((question, qIndex) => {
       if (qIndex !== questionIndex) return question;
@@ -34,7 +37,7 @@ const SelectTask = ({
   };
 
   const onRadioHandler = (questionIndex, answerIndex) => () => {
-    if (creator) return;
+    if (checked || creator) return;
 
     setUserAnswers((state) => state.map((question, qIndex) => {
       if (qIndex !== questionIndex) return question;
@@ -61,42 +64,83 @@ const SelectTask = ({
       </Title>
 
       {
-        questions.map(({ question, answers, multiline }, index) => (
-          <Question key={`question_${index}`}>
-            <Subtitle>{`${index + 1}. ${question}`}</Subtitle>
-            <AnswerContainer>
-              {
-                answers.map(({ title: answerTitle }, answerIndex) => {
-                  const isChecked = creator
-                    ? questions?.[index]?.answers?.[answerIndex].isCorrect
-                    : userAnswers?.[index]?.[answerIndex];
-                  return (
-                    <Answer key={`answer_${index}_${answerIndex}`}>
-                      {
-                        multiline ? (
-                          <Checkbox
-                            checked={isChecked}
-                            onChange={onCheckboxHandler(index, answerIndex)}
-                            correct={creator}
-                          />
-                        ) : (
-                          <RadioButton
-                            checked={isChecked}
-                            onChange={onRadioHandler(index, answerIndex)}
-                            correct={creator}
-                          />
-                        )
-                      }
-                      <Text>
-                        {answerTitle}
-                      </Text>
-                    </Answer>
-                  );
-                })
-              }
-            </AnswerContainer>
-          </Question>
-        ))
+        questions.map(({ question, answers, multiline }, index) => {
+          let correction = null;
+          const predicate = ({ isCorrect }, answerIndex) => {
+            const userAnswer = userAnswers?.[index]?.[answerIndex];
+            return userAnswer && userAnswer === isCorrect;
+          };
+
+          const correctAnswersList = filter(answers, { isCorrect: true });
+          const userCorrectAnswersList = filter(answers, predicate);
+
+          if (checked) {
+            if (correctAnswersList.length === userCorrectAnswersList.length) {
+              correction = 'correct';
+            } else if (userCorrectAnswersList.length > 0) {
+              correction = 'partially';
+            } else {
+              correction = 'incorrect';
+            }
+          }
+
+          return (
+            <Question key={`question_${index}`} correction={correction}>
+              <Subtitle>{`${index + 1}. ${question}`}</Subtitle>
+              <AnswerContainer>
+                {
+                  answers.map(({ title: answerTitle }, answerIndex) => {
+                    const userAnswer = userAnswers?.[index]?.[answerIndex];
+                    const correctAnswer = questions?.[index]?.answers?.[answerIndex].isCorrect;
+                    const isActiveByUser = checked ? (userAnswer || correctAnswer) : userAnswer;
+                    const isActive = creator
+                      ? correctAnswer
+                      : isActiveByUser;
+                    const isUserCorrectAnswer = userAnswer === correctAnswer;
+                    const isShowResult = checked && (userAnswer || correctAnswer);
+                    const correctionColor = creator || (checked && correctAnswer);
+                    const withOpacity = checked && correctAnswer && !userAnswer;
+
+                    return (
+                      <Answer key={`answer_${index}_${answerIndex}_${checked}`}>
+
+                        <IconContainer correct={isUserCorrectAnswer}>
+                          {isShowResult && (isUserCorrectAnswer ? (
+                            <FontAwesomeIcon icon={faCheck} />
+
+                          ) : (
+                            <FontAwesomeIcon icon={faXmark} />
+                          ))}
+                        </IconContainer>
+
+                        {
+                          multiline ? (
+                            <Checkbox
+                              checked={isActive}
+                              onChange={onCheckboxHandler(index, answerIndex)}
+                              correct={correctionColor}
+                              withOpacity={withOpacity}
+                            />
+                          ) : (
+                            <RadioButton
+                              checked={isActive}
+                              onChange={onRadioHandler(index, answerIndex)}
+                              correct={correctionColor}
+                              withOpacity={withOpacity}
+                            />
+                          )
+                        }
+                        <Text>
+                          {answerTitle}
+                        </Text>
+                      </Answer>
+                    );
+                  })
+                }
+              </AnswerContainer>
+            </Question>
+          );
+        })
       }
 
     </Container>
@@ -124,25 +168,41 @@ const Subtitle = styled.div`
 `;
 
 const Question = styled.div`
-  margin: 10px 0;
+  padding: 10px;
+  margin: 15px 0;
+  border: 4px solid ${({ correction }) => {
+    if (correction === 'correct') {
+      return 'limegreen';
+    } if (correction === 'partially') {
+      return 'rgb(250, 210, 0)';
+    } if (correction === 'incorrect') {
+      return 'red';
+    }
+    return 'rgba(0, 0, 0, 0.1)';
+  }};
+  border-radius: 10px;
 `;
 
 const AnswerContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 10px 0;
-  padding-left: 26px;
 `;
 
 const Answer = styled.div`
   display: flex;
   align-items: center;
   margin: 3px 0;
-  padding-left: 26px;
 `;
 
 const Text = styled.div`
   margin-left: 16px;
+`;
+
+const IconContainer = styled.div`
+  width: 30px;
+  font-size: 25px;
+  color: ${({ correct }) => (correct ? 'limegreen' : 'red')}
 `;
 
 export default SelectTask;

@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
-const RadioButton = ({ checked, onChange, correct }) => {
+const RadioButton = ({
+  checked, onChange, correct, withOpacity,
+}) => {
   const handleClick = useCallback(() => {
     onChange(!checked);
   }, [checked]);
@@ -11,6 +13,7 @@ const RadioButton = ({ checked, onChange, correct }) => {
       checked={checked}
       correct={correct}
       onClick={handleClick}
+      withOpacity={withOpacity}
     >
       {checked && <Content correct={correct} />}
     </Container>
@@ -36,6 +39,7 @@ const Container = styled.div`
   }};
 
   cursor: pointer;
+  opacity: ${({ withOpacity }) => (withOpacity ? 0.5 : 1)};
 `;
 
 const Content = styled.div`

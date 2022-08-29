@@ -40,6 +40,15 @@ export const tasksSlice = createSlice({
           ],
           multiline: false,
         },
+        {
+          question: 'This is the third task question, multiline',
+          answers: [
+            { title: 'First task variant', isCorrect: true },
+            { title: 'Second task variant', isCorrect: true },
+            { title: 'Third task variant', isCorrect: false },
+          ],
+          multiline: true,
+        },
       ],
     },
   ],

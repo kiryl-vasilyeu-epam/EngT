@@ -19,7 +19,7 @@ const COMPONENTS_VARIANT = {
   [AUDIO_VIDEO_TEMPLATE]: SelectTask,
 };
 
-const Tasks = ({ creator }) => {
+const Tasks = ({ creator, checked }) => {
   const tasks = useSelector((state) => state.tasks);
 
   return (
@@ -34,6 +34,7 @@ const Tasks = ({ creator }) => {
             title={title}
             questions={questions}
             creator={creator}
+            checked={checked}
           />
         );
       })}
