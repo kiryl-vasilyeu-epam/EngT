@@ -8,10 +8,14 @@ import { filter } from 'lodash';
 import RadioButton from '../../components/RadioButton/RadioButton';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import IconButton from '../../components/IconButton/IconButton';
-import { tasksSlice } from '../../store/tasksSlice';
+import { removeTask } from '../../store/tasksSlice';
 
 const SelectTask = ({
-  title, questions, creator, index: taskIndex, checked,
+  title,
+  questions,
+  creator,
+  index: taskIndex,
+  checked,
 }) => {
   const [userAnswers, setUserAnswers] = useState(
     () => questions.map(
@@ -47,7 +51,7 @@ const SelectTask = ({
   };
 
   const onDeleteTaskHandler = useCallback(() => {
-    dispatch(tasksSlice.actions.removeTask(taskIndex));
+    dispatch(removeTask(taskIndex));
   }, [taskIndex]);
 
   return (

@@ -12,7 +12,7 @@ import ButtonText from '../../components/ButtonText/ButtonText';
 import { Row } from './common';
 import Question from './Question';
 import { SELECT_TEMPLATE } from '../../constants';
-import { tasksSlice } from '../../store/tasksSlice';
+import { addTask } from '../../store/tasksSlice';
 
 const answerTemplate = {
   title: '', isCorrect: false,
@@ -132,7 +132,7 @@ const SelectTemplate = ({ onSave }) => {
       questions,
     };
 
-    dispatch(tasksSlice.actions.addTask(task));
+    dispatch(addTask(task));
     onSave();
   };
 

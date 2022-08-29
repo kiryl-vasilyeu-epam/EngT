@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import ModalWindow from '../ModalWindow/ModalWindow';
 import TemplatePicker from '../TemplatePicker/TemplatePicker';
@@ -22,40 +22,42 @@ const COMPONENTS_VARIANT = {
   [AUDIO_VIDEO_TEMPLATE]: ({ onTemplatePress }) => <TemplatePicker onPick={onTemplatePress} />,
 };
 
-const CreateTemplateModal = ({ setOpen }) => {
-  const [title, setTitle] = useState(DEFAULT_TITLE);
-  const [currentTemplate, setCurrentTemplate] = useState(TEMPLATE_PICK);
-  const [closeModal, setCloseModal] = useState(null);
+const defaultTemplate = {
+  title: DEFAULT_TITLE, type: TEMPLATE_PICK,
+};
+
+const CreateTemplateModal = ({ handleModalId }) => {
+  const [currentTemplate, setCurrentTemplate] = useState(defaultTemplate);
+  const [modalId, setModalId] = useState(null);
+  useEffect(() => {
+    handleModalId(modalId);
+  }, [modalId]);
 
   const onTemplatePress = useCallback((template) => {
-    setTitle(template.name);
-    setCurrentTemplate(template.type);
+    setCurrentTemplate(template);
   }, []);
+
   const resetData = useCallback(() => {
-    setTitle(DEFAULT_TITLE);
-    setCurrentTemplate(TEMPLATE_PICK);
+    setCurrentTemplate(defaultTemplate);
   }, []);
 
   const onSave = () => {
     resetData();
-    closeModal();
   };
 
-  const currentComponent = COMPONENTS_VARIANT[currentTemplate]({
+  const currentComponent = COMPONENTS_VARIANT[currentTemplate.type]({
     onTemplatePress,
     onSave,
   });
 
-  const isOnTemplatePicker = currentTemplate !== TEMPLATE_PICK;
+  const isOnTemplatePicker = currentTemplate.type !== TEMPLATE_PICK;
 
   return (
     <ModalWindow
-      setOpen={setOpen}
-      setClose={setCloseModal}
-      onClose={resetData}
-      title={title}
+      title={currentTemplate.title}
       showBackButton={isOnTemplatePicker}
       onBackPress={resetData}
+      setModalId={setModalId}
     >
       {currentComponent}
     </ModalWindow>

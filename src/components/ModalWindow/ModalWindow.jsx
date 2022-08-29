@@ -1,34 +1,30 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
+import { find, uniqueId } from 'lodash';
 import { BACKGROUND_COLOR } from '../../constants';
 import IconButton from '../IconButton/IconButton';
+import { initModal, hideModal } from '../../store/modalsControlSlice';
 
 const ModalWindow = ({
-  setOpen,
-  setClose,
-  onClose,
   title = 'Title',
   children,
   showBackButton,
   onBackPress,
+  setModalId,
 }) => {
-  const [visible, setVisible] = useState(false);
-
-  const closeModal = useCallback(() => {
-    onClose();
-    setVisible(false);
-    document.body.classList.remove('modal-opened');
-  }, []);
-
-  const openModal = useCallback(() => {
-    setVisible(true);
-    document.body.classList.add('modal-opened');
-  }, []);
-
+  const [modalId] = useState(uniqueId('modal_'));
+  const dispatch = useDispatch();
   useEffect(() => {
-    setOpen(() => openModal);
-    setClose(() => closeModal);
+    dispatch(initModal(modalId));
+    setModalId(modalId);
   }, []);
+
+  const visible = useSelector((state) => find(state.modal, { id: modalId })?.visible);
+  const closeModal = useCallback(() => {
+    dispatch(hideModal(modalId));
+    document.body.classList.remove('modal-opened');
+  }, [modalId]);
 
   const handleContentClick = useCallback((e) => {
     e.stopPropagation();
@@ -39,7 +35,6 @@ const ModalWindow = ({
   return (
     <Wrapper onClick={closeModal}>
       <Content onClick={handleContentClick}>
-
         <Header>
           <div style={{ width: 40 }}>
             {showBackButton && (
@@ -49,14 +44,11 @@ const ModalWindow = ({
               />
             )}
           </div>
-
           <Title>
             {title}
           </Title>
-
           <IconButton onClick={closeModal} iconName="faXmark" />
         </Header>
-
         {children}
       </Content>
     </Wrapper>

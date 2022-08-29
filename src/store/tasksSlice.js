@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { compact, filter } from 'lodash';
 
-export const tasksSlice = createSlice({
+const tasksSlice = createSlice({
   name: 'tasks',
   initialState: [
     {
@@ -71,3 +71,6 @@ export const tasksSlice = createSlice({
     ),
   },
 });
+
+export const { addTask, removeTask } = tasksSlice.actions;
+export default tasksSlice;

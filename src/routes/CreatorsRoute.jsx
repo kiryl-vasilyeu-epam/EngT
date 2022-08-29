@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import CreateTemplateModal from '../components/CreateTemplateModal/CreateTemplateModal';
 import RoundIconButton from '../components/RoundIconButton/RoundIconButton';
+import { showModal } from '../store/modalsControlSlice';
 import Tasks from '../tasks/Tasks/Tasks';
 
 const CreatorsRoute = () => {
-  const [openModal, setOpenModal] = useState(null);
+  const [modalId, handleModalId] = useState(null);
+  const dispatch = useDispatch();
+  const openModal = useCallback(() => {
+    dispatch(showModal(modalId));
+  }, [modalId]);
 
   return (
     <Content>
@@ -14,7 +20,7 @@ const CreatorsRoute = () => {
       <ButtonContainer>
         <RoundIconButton onClick={openModal} />
       </ButtonContainer>
-      <CreateTemplateModal setOpen={setOpenModal} />
+      <CreateTemplateModal handleModalId={handleModalId} />
     </Content>
   );
 };

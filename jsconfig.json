@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"],
+      "test/*": ["test/*"],
+      "components/*": ["src/components/*"],
+      "routes/*": ["src/routes/*"],
+      "store/*": ["src/store/*"],
+      "tasks/*": ["src/tasks/*"],
+      "templates/*": ["src/templates/*"],
+      "constants/*": ["src/constants/*"]
+    }
+  }
+}
