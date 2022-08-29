@@ -1,10 +1,15 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import RadioButton from '../../components/RadioButton/RadioButton';
 import Checkbox from '../../components/Checkbox/Checkbox';
+import IconButton from '../../components/IconButton/IconButton';
+import { tasksSlice } from '../../store/tasksSlice';
 
-const SelectTask = ({ title, questions }) => {
+const SelectTask = ({
+  title, questions, creator, index: taskIndex,
+}) => {
   const [userAnswers, setUserAnswers] = useState(
     () => questions.map(
       ({ answers }) => answers.map(
@@ -13,7 +18,11 @@ const SelectTask = ({ title, questions }) => {
     ),
   );
 
+  const dispatch = useDispatch();
+
   const onCheckboxHandler = (questionIndex, answerIndex) => (value) => {
+    if (creator) return;
+
     setUserAnswers((state) => state.map((question, qIndex) => {
       if (qIndex !== questionIndex) return question;
 
@@ -25,6 +34,8 @@ const SelectTask = ({ title, questions }) => {
   };
 
   const onRadioHandler = (questionIndex, answerIndex) => () => {
+    if (creator) return;
+
     setUserAnswers((state) => state.map((question, qIndex) => {
       if (qIndex !== questionIndex) return question;
 
@@ -32,11 +43,21 @@ const SelectTask = ({ title, questions }) => {
     }));
   };
 
+  const onDeleteTaskHandler = useCallback(() => {
+    dispatch(tasksSlice.actions.removeTask(taskIndex));
+  }, [taskIndex]);
+
   return (
     <Container>
 
       <Title>
         {title}
+        {creator && (
+          <IconButton
+            iconName="faTrash"
+            onClick={onDeleteTaskHandler}
+          />
+        )}
       </Title>
 
       {
@@ -45,18 +66,24 @@ const SelectTask = ({ title, questions }) => {
             <Subtitle>{`${index + 1}. ${question}`}</Subtitle>
             <AnswerContainer>
               {
-                  answers.map(({ title: answerTitle }, answerIndex) => (
+                answers.map(({ title: answerTitle }, answerIndex) => {
+                  const isChecked = creator
+                    ? questions?.[index]?.answers?.[answerIndex].isCorrect
+                    : userAnswers?.[index]?.[answerIndex];
+                  return (
                     <Answer key={`answer_${index}_${answerIndex}`}>
                       {
                         multiline ? (
                           <Checkbox
-                            checked={userAnswers[index][answerIndex]}
+                            checked={isChecked}
                             onChange={onCheckboxHandler(index, answerIndex)}
+                            correct={creator}
                           />
                         ) : (
                           <RadioButton
-                            checked={userAnswers[index][answerIndex]}
+                            checked={isChecked}
                             onChange={onRadioHandler(index, answerIndex)}
+                            correct={creator}
                           />
                         )
                       }
@@ -64,8 +91,9 @@ const SelectTask = ({ title, questions }) => {
                         {answerTitle}
                       </Text>
                     </Answer>
-                  ))
-                }
+                  );
+                })
+              }
             </AnswerContainer>
           </Question>
         ))
@@ -83,6 +111,9 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 50px;

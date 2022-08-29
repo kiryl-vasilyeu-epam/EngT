@@ -12,6 +12,7 @@ const RoundIconButton = ({ onClick = noop }) => (
 
 const Button = styled.div`
   display: flex;
+  flex-shrink: 0;
   justify-content: center;
   align-items: center;
 

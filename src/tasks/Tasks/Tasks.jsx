@@ -19,7 +19,7 @@ const COMPONENTS_VARIANT = {
   [AUDIO_VIDEO_TEMPLATE]: SelectTask,
 };
 
-const Tasks = () => {
+const Tasks = ({ creator }) => {
   const tasks = useSelector((state) => state.tasks);
 
   return (
@@ -30,8 +30,10 @@ const Tasks = () => {
         return (
           <Component
             key={`task_${type}_${index}`}
+            index={index}
             title={title}
             questions={questions}
+            creator={creator}
           />
         );
       })}

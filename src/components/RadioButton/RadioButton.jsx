@@ -1,14 +1,18 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
-const RadioButton = ({ checked, onChange }) => {
+const RadioButton = ({ checked, onChange, correct }) => {
   const handleClick = useCallback(() => {
     onChange(!checked);
   }, [checked]);
 
   return (
-    <Container checked={checked} onClick={handleClick}>
-      {checked && <Content />}
+    <Container
+      checked={checked}
+      correct={correct}
+      onClick={handleClick}
+    >
+      {checked && <Content correct={correct} />}
     </Container>
   );
 };
@@ -25,7 +29,11 @@ const Container = styled.div`
 
   border-radius: 30px;
 
-  border: 4px solid ${({ checked }) => (checked ? 'blue' : 'black')};
+  border: 4px solid ${({ checked, correct }) => {
+    if (checked && correct) return 'limegreen';
+    if (checked) return 'blue';
+    return 'black';
+  }};
 
   cursor: pointer;
 `;
@@ -36,7 +44,7 @@ const Content = styled.div`
 
   border-radius: 10px;
 
-  background: blue;
+  background: ${({ correct }) => (correct ? 'limegreen' : 'blue')};
 `;
 
 export default RadioButton;

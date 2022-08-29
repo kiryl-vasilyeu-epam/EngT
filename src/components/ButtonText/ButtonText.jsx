@@ -2,13 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ButtonText = ({
-  title, onClick, withMargin, primary, withoutRadius,
+  title,
+  onClick,
+  withMargin,
+  primary,
+  withoutRadius,
+  width,
 }) => (
   <Container
     withMargin={withMargin}
     primary={primary}
     withoutRadius={withoutRadius}
     onClick={onClick}
+    width={width}
   >
     {title}
   </Container>
@@ -19,7 +25,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 100%;
+  width: ${({ width }) => width || '100%'};
 
   margin: ${({ withMargin }) => (withMargin ? 10 : 0)}px;
   padding: 16px 16px;

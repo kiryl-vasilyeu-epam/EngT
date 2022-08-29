@@ -17,10 +17,16 @@ const ModalWindow = ({
   const closeModal = useCallback(() => {
     onClose();
     setVisible(false);
+    document.body.classList.remove('modal-opened');
+  }, []);
+
+  const openModal = useCallback(() => {
+    setVisible(true);
+    document.body.classList.add('modal-opened');
   }, []);
 
   useEffect(() => {
-    setOpen(() => () => setVisible(true));
+    setOpen(() => openModal);
     setClose(() => closeModal);
   }, []);
 
@@ -67,13 +73,14 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
 
   width: 100%;
   height: 100%;
-
+  overflow: hidden;
+  
   background: rgba(0, 0, 0, 0.4);
 
   animation: ${fadeIn} .2s;
