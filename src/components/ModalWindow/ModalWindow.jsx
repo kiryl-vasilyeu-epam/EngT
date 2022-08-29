@@ -4,17 +4,24 @@ import { BACKGROUND_COLOR } from '../../constants';
 import IconButton from '../IconButton/IconButton';
 
 const ModalWindow = ({
-  setOpen, onClose, title = 'Title', children,
+  setOpen,
+  setClose,
+  onClose,
+  title = 'Title',
+  children,
+  showBackButton,
+  onBackPress,
 }) => {
   const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    setOpen(() => () => setVisible(true));
-  }, []);
 
   const closeModal = useCallback(() => {
     onClose();
     setVisible(false);
+  }, []);
+
+  useEffect(() => {
+    setOpen(() => () => setVisible(true));
+    setClose(() => closeModal);
   }, []);
 
   const handleContentClick = useCallback((e) => {
@@ -28,13 +35,20 @@ const ModalWindow = ({
       <Content onClick={handleContentClick}>
 
         <Header>
+          <div style={{ width: 40 }}>
+            {showBackButton && (
+              <IconButton
+                iconName="faArrowLeft"
+                onClick={onBackPress}
+              />
+            )}
+          </div>
+
           <Title>
             {title}
           </Title>
 
-          <CloseButtonContainer>
-            <IconButton onClick={closeModal} iconName="faXmark" />
-          </CloseButtonContainer>
+          <IconButton onClick={closeModal} iconName="faXmark" />
         </Header>
 
         {children}
@@ -77,6 +91,8 @@ const Content = styled.div`
   border-radius: 20px;
   background: ${BACKGROUND_COLOR};
 
+  overflow: hidden;
+
   box-shadow: 4px 3px 11px 0px rgba(66, 68, 90, 1);
 `;
 
@@ -84,17 +100,12 @@ const Header = styled.div`
   border-bottom: 2px solid rgba(0, 0, 0, 0.2);
 
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
   min-width: 0;
 
-  padding: 10px 80px;
-`;
-
-const CloseButtonContainer = styled.div`
-  position: absolute;
-  right: 20px;
+  padding: 10px 20px;
 `;
 
 const Title = styled.div`

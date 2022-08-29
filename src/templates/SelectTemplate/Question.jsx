@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Row, ButtonContainer } from './common';
+import { Row } from './common';
 import Input from '../../components/Input/Input';
 import Checkbox from '../../components/Checkbox/Checkbox';
 import RoundIconButton from '../../components/RoundIconButton/RoundIconButton';
@@ -36,7 +36,8 @@ const Question = ({
       <Subtitle>
         Answers:
       </Subtitle>
-      {
+      <Answers>
+        {
         answers.map((answer, answerIndex) => (
           <Row key={`answer_${index}_${answerIndex}`}>
             <Checkbox
@@ -52,6 +53,7 @@ const Question = ({
           </Row>
         ))
       }
+      </Answers>
 
       <ButtonContainer>
         <RoundIconButton onClick={addAnswer(index)} />
@@ -64,7 +66,7 @@ const Question = ({
 
 const Container = styled.div`
   border: 3px solid rgba(0, 0, 0, 0.3);
-  padding: 10px 20px;
+  padding: 16px 20px;
   border-radius: 10px;
   margin: 10px 0;
 `;
@@ -74,9 +76,20 @@ const Column = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 const Subtitle = styled.div`
   font-size: 20px;
   margin-right: 10px;
+`;
+
+const Answers = styled.div`
+  margin-left: 20px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 66px;
 `;
 
 export default Question;

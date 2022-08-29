@@ -15,20 +15,20 @@ const Checkbox = ({ checked, onChange }) => {
 };
 
 const Container = styled.div`
+  border: 1px solid red;
+
   display: flex;
   justify-content: center;
   align-items: center;
 
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
 
   border-radius: 8px;
 
   border: 3px solid ${({ checked }) => (checked ? 'blue' : 'black')};
   background: ${({ checked }) => (checked ? 'blue' : 'transparent')};
   color: ${({ checked }) => (checked ? 'white' : 'black')};
-
-  margin: 0 20px;
 
   font-size: 23px;
 

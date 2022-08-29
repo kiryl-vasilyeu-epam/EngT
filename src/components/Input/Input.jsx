@@ -20,6 +20,7 @@ const InputElement = styled(TextareaAutosize)`
   border: 2px solid rgba(0, 0, 0, 0.3);
   background: rgba(0, 0, 0, 0.03);
   padding: 10px;
+  margin: 0 10px;
   border-radius: 10px;
   font-size: 20px;
   flex: 1;
