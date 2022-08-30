@@ -8,7 +8,8 @@ const Checkbox = ({
 }) => {
   const handleClick = useCallback(() => {
     onChange(!checked);
-  }, [checked]);
+  }, [checked, onChange]);
+
   return (
     <Container
       checked={checked}

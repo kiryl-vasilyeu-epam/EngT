@@ -26,15 +26,13 @@ const Tasks = ({
 
   return (
     <Container>
-      {tasks.map(({ type, title, questions }, index) => {
-        const Component = COMPONENTS_VARIANT[type];
-
+      {tasks.map((task, index) => {
+        const Component = COMPONENTS_VARIANT[task.type];
         return (
           <Component
-            key={`task_${type}_${index}`}
+            key={task.id}
             index={index}
-            title={title}
-            questions={questions}
+            task={task}
             creator={creator}
             checked={checked}
             initialUserAnswer={userAnswers?.[index]}

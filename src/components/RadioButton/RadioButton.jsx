@@ -6,7 +6,7 @@ const RadioButton = ({
 }) => {
   const handleClick = useCallback(() => {
     onChange(!checked);
-  }, [checked]);
+  }, [checked, onChange]);
 
   return (
     <Container

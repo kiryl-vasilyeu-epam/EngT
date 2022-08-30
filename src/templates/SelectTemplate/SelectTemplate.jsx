@@ -1,139 +1,112 @@
-/* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-import { compact } from 'lodash';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Input, RoundIconButton, ButtonText,
 } from 'components';
+import { filter } from 'lodash';
 
 import { SELECT_TEMPLATE } from 'constants';
-import { addTask } from 'store';
+import {
+  addTask, initTemplate, deleteTemplate, modifyTemplate,
+} from 'store';
 import { Row } from './common';
 import Question from './Question';
-
-const answerTemplate = {
-  title: '', isCorrect: false,
-};
-const questionTemplate = {
-  question: '',
-  answers: [answerTemplate],
-};
+import { createQuestion, createAnswer } from './helpers';
 
 const SelectTemplate = ({ onSave }) => {
-  const [title, setTitle] = useState('');
-  const [questions, setQuestions] = useState([questionTemplate]);
   const dispatch = useDispatch();
+  const template = useSelector((state) => state.template);
 
-  const handleQuestionChange = (index) => (value) => {
-    setQuestions((stateQuestions) => stateQuestions.map((questionData, ind) => {
-      if (index === ind) {
-        return {
-          ...questionData,
-          question: value,
-        };
-      }
-
-      return questionData;
-    }));
-  };
-
-  const handleAnswerChange = (index, answerIndex) => (value) => {
-    setQuestions((stateQuestions) => stateQuestions.map((questionData, ind) => {
-      if (index === ind) {
-        return {
-          ...questionData,
-          answers: questionData.answers.map((answer, answerInd) => {
-            if (answerIndex === answerInd) {
-              return {
-                ...answer,
-                title: value,
-              };
-            }
-
-            return answer;
-          }),
-        };
-      }
-
-      return questionData;
-    }));
-  };
-
-  const handleCorrectionChange = (index, answerIndex) => (value) => {
-    setQuestions((stateQuestions) => stateQuestions.map((questionData, ind) => {
-      if (index === ind) {
-        return {
-          ...questionData,
-          answers: questionData.answers.map((answer, answerInd) => {
-            if (answerIndex === answerInd) {
-              return {
-                ...answer,
-                isCorrect: value,
-              };
-            }
-
-            return answer;
-          }),
-        };
-      }
-
-      return questionData;
-    }));
-  };
-
-  const addQuestion = () => {
-    setQuestions((state) => [...state, questionTemplate]);
-  };
-
-  const deleteQuestion = (index) => () => {
-    setQuestions((stateQuestions) => compact(
-      stateQuestions.map((questionData, ind) => (index === ind ? null : questionData)),
-    ));
-  };
-
-  const addAnswer = (questionIndex) => () => {
-    setQuestions((stateQuestions) => stateQuestions.map((questionData, index) => {
-      if (index === questionIndex) {
-        return {
-          ...questionData,
-          answers: [
-            ...questionData.answers,
-            answerTemplate,
-          ],
-        };
-      }
-
-      return questionData;
-    }));
-  };
-
-  const deleteAnswer = (questionIndex, answerIndex) => () => {
-    setQuestions((stateQuestions) => stateQuestions.map((questionData, index) => {
-      if (index === questionIndex) {
-        return {
-          ...questionData,
-          answers: compact(
-            questionData.answers.map((answer, ind) => (answerIndex === ind ? null : answer)),
-          ),
-        };
-      }
-
-      return questionData;
-    }));
-  };
-
-  const handleSave = () => {
-    const task = {
-      type: SELECT_TEMPLATE,
-      title,
-      questions,
+  useEffect(() => {
+    dispatch(initTemplate(SELECT_TEMPLATE));
+    return () => {
+      dispatch(deleteTemplate());
     };
+  }, []);
 
-    dispatch(addTask(task));
+  const {
+    title, questions,
+  } = template;
+
+  const updateTemplate = useCallback((...args) => {
+    dispatch(modifyTemplate(...args));
+  }, [dispatch, modifyTemplate]);
+
+  const setTitle = useCallback((templateTitle) => {
+    updateTemplate({ title: templateTitle });
+  }, []);
+
+  const handleQuestionChange = useCallback((questionId, questionTitle) => {
+    updateTemplate({
+      questions: questions.map((question) => (question.id === questionId ? {
+        ...question,
+        title: questionTitle,
+      } : question)),
+    });
+  }, [questions]);
+
+  const handleAnswerChange = useCallback((questionId, answerId, answerChanges) => {
+    updateTemplate({
+      questions: questions.map((question) => (question.id === questionId ? {
+        ...question,
+        multiline: !!filter(question.answers, { isCorrect: true }).length,
+        answers: question.answers.map(
+          (answer) => (answer.id === answerId ? {
+            ...answer,
+            ...answerChanges,
+          } : answer),
+        ),
+      } : question)),
+    });
+  }, [questions]);
+
+  const addQuestion = useCallback(() => {
+    updateTemplate({
+      questions: [
+        ...questions,
+        createQuestion(),
+      ],
+    });
+  }, [questions]);
+
+  const deleteQuestion = useCallback((questionId) => {
+    updateTemplate({
+      questions: questions.filter(({ id }) => id !== questionId),
+    });
+  }, [questions]);
+
+  const addAnswer = useCallback((questionId) => {
+    updateTemplate({
+      questions: questions.map(
+        (question) => (question.id === questionId ? ({
+          ...question,
+          answers: [
+            ...question.answers,
+            createAnswer(),
+          ],
+        }) : question),
+      ),
+    });
+  }, [questions]);
+
+  const deleteAnswer = useCallback((questionId, answerId) => {
+    updateTemplate({
+      questions: questions.map(
+        (question) => (question.id === questionId ? ({
+          ...question,
+          answers: question.answers.filter(({ id }) => answerId !== id),
+        }) : question),
+      ),
+    });
+  }, [questions]);
+
+  const handleSave = useCallback(() => {
+    dispatch(addTask(template));
     onSave();
-  };
+    dispatch(deleteTemplate());
+  }, [template]);
 
   return (
     <>
@@ -141,17 +114,20 @@ const SelectTemplate = ({ onSave }) => {
 
         <Row>
           <Title>Exercise Title:</Title>
-          <Input value={title} onChange={setTitle} placeholder="Enter lesson title" />
+          <Input
+            value={title}
+            onChange={setTitle}
+            placeholder="Enter lesson title"
+          />
         </Row>
 
         {questions.map((questionData, index) => (
           <Question
-            key={`question_${index}`}
+            key={questionData.id}
             index={index}
             questionData={questionData}
             handleQuestionChange={handleQuestionChange}
             handleAnswerChange={handleAnswerChange}
-            handleCorrectionChange={handleCorrectionChange}
             addAnswer={addAnswer}
             deleteAnswer={deleteAnswer}
             deleteQuestion={deleteQuestion}
@@ -163,6 +139,7 @@ const SelectTemplate = ({ onSave }) => {
         </ButtonContainer>
 
       </Container>
+
       <ButtonText
         title="Save"
         onClick={handleSave}

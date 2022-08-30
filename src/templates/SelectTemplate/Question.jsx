@@ -1,67 +1,79 @@
-/* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
 import {
-  Input, Checkbox, RoundIconButton, IconButton,
+  Input, RoundIconButton, IconButton,
 } from 'components';
 import { Row } from './common';
+import Answer from './Answer';
 
 const Question = ({
-  questionData: { question, answers },
-  index,
+  questionData: { title, answers, id },
   handleQuestionChange,
   handleAnswerChange,
-  handleCorrectionChange,
   addAnswer,
   deleteQuestion,
   deleteAnswer,
-}) => (
-  <Container>
-    <Row>
-      <Subtitle>
-        Question:
-      </Subtitle>
-      <Input
-        value={question}
-        onChange={handleQuestionChange(index)}
-        placeholder="Write a question"
-      />
+}) => {
+  const onTitleChange = useCallback((value) => {
+    handleQuestionChange(id, value);
+  }, [id, handleQuestionChange]);
 
-      <IconButton iconName="faTrashCan" onClick={deleteQuestion(index)} />
-    </Row>
+  const onDelete = useCallback(() => {
+    deleteQuestion(id);
+  }, [id, deleteQuestion]);
 
-    <Column>
-      <Subtitle>
-        Answers:
-      </Subtitle>
-      <Answers>
-        {
-        answers.map((answer, answerIndex) => (
-          <Row key={`answer_${index}_${answerIndex}`}>
-            <Checkbox
-              checked={answer.isCorrect}
-              onChange={handleCorrectionChange(index, answerIndex)}
-            />
-            <Input
-              value={answer.title}
-              onChange={handleAnswerChange(index, answerIndex)}
-              placeholder="Write an answer"
-            />
-            <IconButton iconName="faDeleteLeft" onClick={deleteAnswer(index, answerIndex)} />
-          </Row>
-        ))
-      }
-      </Answers>
+  const onAddAnswer = useCallback(() => {
+    addAnswer(id);
+  }, [id, addAnswer]);
 
-      <ButtonContainer>
-        <RoundIconButton onClick={addAnswer(index)} />
-      </ButtonContainer>
+  return (
+    <Container>
 
-    </Column>
+      <Row>
+        <Subtitle>
+          Question:
+        </Subtitle>
+        <Input
+          value={title}
+          onChange={onTitleChange}
+          placeholder="Write a question"
+        />
+        <IconButton
+          iconName="faTrashCan"
+          onClick={onDelete}
+        />
+      </Row>
 
-  </Container>
-);
+      <Column>
+
+        <Subtitle>
+          Answers:
+        </Subtitle>
+
+        <Answers>
+          {
+            answers.map((answer) => (
+              <Answer
+                key={answer.id}
+                answer={answer}
+                questionId={id}
+                handleAnswerChange={handleAnswerChange}
+                deleteAnswer={deleteAnswer}
+              />
+            ))
+          }
+        </Answers>
+
+        <ButtonContainer>
+          <RoundIconButton onClick={onAddAnswer} />
+        </ButtonContainer>
+
+      </Column>
+
+    </Container>
+  );
+};
 
 const Container = styled.div`
   border: 3px solid rgba(0, 0, 0, 0.3);

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TEMPLATES_LIST } from 'constants';
-import { ButtonText, LastScrollElement } from 'components';
+import { ButtonText } from 'components';
 
 const TemplatePicker = ({ onPick }) => (
   <Container>
@@ -17,7 +17,6 @@ const TemplatePicker = ({ onPick }) => (
       ))
     }
     </Content>
-    <LastScrollElement />
   </Container>
 );
 
@@ -25,9 +24,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: auto;
 `;
 const Content = styled.div`
   padding-top: 20px;
+  padding-bottom: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;

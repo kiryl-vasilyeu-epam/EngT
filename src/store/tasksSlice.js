@@ -1,51 +1,57 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { compact, filter } from 'lodash';
+import { uniqueId } from 'lodash';
 
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState: [
     {
+      id: 1,
       title: 'TITLE: This is the first task in a list',
       type: 'SELECT_TEMPLATE',
       questions: [
         {
-          question: 'This is the first task question',
+          id: 10,
+          title: 'This is the first task question',
           answers: [
-            { title: 'First task variant', isCorrect: false },
-            { title: 'Second task variant', isCorrect: true },
+            { title: 'First task variant', isCorrect: false, id: 100 },
+            { title: 'Second task variant', isCorrect: true, id: 200 },
           ],
           multiline: false,
         },
       ],
     },
     {
+      id: 2,
       title: 'TITLE: This is the second task in a list',
       type: 'SELECT_TEMPLATE',
       questions: [
         {
-          question: 'This is the first task question, multiline',
+          id: 20,
+          title: 'This is the first task question, multiline',
           answers: [
-            { title: 'First task variant', isCorrect: true },
-            { title: 'Second task variant', isCorrect: false },
-            { title: 'Third task variant', isCorrect: true },
+            { title: 'First task variant', isCorrect: true, id: 300 },
+            { title: 'Second task variant', isCorrect: false, id: 400 },
+            { title: 'Third task variant', isCorrect: true, id: 500 },
           ],
           multiline: true,
         },
         {
-          question: 'This is the second task question',
+          id: 30,
+          title: 'This is the second task question',
           answers: [
-            { title: 'First task variant', isCorrect: true },
-            { title: 'Second task variant', isCorrect: false },
-            { title: 'Third task variant', isCorrect: false },
+            { title: 'First task variant', isCorrect: true, id: 600 },
+            { title: 'Second task variant', isCorrect: false, id: 700 },
+            { title: 'Third task variant', isCorrect: false, id: 800 },
           ],
           multiline: false,
         },
         {
-          question: 'This is the third task question, multiline',
+          id: 40,
+          title: 'This is the third task question, multiline',
           answers: [
-            { title: 'First task variant', isCorrect: true },
-            { title: 'Second task variant', isCorrect: true },
-            { title: 'Third task variant', isCorrect: false },
+            { title: 'First task variant', isCorrect: true, id: 900 },
+            { title: 'Second task variant', isCorrect: true, id: 1000 },
+            { title: 'Third task variant', isCorrect: false, id: 1100 },
           ],
           multiline: true,
         },
@@ -57,18 +63,10 @@ const tasksSlice = createSlice({
       ...state,
       {
         ...task,
-        questions: task.questions.map((question) => ({
-          ...question,
-          multiline: filter(question.answers, { isCorrect: true }).length > 1,
-        })),
+        id: uniqueId('task_'),
       },
     ],
-    removeTask: (state, { payload: index }) => compact(
-      state.map((task, taskIndex) => {
-        if (taskIndex !== index) return task;
-        return null;
-      }),
-    ),
+    removeTask: (state, { payload: taskId }) => state.filter(({ id }) => id !== taskId),
   },
 });
 

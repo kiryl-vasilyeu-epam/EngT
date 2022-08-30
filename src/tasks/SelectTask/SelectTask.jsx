@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
@@ -14,12 +13,11 @@ import {
 import { removeTask } from 'store';
 
 const SelectTask = ({
-  title,
-  questions,
+  task,
   creator,
-  index: taskIndex,
   checked,
 }) => {
+  const { id, questions, title } = task;
   const [userAnswers, setUserAnswers] = useState(
     () => questions.map(
       ({ answers }) => answers.map(
@@ -54,8 +52,8 @@ const SelectTask = ({
   };
 
   const onDeleteTaskHandler = useCallback(() => {
-    dispatch(removeTask(taskIndex));
-  }, [taskIndex]);
+    dispatch(removeTask(id));
+  }, [id]);
 
   return (
     <Container>
@@ -63,15 +61,24 @@ const SelectTask = ({
       <Title>
         {title}
         {creator && (
-          <IconButton
-            iconName="faTrash"
-            onClick={onDeleteTaskHandler}
-          />
+          <CreatorButtons>
+            <IconButton
+              iconName="faPen"
+              onClick={onDeleteTaskHandler}
+            />
+            <IconButton
+              iconName="faTrash"
+              onClick={onDeleteTaskHandler}
+            />
+          </CreatorButtons>
+
         )}
       </Title>
 
       {
-        questions.map(({ question, answers, multiline }, index) => {
+        questions.map(({
+          title: questionTitle, id: questionId, answers, multiline,
+        }, index) => {
           let correction = null;
           const predicate = ({ isCorrect }, answerIndex) => {
             const userAnswer = userAnswers?.[index]?.[answerIndex];
@@ -92,11 +99,11 @@ const SelectTask = ({
           }
 
           return (
-            <Question key={`question_${index}`} correction={correction}>
-              <Subtitle>{`${index + 1}. ${question}`}</Subtitle>
+            <Question key={questionId} correction={correction}>
+              <Subtitle>{`${index + 1}. ${questionTitle}`}</Subtitle>
               <AnswerContainer>
                 {
-                  answers.map(({ title: answerTitle }, answerIndex) => {
+                  answers.map(({ title: answerTitle, id: answerId }, answerIndex) => {
                     const userAnswer = userAnswers?.[index]?.[answerIndex];
                     const correctAnswer = questions?.[index]?.answers?.[answerIndex].isCorrect;
                     const isActiveByUser = checked ? (userAnswer || correctAnswer) : userAnswer;
@@ -109,8 +116,7 @@ const SelectTask = ({
                     const withOpacity = checked && correctAnswer && !userAnswer;
 
                     return (
-                      <Answer key={`answer_${index}_${answerIndex}_${checked}`}>
-
+                      <Answer key={answerId}>
                         <IconContainer correct={isUserCorrectAnswer}>
                           {isShowResult && (isUserCorrectAnswer ? (
                             <FontAwesomeIcon icon={faCheck} />
@@ -210,6 +216,9 @@ const IconContainer = styled.div`
   width: 30px;
   font-size: 25px;
   color: ${({ correct }) => (correct ? 'limegreen' : 'red')}
+`;
+const CreatorButtons = styled.div`
+  display: flex;
 `;
 
 export default SelectTask;
