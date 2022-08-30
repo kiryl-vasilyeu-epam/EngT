@@ -17,7 +17,7 @@ const templateCreationSlice = createSlice({
   name: 'templateCreation',
   initialState,
   reducers: {
-    initTemplate: (_state, { payload: type }) => ({
+    initTemplate: (_state, { payload: { type, task } }) => task || ({
       ...initialTemplates[type],
     }),
     modifyTemplate: (state, { payload: newState }) => ({
@@ -28,5 +28,9 @@ const templateCreationSlice = createSlice({
   },
 });
 
-export const { initTemplate, modifyTemplate, deleteTemplate } = templateCreationSlice.actions;
+export const {
+  initTemplate,
+  modifyTemplate,
+  deleteTemplate,
+} = templateCreationSlice.actions;
 export default templateCreationSlice;

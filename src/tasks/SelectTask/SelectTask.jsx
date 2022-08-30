@@ -10,14 +10,17 @@ import {
   IconButton,
 } from 'components';
 
-import { removeTask } from 'store';
+import { removeTask, showModal } from 'store';
 
 const SelectTask = ({
   task,
   creator,
   checked,
+  modalId,
 }) => {
-  const { id, questions, title } = task;
+  const {
+    id, questions, title, type,
+  } = task;
   const [userAnswers, setUserAnswers] = useState(
     () => questions.map(
       ({ answers }) => answers.map(
@@ -55,6 +58,10 @@ const SelectTask = ({
     dispatch(removeTask(id));
   }, [id]);
 
+  const onEditHandler = useCallback(() => {
+    dispatch(showModal({ modalId, params: { taskId: id, type } }));
+  }, [dispatch, modalId, id]);
+
   return (
     <Container>
 
@@ -64,7 +71,7 @@ const SelectTask = ({
           <CreatorButtons>
             <IconButton
               iconName="faPen"
-              onClick={onDeleteTaskHandler}
+              onClick={onEditHandler}
             />
             <IconButton
               iconName="faTrash"

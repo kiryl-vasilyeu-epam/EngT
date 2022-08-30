@@ -10,13 +10,13 @@ const CreatorsRoute = () => {
   const [modalId, handleModalId] = useState(null);
   const dispatch = useDispatch();
   const openModal = useCallback(() => {
-    dispatch(showModal(modalId));
+    dispatch(showModal({ modalId }));
   }, [modalId]);
 
   return (
     <Content>
       Creator
-      <Tasks creator />
+      <Tasks creator modalId={modalId} />
       <ButtonContainer>
         <RoundIconButton onClick={openModal} />
       </ButtonContainer>

@@ -5,22 +5,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Input, RoundIconButton, ButtonText,
 } from 'components';
-import { filter } from 'lodash';
+import { filter, find } from 'lodash';
 
 import { SELECT_TEMPLATE } from 'constants';
 import {
-  addTask, initTemplate, deleteTemplate, modifyTemplate,
+  addTask, initTemplate, deleteTemplate, modifyTemplate, modifyTask,
 } from 'store';
 import { Row } from './common';
 import Question from './Question';
 import { createQuestion, createAnswer } from './helpers';
 
-const SelectTemplate = ({ onSave }) => {
+const SelectTemplate = ({ onSave, taskId }) => {
+  const task = useSelector((state) => find(state.tasks, { id: taskId }));
   const dispatch = useDispatch();
   const template = useSelector((state) => state.template);
 
   useEffect(() => {
-    dispatch(initTemplate(SELECT_TEMPLATE));
+    dispatch(initTemplate({ type: SELECT_TEMPLATE, task }));
     return () => {
       dispatch(deleteTemplate());
     };
@@ -103,7 +104,11 @@ const SelectTemplate = ({ onSave }) => {
   }, [questions]);
 
   const handleSave = useCallback(() => {
-    dispatch(addTask(template));
+    if (taskId) {
+      dispatch(modifyTask(template));
+    } else {
+      dispatch(addTask(template));
+    }
     onSave();
     dispatch(deleteTemplate());
   }, [template]);

@@ -22,7 +22,7 @@ const ModalWindow = ({
 
   const visible = useSelector((state) => find(state.modal, { id: modalId })?.visible);
   const closeModal = useCallback(() => {
-    dispatch(hideModal(modalId));
+    dispatch(hideModal({ modalId }));
     document.body.classList.remove('modal-opened');
   }, [modalId]);
 

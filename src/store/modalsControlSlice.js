@@ -1,22 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const changeModalVisibilityTo = (visible) => (state, { payload: id }) => state.map((modal) => {
-  if (modal.id === id) {
-    const { body: { classList } } = document;
-    if (visible) {
-      classList.add('modal-opened');
-    } else {
-      classList.remove('modal-opened');
+const changeModalVisibilityTo = (visible) => (state, { payload }) => {
+  const { modalId, params } = payload;
+
+  return state.map((modal) => {
+    if (modal.id === modalId) {
+      const { body: { classList } } = document;
+      if (visible) {
+        classList.add('modal-opened');
+      } else {
+        classList.remove('modal-opened');
+      }
+
+      return {
+        ...modal,
+        visible,
+        params: params || null,
+      };
     }
 
-    return {
-      ...modal,
-      visible,
-    };
-  }
-
-  return modal;
-});
+    return modal;
+  });
+};
 
 const modalsControlSlice = createSlice({
   name: 'modal',
@@ -27,6 +32,7 @@ const modalsControlSlice = createSlice({
       {
         id,
         visible: false,
+        params: null,
       },
     ],
     showModal: changeModalVisibilityTo(true),

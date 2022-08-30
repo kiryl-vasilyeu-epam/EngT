@@ -20,22 +20,21 @@ const COMPONENTS_VARIANT = {
 };
 
 const Tasks = ({
-  creator, checked, userAnswers,
+  creator, checked, modalId,
 }) => {
   const tasks = useSelector((state) => state.tasks);
 
   return (
     <Container>
-      {tasks.map((task, index) => {
+      {tasks.map((task) => {
         const Component = COMPONENTS_VARIANT[task.type];
         return (
           <Component
             key={task.id}
-            index={index}
             task={task}
             creator={creator}
             checked={checked}
-            initialUserAnswer={userAnswers?.[index]}
+            modalId={modalId}
           />
         );
       })}
