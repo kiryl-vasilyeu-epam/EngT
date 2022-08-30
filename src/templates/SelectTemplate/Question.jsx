@@ -2,11 +2,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {
+  Input, Checkbox, RoundIconButton, IconButton,
+} from 'components';
 import { Row } from './common';
-import Input from '../../components/Input/Input';
-import Checkbox from '../../components/Checkbox/Checkbox';
-import RoundIconButton from '../../components/RoundIconButton/RoundIconButton';
-import IconButton from '../../components/IconButton/IconButton';
 
 const Question = ({
   questionData: { question, answers },

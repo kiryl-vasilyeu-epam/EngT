@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ButtonText from './components/ButtonText/ButtonText';
-import { BACKGROUND_COLOR } from './constants';
-import CreatorsRoute from './routes/CreatorsRoute';
-import UserRoute from './routes/UserRoute';
+import { ButtonText } from 'components';
+import { BACKGROUND_COLOR } from 'constants';
+import { CreatorsRoute, UserRoute } from 'routes';
 
 const App = () => {
   const [route, setRoute] = useState('creator');

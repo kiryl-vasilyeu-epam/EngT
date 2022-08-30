@@ -8,8 +8,8 @@ import {
   DRAG_N_DROP_TEMPLATE,
   FILL_THE_WORD_TEMPLATE,
   AUDIO_VIDEO_TEMPLATE,
-} from '../../constants';
-import SelectTask from '../SelectTask/SelectTask';
+} from 'constants';
+import { SelectTask } from '../SelectTask';
 
 const COMPONENTS_VARIANT = {
   [SELECT_TEMPLATE]: SelectTask,

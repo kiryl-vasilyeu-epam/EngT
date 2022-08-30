@@ -1,17 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import ModalWindow from '../ModalWindow/ModalWindow';
-import TemplatePicker from '../TemplatePicker/TemplatePicker';
+import { TemplatePicker, SelectTemplate } from 'templates';
 
-import { DEFAULT_TITLE, TEMPLATE_PICK } from './constants';
 import {
   SELECT_TEMPLATE,
   DROPDOWN_TEMPLATE,
   DRAG_N_DROP_TEMPLATE,
   FILL_THE_WORD_TEMPLATE,
   AUDIO_VIDEO_TEMPLATE,
-} from '../../constants';
-import SelectTemplate from '../../templates/SelectTemplate/SelectTemplate';
+} from 'constants';
+import { ModalWindow } from '../ModalWindow';
+import { DEFAULT_TITLE, TEMPLATE_PICK } from './constants';
 
 const COMPONENTS_VARIANT = {
   [TEMPLATE_PICK]: ({ onTemplatePress }) => <TemplatePicker onPick={onTemplatePress} />,

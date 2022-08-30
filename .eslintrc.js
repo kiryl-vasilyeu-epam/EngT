@@ -4,6 +4,7 @@ module.exports = {
     es2021: true,
   },
   extends: [
+    'react-app',
     'plugin:react/recommended',
     'airbnb',
   ],
@@ -17,9 +18,17 @@ module.exports = {
   plugins: [
     'react',
   ],
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ['src'],
+      },
+    },
+  },
   rules: {
     'react/function-component-definition': 0,
     'react/prop-types': 0,
+    'react-hooks/exhaustive-deps': 0,
     'import/prefer-default-export': 0,
   },
 };

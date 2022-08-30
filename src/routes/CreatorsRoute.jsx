@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import CreateTemplateModal from '../components/CreateTemplateModal/CreateTemplateModal';
-import RoundIconButton from '../components/RoundIconButton/RoundIconButton';
-import { showModal } from '../store/modalsControlSlice';
-import Tasks from '../tasks/Tasks/Tasks';
+import { Tasks } from 'tasks';
+import { CreateTemplateModal } from 'features';
+import { RoundIconButton } from 'components';
+import { showModal } from 'store';
 
 const CreatorsRoute = () => {
   const [modalId, handleModalId] = useState(null);

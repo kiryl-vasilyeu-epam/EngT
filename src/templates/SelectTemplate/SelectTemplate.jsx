@@ -4,15 +4,14 @@ import styled from 'styled-components';
 import { compact } from 'lodash';
 
 import { useDispatch } from 'react-redux';
-import Input from '../../components/Input/Input';
-import RoundIconButton from '../../components/RoundIconButton/RoundIconButton';
-import LastScrollElement from '../../components/LastScrollElement/LastScrollElement';
-import ButtonText from '../../components/ButtonText/ButtonText';
+import {
+  Input, RoundIconButton, ButtonText,
+} from 'components';
 
+import { SELECT_TEMPLATE } from 'constants';
+import { addTask } from 'store';
 import { Row } from './common';
 import Question from './Question';
-import { SELECT_TEMPLATE } from '../../constants';
-import { addTask } from '../../store/tasksSlice';
 
 const answerTemplate = {
   title: '', isCorrect: false,
@@ -162,8 +161,6 @@ const SelectTemplate = ({ onSave }) => {
         <ButtonContainer>
           <RoundIconButton onClick={addQuestion} />
         </ButtonContainer>
-
-        <LastScrollElement />
 
       </Container>
       <ButtonText

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import ButtonText from '../components/ButtonText/ButtonText';
-import Tasks from '../tasks/Tasks/Tasks';
-import { saveAnswers } from '../store/userAnswersSlice';
+import { ButtonText } from 'components';
+import { Tasks } from 'tasks';
+import { saveAnswers } from 'store';
 
 const UserRoute = () => {
   const dispatch = useDispatch();

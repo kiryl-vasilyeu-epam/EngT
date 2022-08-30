@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TEMPLATES_LIST } from '../../constants';
-import ButtonText from '../ButtonText/ButtonText';
-import LastScrollElement from '../LastScrollElement/LastScrollElement';
+import { TEMPLATES_LIST } from 'constants';
+import { ButtonText, LastScrollElement } from 'components';
 
 const TemplatePicker = ({ onPick }) => (
   <Container>

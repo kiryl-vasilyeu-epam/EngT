@@ -5,10 +5,13 @@ import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { filter } from 'lodash';
-import RadioButton from '../../components/RadioButton/RadioButton';
-import Checkbox from '../../components/Checkbox/Checkbox';
-import IconButton from '../../components/IconButton/IconButton';
-import { removeTask } from '../../store/tasksSlice';
+import {
+  RadioButton,
+  Checkbox,
+  IconButton,
+} from 'components';
+
+import { removeTask } from 'store';
 
 const SelectTask = ({
   title,

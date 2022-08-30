@@ -2,9 +2,9 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
 import { find, uniqueId } from 'lodash';
-import { BACKGROUND_COLOR } from '../../constants';
-import IconButton from '../IconButton/IconButton';
-import { initModal, hideModal } from '../../store/modalsControlSlice';
+import { BACKGROUND_COLOR } from 'constants';
+import { IconButton } from 'components';
+import { initModal, hideModal } from 'store';
 
 const ModalWindow = ({
   title = 'Title',

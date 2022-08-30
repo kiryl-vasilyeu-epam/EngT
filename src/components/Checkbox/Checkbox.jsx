@@ -10,7 +10,12 @@ const Checkbox = ({
     onChange(!checked);
   }, [checked]);
   return (
-    <Container checked={checked} onClick={handleClick} correct={correct} withOpacity={withOpacity}>
+    <Container
+      checked={checked}
+      onClick={handleClick}
+      correct={correct}
+      withOpacity={withOpacity}
+    >
       {checked && <FontAwesomeIcon icon={faCheck} />}
     </Container>
   );
