@@ -1,6 +1,5 @@
-/* eslint-disable react/no-array-index-key */
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
   SELECT_TEMPLATE,
@@ -9,6 +8,7 @@ import {
   FILL_THE_WORD_TEMPLATE,
   AUDIO_VIDEO_TEMPLATE,
 } from 'constants';
+import { initUserAnswers } from 'store';
 import { SelectTask } from '../SelectTask';
 
 const COMPONENTS_VARIANT = {
@@ -22,11 +22,19 @@ const COMPONENTS_VARIANT = {
 const Tasks = ({
   creator, checked, modalId,
 }) => {
+  const userAnswers = useSelector((state) => state.userAnswers.tasks);
   const tasks = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!creator && !userAnswers.length) {
+      dispatch(initUserAnswers(tasks));
+    }
+  }, [tasks, creator]);
+  const data = creator ? tasks : userAnswers;
 
   return (
     <Container>
-      {tasks.map((task) => {
+      {data.map((task) => {
         const Component = COMPONENTS_VARIANT[task.type];
         return (
           <Component

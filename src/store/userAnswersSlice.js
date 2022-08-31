@@ -2,15 +2,25 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const userAnswersSlice = createSlice({
   name: 'userAnswers',
-  initialState: [],
+  initialState: {
+    tasks: [],
+    checked: false,
+  },
   reducers: {
-    saveAnswers: (state, { payload: answers }) => [
+    initUserAnswers: (state, { payload: tasks }) => ({
       ...state,
-      ...answers,
-    ],
-    cleanAnswers: () => [],
+      tasks,
+    }),
+    setChecked: (state, { payload: checked = true }) => ({
+      ...state,
+      checked,
+    }),
+    updateUserAnswer: (state, { payload: { taskId, userAnswer } }) => ({
+      ...state,
+      tasks: state.tasks.map((task) => (task.id === taskId ? userAnswer : task)),
+    }),
   },
 });
 
-export const { saveAnswers, cleanAnswers } = userAnswersSlice.actions;
+export const { initUserAnswers, setChecked, updateUserAnswer } = userAnswersSlice.actions;
 export default userAnswersSlice;

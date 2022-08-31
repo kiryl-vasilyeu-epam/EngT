@@ -6,16 +6,14 @@ import { ButtonText } from 'components';
 const TemplatePicker = ({ onPick }) => (
   <Container>
     <Content>
-      {
-      TEMPLATES_LIST.map((template) => (
+      {TEMPLATES_LIST.map((template) => (
         <ButtonText
           key={template.type}
           title={template.name}
           onClick={() => onPick(template)}
           withMargin
         />
-      ))
-    }
+      ))}
     </Content>
   </Container>
 );

@@ -1,23 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { ButtonText } from 'components';
 import { Tasks } from 'tasks';
-import { saveAnswers } from 'store';
+import { setChecked } from 'store';
 
 const UserRoute = () => {
   const dispatch = useDispatch();
-  const userAnswers = useSelector((state) => state.userAnswers);
-  const [checked, setChecked] = useState(false);
-  const [currentUserAnswers, setCurrentUserAnswers] = useState(null);
+  const checked = useSelector((state) => state.userAnswers.checked);
 
   const onCheckHandler = () => {
-    setChecked(true);
-    dispatch(
-      saveAnswers(
-        currentUserAnswers,
-      ),
-    );
+    dispatch(setChecked(!checked));
   };
 
   return (
@@ -26,8 +19,6 @@ const UserRoute = () => {
       <Tasks
         checked={checked}
         setChecked={setChecked}
-        userAnswers={userAnswers}
-        setCurrentUserAnswers={setCurrentUserAnswers}
       />
       <ButtonText
         title={checked ? 'Checked' : 'Check'}

@@ -52,17 +52,15 @@ const Question = ({
         </Subtitle>
 
         <Answers>
-          {
-            answers.map((answer) => (
-              <Answer
-                key={answer.id}
-                answer={answer}
-                questionId={id}
-                handleAnswerChange={handleAnswerChange}
-                deleteAnswer={deleteAnswer}
-              />
-            ))
-          }
+          {answers.map((answer) => (
+            <Answer
+              key={answer.id}
+              answer={answer}
+              questionId={id}
+              handleAnswerChange={handleAnswerChange}
+              deleteAnswer={deleteAnswer}
+            />
+          ))}
         </Answers>
 
         <ButtonContainer>
