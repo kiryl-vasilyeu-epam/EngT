@@ -1,9 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { SELECT_TEMPLATE } from 'constants';
+import { DROPDOWN_TEMPLATE, SELECT_TEMPLATE } from 'constants';
 
 const initialTemplates = {
   [SELECT_TEMPLATE]: {
     type: SELECT_TEMPLATE,
+    title: '',
+    questions: [],
+  },
+  [DROPDOWN_TEMPLATE]: {
+    type: DROPDOWN_TEMPLATE,
     title: '',
     questions: [],
   },

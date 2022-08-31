@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { TemplatePicker, SelectTemplate } from 'templates';
+import { TemplatePicker, SelectTemplate, DropdownTemplate } from 'templates';
 
 import {
   SELECT_TEMPLATE,
@@ -19,7 +19,7 @@ import { DEFAULT_TITLE, TEMPLATE_PICK } from './constants';
 const COMPONENTS_VARIANT = {
   [TEMPLATE_PICK]: ({ onTemplatePress }) => <TemplatePicker onPick={onTemplatePress} />,
   [SELECT_TEMPLATE]: ({ onSave, taskId }) => <SelectTemplate onSave={onSave} taskId={taskId} />,
-  [DROPDOWN_TEMPLATE]: ({ onTemplatePress }) => <TemplatePicker onPick={onTemplatePress} />,
+  [DROPDOWN_TEMPLATE]: ({ onTemplatePress }) => <DropdownTemplate onPick={onTemplatePress} />,
   [DRAG_N_DROP_TEMPLATE]: ({ onTemplatePress }) => <TemplatePicker onPick={onTemplatePress} />,
   [FILL_THE_WORD_TEMPLATE]: ({ onTemplatePress }) => <TemplatePicker onPick={onTemplatePress} />,
   [AUDIO_VIDEO_TEMPLATE]: ({ onTemplatePress }) => <TemplatePicker onPick={onTemplatePress} />,

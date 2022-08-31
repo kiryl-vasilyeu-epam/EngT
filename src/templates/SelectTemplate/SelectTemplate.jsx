@@ -1,43 +1,32 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
-import { useDispatch, useSelector } from 'react-redux';
 import {
-  Input, RoundIconButton, ButtonText,
+  RoundIconButton, TemplateContainer,
 } from 'components';
-import { filter, find } from 'lodash';
+import { filter } from 'lodash';
 
 import { SELECT_TEMPLATE } from 'constants';
-import {
-  addTask, initTemplate, deleteTemplate, modifyTemplate, modifyTask,
-} from 'store';
-import { Row } from './common';
+
+import { useTemplate } from 'hooks';
 import Question from './Question';
 import { createQuestion, createAnswer } from './helpers';
 
 const SelectTemplate = ({ onSave, taskId }) => {
-  const task = useSelector((state) => find(state.tasks, { id: taskId }));
-  const dispatch = useDispatch();
-  const template = useSelector((state) => state.template);
-
-  useEffect(() => {
-    dispatch(initTemplate({ type: SELECT_TEMPLATE, task }));
-    return () => {
-      dispatch(deleteTemplate());
-    };
-  }, []);
+  const {
+    setTitle,
+    updateTemplate,
+    template,
+    handleSave,
+  } = useTemplate({
+    onSave,
+    taskId,
+    type: SELECT_TEMPLATE,
+  });
 
   const {
     title, questions,
   } = template;
-
-  const updateTemplate = useCallback((...args) => {
-    dispatch(modifyTemplate(...args));
-  }, [dispatch, modifyTemplate]);
-
-  const setTitle = useCallback((templateTitle) => {
-    updateTemplate({ title: templateTitle });
-  }, []);
 
   const handleQuestionChange = useCallback((questionId, questionTitle) => {
     updateTemplate({
@@ -103,71 +92,31 @@ const SelectTemplate = ({ onSave, taskId }) => {
     });
   }, [questions]);
 
-  const handleSave = useCallback(() => {
-    if (taskId) {
-      dispatch(modifyTask(template));
-    } else {
-      dispatch(addTask(template));
-    }
-    onSave();
-    dispatch(deleteTemplate());
-  }, [template]);
-
   return (
-    <>
-      <Container>
+    <TemplateContainer
+      handleSave={handleSave}
+      title={title}
+      setTitle={setTitle}
+    >
+      {questions.map((questionData, index) => (
+        <Question
+          key={questionData.id}
+          index={index}
+          questionData={questionData}
+          handleQuestionChange={handleQuestionChange}
+          handleAnswerChange={handleAnswerChange}
+          addAnswer={addAnswer}
+          deleteAnswer={deleteAnswer}
+          deleteQuestion={deleteQuestion}
+        />
+      ))}
 
-        <Row>
-          <Title>Exercise Title:</Title>
-          <Input
-            value={title}
-            onChange={setTitle}
-            placeholder="Enter lesson title"
-          />
-        </Row>
-
-        {questions.map((questionData, index) => (
-          <Question
-            key={questionData.id}
-            index={index}
-            questionData={questionData}
-            handleQuestionChange={handleQuestionChange}
-            handleAnswerChange={handleAnswerChange}
-            addAnswer={addAnswer}
-            deleteAnswer={deleteAnswer}
-            deleteQuestion={deleteQuestion}
-          />
-        ))}
-
-        <ButtonContainer>
-          <RoundIconButton onClick={addQuestion} />
-        </ButtonContainer>
-
-      </Container>
-
-      <ButtonText
-        title="Save"
-        onClick={handleSave}
-        primary
-        withoutRadius
-      />
-    </>
+      <ButtonContainer>
+        <RoundIconButton onClick={addQuestion} />
+      </ButtonContainer>
+    </TemplateContainer>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: 20px;
-  overflow: auto;
-`;
-
-const Title = styled.div`
-  font-size: 25px;
-  font-weight: bold;
-  margin-right: 10px;
-`;
 
 const ButtonContainer = styled.div`
   display: flex;
