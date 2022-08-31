@@ -24,6 +24,7 @@ const UserRoute = () => {
         title={checked ? 'Checked' : 'Check'}
         primary={!checked}
         onClick={onCheckHandler}
+        fullWidth
       />
     </Content>
   );

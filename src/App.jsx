@@ -13,13 +13,11 @@ const App = () => {
         <ButtonText
           primary={route === 'creator'}
           title="Creators"
-          width="160px"
           onClick={() => setRoute('creator')}
         />
         <ButtonText
           primary={route === 'user'}
           title="Users"
-          width="160px"
           onClick={() => setRoute('user')}
         />
       </Header>

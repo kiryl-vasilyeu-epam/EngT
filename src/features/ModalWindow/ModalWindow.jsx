@@ -11,6 +11,7 @@ const ModalWindow = ({
   children,
   showBackButton,
   onBackPress,
+  onClose,
   setModalId,
 }) => {
   const [modalId] = useState(uniqueId('modal_'));
@@ -22,8 +23,8 @@ const ModalWindow = ({
 
   const visible = useSelector((state) => find(state.modal, { id: modalId })?.visible);
   const closeModal = useCallback(() => {
+    onClose();
     dispatch(hideModal({ modalId }));
-    document.body.classList.remove('modal-opened');
   }, [modalId]);
 
   const handleContentClick = useCallback((e) => {

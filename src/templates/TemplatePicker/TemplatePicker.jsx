@@ -11,6 +11,7 @@ const TemplatePicker = ({ onPick }) => (
           key={template.type}
           title={template.name}
           onClick={() => onPick(template)}
+          secondary
           withMargin
         />
       ))}

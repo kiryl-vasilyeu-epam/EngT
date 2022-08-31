@@ -1,29 +1,37 @@
-import React from 'react';
-import styled from 'styled-components';
-import TextareaAutosize from 'react-textarea-autosize';
+import React, {
+  useRef, useCallback, useEffect, useState,
+} from 'react';
+import Form from 'react-bootstrap/Form';
 
 const Input = ({ value, onChange, placeholder }) => {
-  const onChangeHandler = (e) => {
+  const ref = useRef(null);
+  const [height, setHeight] = useState('inherit');
+  const onChangeHandler = useCallback((e) => {
     onChange(e.target.value);
-  };
+  }, [onChange]);
+
+  useEffect(() => {
+    const actualHeight = ref.current.scrollHeight;
+    if (actualHeight === height) return;
+
+    if (height === 'inherit') {
+      setHeight(actualHeight);
+    } else {
+      setHeight('inherit');
+    }
+  }, [value, height, ref]);
 
   return (
-    <InputElement
+    <Form.Control
+      ref={ref}
       value={value}
       onChange={onChangeHandler}
       placeholder={placeholder}
+      as="textarea"
+      rows={1}
+      style={{ height }}
     />
   );
 };
-
-const InputElement = styled(TextareaAutosize)`
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  background: rgba(0, 0, 0, 0.03);
-  padding: 10px;
-  margin: 0 10px;
-  border-radius: 10px;
-  font-size: 20px;
-  flex: 1;
-`;
 
 export default Input;

@@ -74,7 +74,7 @@ const SelectTask = ({
 
 const Container = styled.div`
   margin: 20px 0;
-  border: 3px solid rgba(0, 0, 0, 0.3);
+  border: 2px solid #9FA6B2;
   border-radius: 8px;
   padding: 20px;
 `;

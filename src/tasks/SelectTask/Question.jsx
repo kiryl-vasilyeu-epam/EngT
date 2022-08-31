@@ -10,10 +10,7 @@ const Question = ({
     answers, title, multiline, id,
   } = question;
   let correction = null;
-  const predicate = ({ isCorrect }) => {
-    const userAnswer = true; // userAnswers?.[index]?.[answerIndex];
-    return userAnswer && userAnswer === isCorrect;
-  };
+  const predicate = ({ isCorrect, userAnswer }) => userAnswer && userAnswer === isCorrect;
 
   const correctAnswersList = filter(answers, { isCorrect: true });
   const userCorrectAnswersList = filter(answers, predicate);
@@ -51,15 +48,15 @@ const Question = ({
 const Container = styled.div`
   padding: 10px;
   margin: 15px 0;
-  border: 4px solid ${({ correction }) => {
+  border: 2px solid ${({ correction }) => {
     if (correction === 'correct') {
-      return 'limegreen';
+      return '#14A44D';
     } if (correction === 'partially') {
-      return 'rgb(250, 210, 0)';
+      return '#E4A11B';
     } if (correction === 'incorrect') {
-      return 'red';
+      return '#DC4C64';
     }
-    return 'rgba(0, 0, 0, 0.1)';
+    return '#9FA6B2';
   }};
   border-radius: 10px;
 `;

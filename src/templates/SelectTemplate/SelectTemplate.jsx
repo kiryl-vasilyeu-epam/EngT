@@ -121,7 +121,7 @@ const SelectTemplate = ({ onSave, taskId }) => {
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  border: 3px solid rgba(0, 0, 0, 0.3);
+  border: 2px solid #9FA6B2;
   border-radius: 10px;
   padding: 20px;
   margin: 10px 0;

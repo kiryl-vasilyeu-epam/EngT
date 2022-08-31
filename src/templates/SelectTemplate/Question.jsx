@@ -74,7 +74,7 @@ const Question = ({
 };
 
 const Container = styled.div`
-  border: 3px solid rgba(0, 0, 0, 0.3);
+  border: 2px solid #9FA6B2;
   padding: 16px 20px;
   border-radius: 10px;
   margin: 10px 0;

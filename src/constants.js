@@ -12,4 +12,4 @@ export const TEMPLATES_LIST = [
   { type: AUDIO_VIDEO_TEMPLATE, name: 'Audio and video template' },
 ];
 
-export const BACKGROUND_COLOR = 'rgb(252, 252, 255)';
+export const BACKGROUND_COLOR = '#FBFBFB';

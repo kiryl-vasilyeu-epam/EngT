@@ -56,8 +56,8 @@ const CreateTemplateModal = ({ handleModalId }) => {
   }, []);
 
   const onSave = () => {
-    dispatch(hideModal({ modalId }));
     resetData();
+    dispatch(hideModal({ modalId }));
   };
 
   const currentComponent = COMPONENTS_VARIANT[currentTemplate.type]({
@@ -74,6 +74,7 @@ const CreateTemplateModal = ({ handleModalId }) => {
       showBackButton={isOnTemplatePicker}
       onBackPress={resetData}
       setModalId={setModalId}
+      onClose={resetData}
     >
       {currentComponent}
     </ModalWindow>

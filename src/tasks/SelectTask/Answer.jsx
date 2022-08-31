@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import {
-  RadioButton,
-  Checkbox,
+  Check,
 } from 'components';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,9 +22,7 @@ const Answer = ({
   const isUserCorrectAnswer = userAnswer === isCorrect;
   const isShowResult = checked && (userAnswer || isCorrect);
   const correctionColor = creator || (checked && isCorrect);
-  const withOpacity = checked && isCorrect && !userAnswer;
-
-  const CheckComponent = multiline ? Checkbox : RadioButton;
+  const disabled = checked || creator;
 
   const onCheckPress = (value) => {
     onAnswerHandler(questionId, id, value);
@@ -40,12 +37,12 @@ const Answer = ({
           />
         )}
       </IconContainer>
-
-      <CheckComponent
+      <Check
         checked={isActive}
         onChange={onCheckPress}
-        correct={correctionColor}
-        withOpacity={withOpacity}
+        isValid={correctionColor}
+        disabled={disabled}
+        radio={!multiline}
       />
       <Text>
         {title}

@@ -25,7 +25,7 @@ const TemplateContainer = ({
       title="Save"
       onClick={handleSave}
       primary
-      withoutRadius
+      fullWidth
     />
   </>
 );

@@ -1,7 +1,6 @@
 export { ButtonText } from './ButtonText';
-export { Checkbox } from './Checkbox';
+export { Check } from './Check';
 export { IconButton } from './IconButton';
 export { Input } from './Input';
-export { RadioButton } from './RadioButton';
 export { RoundIconButton } from './RoundIconButton';
 export { TemplateContainer } from './TemplateContainer';

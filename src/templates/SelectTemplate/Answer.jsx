@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import {
-  Input, Checkbox, IconButton,
+  Input, Check, IconButton,
 } from 'components';
 import { Row } from './common';
 
@@ -32,7 +32,7 @@ const Answer = ({
 
   return (
     <Row>
-      <Checkbox
+      <Check
         checked={isCorrect}
         onChange={onCorrectionChange}
       />
