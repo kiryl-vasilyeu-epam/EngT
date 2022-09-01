@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import {
   Input, Check, IconButton,
 } from 'components';
+import styled from 'styled-components';
 import { Row } from './common';
 
 const Answer = ({
@@ -36,11 +37,13 @@ const Answer = ({
         checked={isCorrect}
         onChange={onCorrectionChange}
       />
-      <Input
-        value={title}
-        onChange={onTitleChange}
-        placeholder="Write an answer"
-      />
+      <Margin>
+        <Input
+          value={title}
+          onChange={onTitleChange}
+          placeholder="Write an answer"
+        />
+      </Margin>
       <IconButton
         iconName="faDeleteLeft"
         onClick={onDeleteAnswer}
@@ -48,5 +51,10 @@ const Answer = ({
     </Row>
   );
 };
+
+const Margin = styled.div`
+  flex: 1;
+  margin: 0 20px;
+`;
 
 export default Answer;

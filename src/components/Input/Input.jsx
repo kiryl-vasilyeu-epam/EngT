@@ -3,7 +3,9 @@ import React, {
 } from 'react';
 import Form from 'react-bootstrap/Form';
 
-const Input = ({ value, onChange, placeholder }) => {
+const Input = ({
+  value, onChange, placeholder, ...inputProps
+}) => {
   const ref = useRef(null);
   const [height, setHeight] = useState('inherit');
   const onChangeHandler = useCallback((e) => {
@@ -30,6 +32,7 @@ const Input = ({ value, onChange, placeholder }) => {
       as="textarea"
       rows={1}
       style={{ height }}
+      {...inputProps}
     />
   );
 };
