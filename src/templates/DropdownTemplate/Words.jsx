@@ -16,7 +16,7 @@ const Words = ({
           return {
             ...word,
             isActive: !word.isActive,
-            options: [generateOption()],
+            options: [generateOption(word.id)],
           };
         }
         return word;

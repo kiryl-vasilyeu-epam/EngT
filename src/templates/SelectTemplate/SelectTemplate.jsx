@@ -98,7 +98,7 @@ const SelectTemplate = ({ onSave, taskId }) => {
       title={title}
       setTitle={setTitle}
     >
-      {questions.map((questionData, index) => (
+      {questions?.map((questionData, index) => (
         <Question
           key={questionData.id}
           index={index}

@@ -16,12 +16,15 @@ export const generateOption = (id) => ({
   id: uniqueId(`option_${id}`),
 });
 
-export const generateWordFromTitle = (title) => ({
-  title,
-  isActive: false,
-  id: uniqueId('template_word'),
-  options: [generateOption()],
-});
+export const generateWordFromTitle = (title) => {
+  const id = uniqueId('template_word');
+  return {
+    title,
+    isActive: false,
+    id,
+    options: [generateOption(id)],
+  };
+};
 
 export const generateWordsFromTitle = (title) => title.split(' ')
   .filter((text) => !!text)

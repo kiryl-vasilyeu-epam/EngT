@@ -31,8 +31,8 @@ export const useTemplate = ({ taskId, type, onSave }) => {
     } else {
       dispatch(addTask(template));
     }
-    onSave();
     dispatch(deleteTemplate());
+    onSave();
   }, [template]);
 
   return {

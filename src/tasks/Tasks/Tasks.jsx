@@ -10,10 +10,11 @@ import {
 } from 'constants';
 import { initUserAnswers } from 'store';
 import { SelectTask } from '../SelectTask';
+import { DropdownTask } from '../DropdownTask';
 
 const COMPONENTS_VARIANT = {
   [SELECT_TEMPLATE]: SelectTask,
-  [DROPDOWN_TEMPLATE]: SelectTask,
+  [DROPDOWN_TEMPLATE]: DropdownTask,
   [DRAG_N_DROP_TEMPLATE]: SelectTask,
   [FILL_THE_WORD_TEMPLATE]: SelectTask,
   [AUDIO_VIDEO_TEMPLATE]: SelectTask,

@@ -13,7 +13,7 @@ const DropdownTemplate = ({ onSave, taskId }) => {
     template,
     handleSave,
   } = useTemplate({ onSave, taskId, type: DROPDOWN_TEMPLATE });
-  const { questions } = template;
+  const { questions, title } = template;
 
   const addQuestion = useCallback(() => {
     updateTemplate({
@@ -90,8 +90,6 @@ const DropdownTemplate = ({ onSave, taskId }) => {
     });
   }, [questions]);
 
-  const { title } = template;
-
   return (
     <TemplateContainer
       handleSave={handleSave}
@@ -99,7 +97,7 @@ const DropdownTemplate = ({ onSave, taskId }) => {
       setTitle={setTitle}
     >
       <Container>
-        {questions.map((question) => (
+        {questions?.map((question) => (
           <Question
             key={question.id}
             question={question}
