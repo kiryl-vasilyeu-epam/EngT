@@ -37,8 +37,11 @@ const modalsControlSlice = createSlice({
     ],
     showModal: changeModalVisibilityTo(true),
     hideModal: changeModalVisibilityTo(false),
+    deleteModal: (state, { payload: modalId }) => state.map(({ id }) => id !== modalId),
   },
 });
 
-export const { initModal, showModal, hideModal } = modalsControlSlice.actions;
+export const {
+  initModal, showModal, hideModal, deleteModal,
+} = modalsControlSlice.actions;
 export default modalsControlSlice;

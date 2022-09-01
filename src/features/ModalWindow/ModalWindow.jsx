@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components';
 import { find, uniqueId } from 'lodash';
 import { BACKGROUND_COLOR } from 'constants';
 import { IconButton } from 'components';
-import { initModal, hideModal } from 'store';
+import { initModal, hideModal, deleteModal } from 'store';
 
 const ModalWindow = ({
   title = 'Title',
@@ -19,6 +19,9 @@ const ModalWindow = ({
   useEffect(() => {
     dispatch(initModal(modalId));
     setModalId(modalId);
+    return () => {
+      dispatch(deleteModal(modalId));
+    };
   }, []);
 
   const visible = useSelector((state) => find(state.modal, { id: modalId })?.visible);

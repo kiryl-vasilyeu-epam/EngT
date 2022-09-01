@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import { filter } from 'lodash';
+import { ColoredBorder } from 'components';
 import Answer from './Answer';
+import { getCorrection } from '../helpers';
 
 const Question = ({
   question, checked, creator, index, onAnswerHandler,
@@ -10,23 +12,25 @@ const Question = ({
     answers, title, multiline, id,
   } = question;
   let correction = null;
-  const predicate = ({ isCorrect, userAnswer }) => userAnswer && userAnswer === isCorrect;
-
-  const correctAnswersList = filter(answers, { isCorrect: true });
-  const userCorrectAnswersList = filter(answers, predicate);
+  const predicate = useCallback(
+    ({ isCorrect, userAnswer }) => userAnswer && userAnswer === isCorrect,
+    [],
+  );
+  const correctAnswersList = useMemo(
+    () => filter(answers, { isCorrect: true }),
+    [answers],
+  );
+  const userCorrectAnswersList = useMemo(
+    () => filter(answers, predicate),
+    [answers],
+  );
 
   if (checked) {
-    if (correctAnswersList.length === userCorrectAnswersList.length) {
-      correction = 'correct';
-    } else if (userCorrectAnswersList.length > 0) {
-      correction = 'partially';
-    } else {
-      correction = 'incorrect';
-    }
+    correction = getCorrection(correctAnswersList, userCorrectAnswersList);
   }
 
   return (
-    <Container correction={correction}>
+    <ColoredBorder correction={correction}>
       <Subtitle>{`${index + 1}. ${title}`}</Subtitle>
       <AnswerContainer>
         {answers.map((answer) => (
@@ -41,25 +45,9 @@ const Question = ({
           />
         ))}
       </AnswerContainer>
-    </Container>
+    </ColoredBorder>
   );
 };
-
-const Container = styled.div`
-  padding: 10px;
-  margin: 15px 0;
-  border: 2px solid ${({ correction }) => {
-    if (correction === 'correct') {
-      return '#14A44D';
-    } if (correction === 'partially') {
-      return '#E4A11B';
-    } if (correction === 'incorrect') {
-      return '#DC4C64';
-    }
-    return '#9FA6B2';
-  }};
-  border-radius: 10px;
-`;
 
 const Subtitle = styled.div`
   font-size: 25px;

@@ -27,10 +27,10 @@ const Tasks = ({
   const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!creator && !userAnswers.length) {
+    if (!userAnswers.length || userAnswers.length !== tasks.length) {
       dispatch(initUserAnswers(tasks));
     }
-  }, [tasks, creator]);
+  }, [tasks, userAnswers]);
   const data = creator ? tasks : userAnswers;
 
   return (

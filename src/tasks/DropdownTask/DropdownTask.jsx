@@ -1,6 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { updateUserAnswer } from 'store';
+import { Title, TaskContainer } from '../components';
+import Question from './Question';
 
 const DropdownTask = ({
   task,
@@ -14,7 +16,7 @@ const DropdownTask = ({
 
   const dispatch = useDispatch();
 
-  const onAnswerHandler = (questionId, answerId, userAnswer) => {
+  const onAnswerHandler = (questionId, wordId, userAnswer) => {
     if (checked || creator) return;
 
     dispatch(updateUserAnswer({
@@ -25,19 +27,14 @@ const DropdownTask = ({
           question.id === questionId
             ? {
               ...question,
-              answers: question.answers.map((answer) => {
-                if (answer.id === answerId) {
+              words: question.words.map((word) => {
+                if (word.id === wordId) {
                   return {
-                    ...answer,
+                    ...word,
                     userAnswer,
                   };
-                } if (!question.multiline) {
-                  return {
-                    ...answer,
-                    userAnswer: false,
-                  };
                 }
-                return answer;
+                return word;
               }),
             } : question
         )),
@@ -46,14 +43,26 @@ const DropdownTask = ({
   };
 
   return (
-    <Container>
-      DropdownTask
-    </Container>
+    <TaskContainer>
+      <Title
+        id={id}
+        modalId={modalId}
+        title={title}
+        creator={creator}
+        type={type}
+      />
+      {questions.map((question, index) => (
+        <Question
+          key={question.id}
+          question={question}
+          checked={checked}
+          creator={creator}
+          index={index}
+          onAnswerHandler={onAnswerHandler}
+        />
+      ))}
+    </TaskContainer>
   );
 };
-
-const Container = styled.div`
-  border: 5px solid red;
-`;
 
 export default DropdownTask;

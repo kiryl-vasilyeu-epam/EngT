@@ -1,10 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
 import { updateUserAnswer } from 'store';
 import Question from './Question';
-import Title from './Title';
+import { Title, TaskContainer } from '../components';
 
 const SelectTask = ({
   task,
@@ -50,7 +49,7 @@ const SelectTask = ({
   };
 
   return (
-    <Container>
+    <TaskContainer>
       <Title
         id={id}
         modalId={modalId}
@@ -68,15 +67,8 @@ const SelectTask = ({
           onAnswerHandler={onAnswerHandler}
         />
       ))}
-    </Container>
+    </TaskContainer>
   );
 };
-
-const Container = styled.div`
-  margin: 20px 0;
-  border: 2px solid #9FA6B2;
-  border-radius: 8px;
-  padding: 20px;
-`;
 
 export default SelectTask;
