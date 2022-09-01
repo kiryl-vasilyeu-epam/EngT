@@ -7,7 +7,6 @@ import {
   DROPDOWN_TEMPLATE,
   DRAG_N_DROP_TEMPLATE,
   FILL_THE_WORD_TEMPLATE,
-  AUDIO_VIDEO_TEMPLATE,
   TEMPLATES_LIST,
 } from 'constants';
 import { find } from 'lodash';
@@ -22,7 +21,6 @@ const COMPONENTS_VARIANT = {
   [DROPDOWN_TEMPLATE]: ({ onSave, taskId }) => <DropdownTemplate onSave={onSave} taskId={taskId} />,
   [DRAG_N_DROP_TEMPLATE]: ({ onTemplatePress }) => <TemplatePicker onPick={onTemplatePress} />,
   [FILL_THE_WORD_TEMPLATE]: ({ onTemplatePress }) => <TemplatePicker onPick={onTemplatePress} />,
-  [AUDIO_VIDEO_TEMPLATE]: ({ onTemplatePress }) => <TemplatePicker onPick={onTemplatePress} />,
 };
 
 const defaultTemplate = {

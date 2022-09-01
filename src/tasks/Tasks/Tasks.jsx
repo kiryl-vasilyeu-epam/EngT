@@ -6,7 +6,6 @@ import {
   DROPDOWN_TEMPLATE,
   DRAG_N_DROP_TEMPLATE,
   FILL_THE_WORD_TEMPLATE,
-  AUDIO_VIDEO_TEMPLATE,
 } from 'constants';
 import { initUserAnswers } from 'store';
 import { SelectTask } from '../SelectTask';
@@ -17,7 +16,6 @@ const COMPONENTS_VARIANT = {
   [DROPDOWN_TEMPLATE]: DropdownTask,
   [DRAG_N_DROP_TEMPLATE]: SelectTask,
   [FILL_THE_WORD_TEMPLATE]: SelectTask,
-  [AUDIO_VIDEO_TEMPLATE]: SelectTask,
 };
 
 const Tasks = ({
