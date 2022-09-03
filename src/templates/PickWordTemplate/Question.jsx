@@ -7,9 +7,10 @@ import ActiveWords from './ActiveWords';
 const Question = ({
   question, deleteQuestion,
   handleQuestionChange, handleWordsChange, handleOptionsChange,
-  addOption, deleteOption,
+  addOption, deleteOption, settings,
 }) => {
   const { title, id, words } = question;
+  const { withOptions } = settings;
 
   const onDelete = useCallback(() => {
     deleteQuestion(id);
@@ -41,7 +42,7 @@ const Question = ({
 
       <WordsContainer>
         <Subtitle>
-          Words:
+          Pick words:
         </Subtitle>
         <Words
           words={words}
@@ -50,20 +51,22 @@ const Question = ({
           handleWordsChange={handleWordsChange}
         />
       </WordsContainer>
-
-      <OptionsContainer>
-        <Subtitle>
-          Options:
-        </Subtitle>
-        <ActiveWords
-          words={words}
-          questionId={id}
-          handleOptionsChange={handleOptionsChange}
-          addOption={addOption}
-          deleteOption={deleteOption}
-        />
-      </OptionsContainer>
-
+      {
+        withOptions && (
+          <OptionsContainer>
+            <Subtitle>
+              Options:
+            </Subtitle>
+            <ActiveWords
+              words={words}
+              questionId={id}
+              handleOptionsChange={handleOptionsChange}
+              addOption={addOption}
+              deleteOption={deleteOption}
+            />
+          </OptionsContainer>
+        )
+      }
     </Container>
   );
 };
@@ -100,7 +103,7 @@ const Subtitle = styled.div`
   display: flex;
   align-items: center;
   flex-grow: 0;
-  width: 100px;
+  width: 120px;
   min-height: 49px;
 `;
 

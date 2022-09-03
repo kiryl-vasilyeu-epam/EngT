@@ -3,7 +3,7 @@ import { uniqueId } from 'lodash';
 
 const initialState = [
   {
-    type: 'DROPDOWN_TEMPLATE',
+    type: 'DRAG_N_DROP_TEMPLATE',
     title: 'Some fucking title',
     id: 'task_53',
     questions: [
@@ -16,7 +16,7 @@ const initialState = [
             title: 'Lorem', isActive: false, id: 'template_word62', options: [{ title: '', id: 'option_template_word89' }],
           },
           {
-            title: 'ipsum dolor', isActive: true, id: 'template_word64', options: [{ title: 'finger', id: 'option_template_word90' }, { title: 'ass', id: 'option_template_word91' }],
+            title: 'ipsum dolor asasas as asas', isActive: true, id: 'template_word64', options: [{ title: 'finger', id: 'option_template_word90' }, { title: 'ass', id: 'option_template_word91' }],
           },
           {
             title: 'sit', isActive: false, id: 'template_word68', options: [{ title: '', id: 'option_template_word92' }],

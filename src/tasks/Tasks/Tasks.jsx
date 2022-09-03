@@ -10,11 +10,12 @@ import {
 import { initUserAnswers } from 'store';
 import { SelectTask } from '../SelectTask';
 import { DropdownTask } from '../DropdownTask';
+import { DragNDropTask } from '../DragNDropTask';
 
 const COMPONENTS_VARIANT = {
   [SELECT_TEMPLATE]: SelectTask,
   [DROPDOWN_TEMPLATE]: DropdownTask,
-  [DRAG_N_DROP_TEMPLATE]: SelectTask,
+  [DRAG_N_DROP_TEMPLATE]: DragNDropTask,
   [FILL_THE_WORD_TEMPLATE]: SelectTask,
 };
 

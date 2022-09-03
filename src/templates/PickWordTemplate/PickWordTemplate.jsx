@@ -1,19 +1,19 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import { TemplateContainer, RoundIconButton } from 'components';
 import { useTemplate } from 'hooks';
-import { DROPDOWN_TEMPLATE } from 'constants';
-import { createQuestion, generateOption } from './helpers';
+import { createQuestion, generateOption, getSettingsByType } from './helpers';
 import Question from './Question';
 
-const DropdownTemplate = ({ onSave, taskId }) => {
+const PickWordTemplate = ({ onSave, taskId, type }) => {
   const {
     setTitle,
     updateTemplate,
     template,
     handleSave,
-  } = useTemplate({ onSave, taskId, type: DROPDOWN_TEMPLATE });
+  } = useTemplate({ onSave, taskId, type });
   const { questions, title } = template;
+  const settings = useMemo(() => getSettingsByType(type), [type]);
 
   const addQuestion = useCallback(() => {
     updateTemplate({
@@ -107,6 +107,7 @@ const DropdownTemplate = ({ onSave, taskId }) => {
             handleOptionsChange={handleOptionsChange}
             addOption={addOption}
             deleteOption={deleteOption}
+            settings={settings}
           />
         ))}
       </Container>
@@ -132,4 +133,4 @@ const ButtonContainer = styled.div`
   margin: 10px 0;
 `;
 
-export default DropdownTemplate;
+export default PickWordTemplate;

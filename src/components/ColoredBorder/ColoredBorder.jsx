@@ -8,9 +8,9 @@ const ColoredBorder = ({ correction, children }) => (
 );
 
 const Container = styled.div`
-padding: 10px;
-margin: 15px 0;
-border: 2px solid ${({ correction }) => {
+  padding: 10px;
+  margin: 15px 0;
+  border: 2px solid ${({ correction }) => {
     if (correction === 'correct') {
       return '#14A44D';
     } if (correction === 'partially') {
@@ -20,7 +20,7 @@ border: 2px solid ${({ correction }) => {
     }
     return '#9FA6B2';
   }};
-border-radius: 10px;
+  border-radius: 10px;
 `;
 
 export default ColoredBorder;

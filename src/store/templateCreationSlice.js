@@ -1,18 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DROPDOWN_TEMPLATE, SELECT_TEMPLATE } from 'constants';
 
-const initialTemplates = {
-  [SELECT_TEMPLATE]: {
-    type: SELECT_TEMPLATE,
-    title: '',
-    questions: [],
-  },
-  [DROPDOWN_TEMPLATE]: {
-    type: DROPDOWN_TEMPLATE,
-    title: '',
-    questions: [],
-  },
-};
 const initialState = {
   title: '',
   questions: [],
@@ -22,8 +9,9 @@ const templateCreationSlice = createSlice({
   name: 'templateCreation',
   initialState,
   reducers: {
-    initTemplate: (_state, { payload: { type, task } }) => task || ({
-      ...initialTemplates[type],
+    initTemplate: (_state, { payload: { task, type } }) => task || ({
+      ...initialState,
+      type,
     }),
     modifyTemplate: (state, { payload: newState }) => ({
       ...state,

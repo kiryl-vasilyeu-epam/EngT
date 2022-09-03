@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { TemplatePicker, SelectTemplate, DropdownTemplate } from 'templates';
+import {
+  TemplatePicker,
+  SelectTemplate,
+  PickWordTemplate,
+} from 'templates';
 
 import {
   SELECT_TEMPLATE,
@@ -18,9 +22,27 @@ import { DEFAULT_TITLE, TEMPLATE_PICK } from './constants';
 const COMPONENTS_VARIANT = {
   [TEMPLATE_PICK]: ({ onTemplatePress }) => <TemplatePicker onPick={onTemplatePress} />,
   [SELECT_TEMPLATE]: ({ onSave, taskId }) => <SelectTemplate onSave={onSave} taskId={taskId} />,
-  [DROPDOWN_TEMPLATE]: ({ onSave, taskId }) => <DropdownTemplate onSave={onSave} taskId={taskId} />,
-  [DRAG_N_DROP_TEMPLATE]: ({ onTemplatePress }) => <TemplatePicker onPick={onTemplatePress} />,
-  [FILL_THE_WORD_TEMPLATE]: ({ onTemplatePress }) => <TemplatePicker onPick={onTemplatePress} />,
+  [DROPDOWN_TEMPLATE]: ({ onSave, taskId }) => (
+    <PickWordTemplate
+      onSave={onSave}
+      taskId={taskId}
+      type={DROPDOWN_TEMPLATE}
+    />
+  ),
+  [DRAG_N_DROP_TEMPLATE]: ({ onSave, taskId }) => (
+    <PickWordTemplate
+      onSave={onSave}
+      taskId={taskId}
+      type={DRAG_N_DROP_TEMPLATE}
+    />
+  ),
+  [FILL_THE_WORD_TEMPLATE]: ({ onSave, taskId }) => (
+    <PickWordTemplate
+      onSave={onSave}
+      taskId={taskId}
+      type={DRAG_N_DROP_TEMPLATE}
+    />
+  ),
 };
 
 const defaultTemplate = {

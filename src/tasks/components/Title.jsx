@@ -44,7 +44,7 @@ const TitleContainer = styled.div`
   align-items: center;
   font-size: 30px;
   font-weight: bold;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
 
 const CreatorButtons = styled.div`
