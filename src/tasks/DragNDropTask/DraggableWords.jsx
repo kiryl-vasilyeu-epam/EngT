@@ -10,6 +10,8 @@ const DraggableWords = ({
   onAnswerHandler,
   toggleActiveWord,
   activeWord,
+  checked,
+  creator,
 }) => (
   <Container>
     {draggableWords.map((word) => (
@@ -20,6 +22,8 @@ const DraggableWords = ({
         onAnswerHandler={onAnswerHandler}
         toggleActiveWord={toggleActiveWord}
         activeWord={activeWord}
+        checked={checked}
+        creator={creator}
       />
     ))}
   </Container>

@@ -31,7 +31,7 @@ const Input = ({
       placeholder={placeholder}
       as="textarea"
       rows={1}
-      style={{ height }}
+      style={{ height, borderWidth: 2 }}
       {...inputProps}
     />
   );

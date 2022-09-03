@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const DraggableWord = ({
   word, inactive, onAnswerHandler, toggleActiveWord, activeWord,
+  creator, checked,
 }) => {
   const [dragInProcess, setDragInProcess] = useState(false);
 
@@ -41,7 +42,7 @@ const DraggableWord = ({
   return (
     <Container>
       <Element
-        draggable={!inactive}
+        draggable={!inactive && !checked && !creator}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         style={{ opacity: (inactive || dragInProcess) ? 0.2 : 1 }}

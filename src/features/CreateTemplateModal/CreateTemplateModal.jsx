@@ -10,7 +10,7 @@ import {
   SELECT_TEMPLATE,
   DROPDOWN_TEMPLATE,
   DRAG_N_DROP_TEMPLATE,
-  FILL_THE_WORD_TEMPLATE,
+  FILL_TEMPLATE,
   TEMPLATES_LIST,
 } from 'constants';
 import { find } from 'lodash';
@@ -36,11 +36,11 @@ const COMPONENTS_VARIANT = {
       type={DRAG_N_DROP_TEMPLATE}
     />
   ),
-  [FILL_THE_WORD_TEMPLATE]: ({ onSave, taskId }) => (
+  [FILL_TEMPLATE]: ({ onSave, taskId }) => (
     <PickWordTemplate
       onSave={onSave}
       taskId={taskId}
-      type={DRAG_N_DROP_TEMPLATE}
+      type={FILL_TEMPLATE}
     />
   ),
 };

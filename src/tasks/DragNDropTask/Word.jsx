@@ -84,7 +84,7 @@ const Container = styled.div`
 
 const DragPoints = styled.div`
   border: 2px solid ${COLORS.BORDER_COLOR};
-  outline: 4px solid ${
+  outline: 2px solid ${
   ({ withHighlight, isCorrect, isIncorrect }) => {
     if (isCorrect) {
       return COLORS.SUCCESS_COLOR;
@@ -96,7 +96,7 @@ const DragPoints = styled.div`
   }
 };
   border-radius: 7px;
-  padding: 0px 10px;
+  padding: 2px 10px;
   margin: 3px 0;
   min-width: 100px;
   transition: outline .3s;

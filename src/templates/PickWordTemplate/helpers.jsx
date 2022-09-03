@@ -1,7 +1,7 @@
 import {
   DRAG_N_DROP_TEMPLATE,
   DROPDOWN_TEMPLATE,
-  FILL_THE_WORD_TEMPLATE,
+  FILL_TEMPLATE,
 } from 'constants';
 import { uniqueId } from 'lodash';
 
@@ -42,7 +42,7 @@ const PICK_SETTINGS = {
   [DRAG_N_DROP_TEMPLATE]: {
     withOptions: false,
   },
-  [FILL_THE_WORD_TEMPLATE]: {
+  [FILL_TEMPLATE]: {
     withOptions: false,
   },
 };

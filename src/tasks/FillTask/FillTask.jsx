@@ -1,40 +1,28 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUserAnswer } from 'store';
-import { xorBy } from 'lodash';
 import { Title, TaskContainer } from '../components';
 import Question from './Question';
-import DraggableWords from './DraggableWords';
-import { getDraggableWords } from './helpers';
 
-const DragNDropTask = ({
+const FillTask = ({
   task,
   creator,
   checked,
   modalId,
 }) => {
   const {
-    id, questions, title, type, answers,
+    id, questions, title, type,
   } = task;
 
-  const [activeWord, setActiveWord] = useState(null);
   const dispatch = useDispatch();
 
-  const onAnswerHandler = ({
-    questionId,
-    wordId,
-    userAnswer,
-    currentUserAnswer,
-    isRemove,
-  }) => {
+  const onAnswerHandler = (questionId, wordId, userAnswer) => {
     if (checked || creator) return;
 
-    setActiveWord(null);
     dispatch(updateUserAnswer({
       taskId: id,
       userAnswer: {
         ...task,
-        answers: xorBy(task?.answers, [userAnswer, currentUserAnswer], 'id'),
         questions: task.questions.map((question) => (
           question.id === questionId
             ? {
@@ -43,7 +31,7 @@ const DragNDropTask = ({
                 if (word.id === wordId) {
                   return {
                     ...word,
-                    userAnswer: isRemove ? {} : userAnswer,
+                    userAnswer,
                   };
                 }
                 return word;
@@ -54,17 +42,6 @@ const DragNDropTask = ({
     }));
   };
 
-  const draggableWords = useMemo(() => getDraggableWords(questions), [questions]);
-
-  const toggleActiveWord = useCallback((word) => {
-    setActiveWord((active) => {
-      if (!word || active?.id === word.id) {
-        return null;
-      }
-      return word;
-    });
-  }, [setActiveWord]);
-
   return (
     <TaskContainer>
       <Title
@@ -74,15 +51,6 @@ const DragNDropTask = ({
         creator={creator}
         type={type}
       />
-      <DraggableWords
-        draggableWords={draggableWords}
-        answers={answers}
-        onAnswerHandler={onAnswerHandler}
-        toggleActiveWord={toggleActiveWord}
-        activeWord={activeWord}
-        checked={checked}
-        creator={creator}
-      />
       {questions.map((question, index) => (
         <Question
           key={question.id}
@@ -91,11 +59,10 @@ const DragNDropTask = ({
           creator={creator}
           index={index}
           onAnswerHandler={onAnswerHandler}
-          activeWord={activeWord}
         />
       ))}
     </TaskContainer>
   );
 };
 
-export default DragNDropTask;
+export default FillTask;
