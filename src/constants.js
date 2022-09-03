@@ -10,4 +10,11 @@ export const TEMPLATES_LIST = [
   { type: FILL_THE_WORD_TEMPLATE, name: 'Fill the word template' },
 ];
 
-export const BACKGROUND_COLOR = '#FBFBFB';
+export const COLORS = {
+  BACKGROUND_COLOR: '#FBFBFB',
+  BORDER_COLOR: '#9FA6B2',
+  PRIMARY_COLOR: '#2962FF',
+  SUCCESS_COLOR: '#14A44D',
+  WARNING_COLOR: '#E4A11B',
+  ERROR_COLOR: '#DC4C64',
+};

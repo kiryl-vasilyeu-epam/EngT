@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import {
   Input, RoundIconButton, IconButton,
 } from 'components';
+import { COLORS } from 'constants';
 import { Row } from './common';
 import Answer from './Answer';
 
@@ -74,7 +75,7 @@ const Question = ({
 };
 
 const Container = styled.div`
-  border: 2px solid #9FA6B2;
+  border: 2px solid ${COLORS.BORDER_COLOR};
   padding: 16px 20px;
   border-radius: 10px;
   margin: 10px 0;

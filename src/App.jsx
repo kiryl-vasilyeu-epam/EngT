@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ButtonText } from 'components';
-import { BACKGROUND_COLOR } from 'constants';
+import { COLORS } from 'constants';
 import { CreatorsRoute, UserRoute } from 'routes';
 
 const App = () => {
@@ -34,7 +34,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: ${BACKGROUND_COLOR};
+  background: ${COLORS.BACKGROUND_COLOR};
 `;
 
 const Content = styled.div`

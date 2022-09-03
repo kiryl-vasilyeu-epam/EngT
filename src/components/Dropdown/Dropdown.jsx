@@ -94,7 +94,6 @@ const SizeContainer = styled.div`
   position: absolute;
   visibility: hidden;
   z-index: -10;
-  border: 5px solid red;
 `;
 
 export default Dropdown;

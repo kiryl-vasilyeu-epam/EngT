@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import { TemplateContainer, RoundIconButton } from 'components';
 import { useTemplate } from 'hooks';
+import { COLORS } from 'constants';
 import { createQuestion, generateOption, getSettingsByType } from './helpers';
 import Question from './Question';
 
@@ -127,7 +128,7 @@ const Container = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  border: 2px solid #9FA6B2;
+  border: 2px solid ${COLORS.BORDER_COLOR};
   border-radius: 10px;
   padding: 20px;
   margin: 10px 0;

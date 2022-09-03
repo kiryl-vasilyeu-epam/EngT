@@ -1,4 +1,5 @@
 import { RoundIconButton } from 'components';
+import { COLORS } from 'constants';
 import { useUpdate } from 'hooks';
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
@@ -81,7 +82,7 @@ const Words = ({
 const WordsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  border: 2px solid #9FA6B2;
+  border: 2px solid ${COLORS.BORDER_COLOR};
   flex: 1;
   margin: 0 10px;
   border-radius: 7px;

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUserAnswer } from 'store';
 import { xorBy } from 'lodash';
@@ -17,16 +17,24 @@ const DragNDropTask = ({
     id, questions, title, type, answers,
   } = task;
 
+  const [activeWord, setActiveWord] = useState(null);
   const dispatch = useDispatch();
 
-  const onAnswerHandler = (questionId, wordId, userAnswer, isRemove) => {
+  const onAnswerHandler = ({
+    questionId,
+    wordId,
+    userAnswer,
+    currentUserAnswer,
+    isRemove,
+  }) => {
     if (checked || creator) return;
 
+    setActiveWord(null);
     dispatch(updateUserAnswer({
       taskId: id,
       userAnswer: {
         ...task,
-        answers: xorBy(task?.answers, [userAnswer], 'id'),
+        answers: xorBy(task?.answers, [userAnswer, currentUserAnswer], 'id'),
         questions: task.questions.map((question) => (
           question.id === questionId
             ? {
@@ -48,6 +56,15 @@ const DragNDropTask = ({
 
   const draggableWords = useMemo(() => getDraggableWords(questions), [questions]);
 
+  const toggleActiveWord = useCallback((word) => {
+    setActiveWord((active) => {
+      if (!word || active?.id === word.id) {
+        return null;
+      }
+      return word;
+    });
+  }, [setActiveWord]);
+
   return (
     <TaskContainer>
       <Title
@@ -61,6 +78,8 @@ const DragNDropTask = ({
         draggableWords={draggableWords}
         answers={answers}
         onAnswerHandler={onAnswerHandler}
+        toggleActiveWord={toggleActiveWord}
+        activeWord={activeWord}
       />
       {questions.map((question, index) => (
         <Question
@@ -70,6 +89,7 @@ const DragNDropTask = ({
           creator={creator}
           index={index}
           onAnswerHandler={onAnswerHandler}
+          activeWord={activeWord}
         />
       ))}
     </TaskContainer>

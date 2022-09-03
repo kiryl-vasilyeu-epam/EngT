@@ -5,6 +5,7 @@ import { Tasks } from 'tasks';
 import { CreateTemplateModal } from 'features';
 import { RoundIconButton } from 'components';
 import { showModal } from 'store';
+import { COLORS } from 'constants';
 
 const CreatorsRoute = () => {
   const [modalId, handleModalId] = useState(null);
@@ -39,7 +40,7 @@ const Content = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  border: 2px solid #9FA6B2;
+  border: 2px solid ${COLORS.BORDER_COLOR};
   border-radius: 10px;
   padding: 20px;
   margin: 10px 0;

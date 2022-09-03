@@ -7,10 +7,10 @@ import { getCorrection } from '../helpers';
 import Word from './Word';
 
 const Question = ({
-  question, checked, creator, onAnswerHandler, index,
+  question, checked, creator, onAnswerHandler, index, activeWord,
 }) => {
   const { words, id } = question;
-  let correction = null;
+
   const predicate = useCallback(
     ({ isActive, userAnswer, title }) => isActive && userAnswer?.title === title,
     [],
@@ -24,6 +24,7 @@ const Question = ({
     [words],
   );
 
+  let correction = null;
   if (checked) {
     correction = getCorrection(correctAnswersList, userCorrectAnswersList);
   }
@@ -41,6 +42,7 @@ const Question = ({
               questionId={id}
               creator={creator}
               checked={checked}
+              activeWord={activeWord}
             />
           ))}
         </WordsContainer>

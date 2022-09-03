@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { ButtonText, RoundIconButton } from 'components';
 import styled from 'styled-components';
+import { COLORS } from 'constants';
 
 const Word = ({
   word, toggleActive, divideWords, index: wordIndex,
@@ -52,7 +53,7 @@ const Word = ({
 const Title = styled.div`
   display: flex;
   flex-direction: row;
-  border-bottom: 3px solid #9FA6B2
+  border-bottom: 3px solid ${COLORS.BORDER_COLOR}
 `;
 
 const Container = styled.div`

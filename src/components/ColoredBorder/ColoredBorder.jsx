@@ -1,3 +1,4 @@
+import { COLORS } from 'constants';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -12,13 +13,13 @@ const Container = styled.div`
   margin: 15px 0;
   border: 2px solid ${({ correction }) => {
     if (correction === 'correct') {
-      return '#14A44D';
+      return COLORS.SUCCESS_COLOR;
     } if (correction === 'partially') {
-      return '#E4A11B';
+      return COLORS.WARNING_COLOR;
     } if (correction === 'incorrect') {
-      return '#DC4C64';
+      return COLORS.ERROR_COLOR;
     }
-    return '#9FA6B2';
+    return COLORS.BORDER_COLOR;
   }};
   border-radius: 10px;
 `;

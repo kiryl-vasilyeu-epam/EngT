@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
 import { find, uniqueId } from 'lodash';
-import { BACKGROUND_COLOR } from 'constants';
+import { COLORS } from 'constants';
 import { IconButton } from 'components';
 import { initModal, hideModal, deleteModal } from 'store';
 
@@ -92,7 +92,7 @@ const Content = styled.div`
   height: 80%;
 
   border-radius: 20px;
-  background: ${BACKGROUND_COLOR};
+  background: ${COLORS.BACKGROUND_COLOR};
 
   overflow: hidden;
 

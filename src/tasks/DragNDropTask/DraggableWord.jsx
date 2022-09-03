@@ -1,26 +1,42 @@
-import { BACKGROUND_COLOR } from 'constants';
-import React, { useState, useCallback } from 'react';
+import { COLORS } from 'constants';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 
-const DraggableWord = ({ word, inactive, onAnswerHandler }) => {
-  const [opacity, setOpacity] = useState(1);
+const DraggableWord = ({
+  word, inactive, onAnswerHandler, toggleActiveWord, activeWord,
+}) => {
+  const [dragInProcess, setDragInProcess] = useState(false);
+
+  useEffect(() => {
+    setDragInProcess(false);
+  }, [inactive]);
 
   const onDragStart = useCallback((e) => {
     if (inactive) return;
+    toggleActiveWord();
     e.dataTransfer.setData('drag', JSON.stringify(word));
-    setOpacity(0.2);
-  }, [setOpacity, inactive]);
+    setDragInProcess(true);
+  }, [setDragInProcess, inactive, toggleActiveWord]);
 
   const onDragEnd = useCallback(() => {
     if (inactive) return;
-    setOpacity(1);
-  }, [setOpacity, inactive]);
+    setDragInProcess(false);
+  }, [setDragInProcess, inactive]);
 
   const onClick = useCallback(() => {
-    if (!inactive) return;
-    setOpacity(1);
-    onAnswerHandler(word.questionId, word.id, word, true);
-  }, [inactive, word, onAnswerHandler]);
+    if (!inactive) {
+      toggleActiveWord(word);
+    } else {
+      onAnswerHandler({
+        questionId: word.questionId,
+        wordId: word.id,
+        userAnswer: word,
+        isRemove: true,
+      });
+    }
+  }, [inactive, word, onAnswerHandler, toggleActiveWord]);
+
+  const withOutline = activeWord?.id === word.id;
 
   return (
     <Container>
@@ -28,9 +44,10 @@ const DraggableWord = ({ word, inactive, onAnswerHandler }) => {
         draggable={!inactive}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
-        style={{ opacity: inactive ? 0.2 : opacity }}
+        style={{ opacity: (inactive || dragInProcess) ? 0.2 : 1 }}
         inactive={inactive}
         onClick={onClick}
+        withOutline={withOutline}
       >
         {word.title}
       </Element>
@@ -45,11 +62,11 @@ const Container = styled.div`
   opacity: 0.999
 `;
 const Element = styled.div`
-  border: 2px solid #9FA6B2;
+  border: 3px solid ${({ withOutline }) => (withOutline ? COLORS.PRIMARY_COLOR : COLORS.BORDER_COLOR)};
   border-radius: 7px;
   padding: 0px 10px;
   cursor: ${({ inactive }) => (inactive ? 'pointer' : 'move')};
-  background-color: ${BACKGROUND_COLOR};
+  background-color: ${COLORS.BACKGROUND_COLOR};
   transition: opacity .5s;
 `;
 

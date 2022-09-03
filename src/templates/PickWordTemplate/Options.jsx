@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import {
   RoundIconButton,
 } from 'components';
+import { COLORS } from 'constants';
 import Option from './Option';
 
 const Options = ({
@@ -38,7 +39,7 @@ const Options = ({
 };
 
 const Container = styled.div`
-  border: 2px solid #9FA6B2;
+  border: 2px solid ${COLORS.BORDER_COLOR};
   border-radius: 7px;
   padding: 10px;
   margin: 10px 0;
@@ -53,7 +54,7 @@ const TitleContainer = styled.div`
   height: 51px;
   color: white;
   padding 0 20px;
-  background: #2962FF;
+  background: ${COLORS.PRIMARY_COLOR};
   border-radius: 7px;
   cursor: default;
 `;

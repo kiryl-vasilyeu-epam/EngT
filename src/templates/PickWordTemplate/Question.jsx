@@ -1,6 +1,7 @@
 import { Input, IconButton } from 'components';
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
+import { COLORS } from 'constants';
 import Words from './Words';
 import ActiveWords from './ActiveWords';
 
@@ -74,7 +75,7 @@ const Question = ({
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  border: 2px solid #9FA6B2;
+  border: 2px solid ${COLORS.BORDER_COLOR};
   border-radius: 10px;
   padding: 20px;
   margin: 10px 0;

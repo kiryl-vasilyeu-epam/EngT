@@ -1,10 +1,10 @@
-import { BACKGROUND_COLOR } from 'constants';
+import { COLORS } from 'constants';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
 const Word = ({
   word, questionId, onAnswerHandler,
-  creator, checked,
+  creator, checked, activeWord,
 }) => {
   const {
     title, isActive, userAnswer,
@@ -31,14 +31,31 @@ const Word = ({
   const onDrop = useCallback((e) => {
     setWithHighlight(false);
     const answer = JSON.parse(e.dataTransfer.getData('drag'));
-    onAnswerHandler(questionId, word.id, answer);
+    onAnswerHandler({
+      questionId,
+      wordId: word.id,
+      userAnswer: answer,
+      currentUserAnswer: userAnswer,
+    });
   }, [questionId, word, onAnswerHandler]);
 
   const onClick = useCallback(() => {
-    if (userAnswer) {
-      onAnswerHandler(questionId, word.id, userAnswer, true);
+    if (activeWord) {
+      onAnswerHandler({
+        questionId,
+        wordId: word.id,
+        userAnswer: activeWord,
+        currentUserAnswer: userAnswer,
+      });
+    } else if (userAnswer) {
+      onAnswerHandler({
+        questionId,
+        wordId: word.id,
+        userAnswer,
+        isRemove: true,
+      });
     }
-  }, [questionId, word, onAnswerHandler]);
+  }, [questionId, word, onAnswerHandler, activeWord]);
 
   return (
     <Container>
@@ -50,6 +67,9 @@ const Word = ({
           withHighlight={withHighlight}
           onDrop={onDrop}
           onClick={onClick}
+          isCorrect={isCorrect}
+          isIncorrect={isIncorrect}
+          withHover={!!activeWord}
         >
           {value || '\xa0'}
         </DragPoints>
@@ -63,9 +83,17 @@ const Container = styled.div`
 `;
 
 const DragPoints = styled.div`
-  border: 2px solid #9FA6B2;
-  outline: 5px solid ${
-  ({ withHighlight }) => (withHighlight ? '#2962FF' : BACKGROUND_COLOR)
+  border: 2px solid ${COLORS.BORDER_COLOR};
+  outline: 4px solid ${
+  ({ withHighlight, isCorrect, isIncorrect }) => {
+    if (isCorrect) {
+      return COLORS.SUCCESS_COLOR;
+    } if (isIncorrect) {
+      return COLORS.ERROR_COLOR;
+    }
+
+    return withHighlight ? COLORS.PRIMARY_COLOR : COLORS.BACKGROUND_COLOR;
+  }
 };
   border-radius: 7px;
   padding: 0px 10px;
@@ -73,6 +101,10 @@ const DragPoints = styled.div`
   min-width: 100px;
   transition: outline .3s;
   cursor: pointer;
+
+  &:hover {
+    ${({ withHover }) => (withHover ? `outline: 3px solid ${COLORS.PRIMARY_COLOR};` : '')}
+  }
 `;
 
 export default Word;
