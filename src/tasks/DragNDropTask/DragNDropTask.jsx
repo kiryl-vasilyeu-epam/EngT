@@ -2,7 +2,7 @@ import React, { useMemo, useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUserAnswer } from 'store';
 import { xorBy } from 'lodash';
-import { Title, TaskContainer } from '../components';
+import { TaskContainer } from '../components';
 import Question from './Question';
 import DraggableWords from './DraggableWords';
 import { getDraggableWords } from './helpers';
@@ -14,7 +14,7 @@ const DragNDropTask = ({
   modalId,
 }) => {
   const {
-    id, questions, title, type, answers,
+    id, questions, title, type, answers, media,
   } = task;
 
   const [activeWord, setActiveWord] = useState(null);
@@ -66,23 +66,25 @@ const DragNDropTask = ({
   }, [setActiveWord]);
 
   return (
-    <TaskContainer>
-      <Title
-        id={id}
-        modalId={modalId}
-        title={title}
-        creator={creator}
-        type={type}
-      />
-      <DraggableWords
-        draggableWords={draggableWords}
-        answers={answers}
-        onAnswerHandler={onAnswerHandler}
-        toggleActiveWord={toggleActiveWord}
-        activeWord={activeWord}
-        checked={checked}
-        creator={creator}
-      />
+    <TaskContainer
+      id={id}
+      modalId={modalId}
+      title={title}
+      creator={creator}
+      type={type}
+      media={media}
+    >
+      {!!draggableWords.length && (
+        <DraggableWords
+          draggableWords={draggableWords}
+          answers={answers}
+          onAnswerHandler={onAnswerHandler}
+          toggleActiveWord={toggleActiveWord}
+          activeWord={activeWord}
+          checked={checked}
+          creator={creator}
+        />
+      )}
       {questions.map((question, index) => (
         <Question
           key={question.id}

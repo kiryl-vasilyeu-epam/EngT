@@ -54,7 +54,7 @@ const Answer = ({
 
 const Margin = styled.div`
   flex: 1;
-  margin: 0 20px;
+  margin: 0 10px;
 `;
 
 export default Answer;

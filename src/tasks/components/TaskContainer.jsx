@@ -1,9 +1,23 @@
+import { Media } from 'components';
 import { COLORS } from 'constants';
 import React from 'react';
 import styled from 'styled-components';
+import Title from './Title';
 
-const TaskContainer = ({ children }) => (
+const TaskContainer = ({
+  children, id, modalId, title, creator, type, media,
+}) => (
   <Container>
+    <Title
+      id={id}
+      modalId={modalId}
+      title={title}
+      creator={creator}
+      type={type}
+    />
+    {media.map(({ id: mediaId, url }) => (
+      <Media key={mediaId} src={url} />
+    ))}
     {children}
   </Container>
 );

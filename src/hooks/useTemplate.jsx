@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { find } from 'lodash';
+import { find, uniqueId } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addTask, initTemplate, deleteTemplate, modifyTemplate, modifyTask,
@@ -25,6 +25,26 @@ export const useTemplate = ({ taskId, type, onSave }) => {
     updateTemplate({ title: templateTitle });
   }, []);
 
+  const addMedia = useCallback(() => {
+    updateTemplate({ media: [...template.media, { url: '', id: uniqueId('url_') }] });
+  }, [template]);
+
+  const setMedia = useCallback((id, url) => {
+    updateTemplate({
+      media: template.media.map(
+        (media) => (media.id === id
+          ? { ...media, url }
+          : media),
+      ),
+    });
+  }, [template]);
+
+  const deleteMedia = useCallback((mediaId) => {
+    updateTemplate({
+      media: template.media.filter(({ id }) => id !== mediaId),
+    });
+  }, [template]);
+
   const handleSave = useCallback(() => {
     if (taskId) {
       dispatch(modifyTask(template));
@@ -40,5 +60,8 @@ export const useTemplate = ({ taskId, type, onSave }) => {
     updateTemplate,
     template,
     handleSave,
+    addMedia,
+    setMedia,
+    deleteMedia,
   };
 };

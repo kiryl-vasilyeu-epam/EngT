@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   title: '',
   questions: [],
+  media: [],
 };
 
 const templateCreationSlice = createSlice({

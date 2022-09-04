@@ -40,10 +40,12 @@ const Question = ({
           onChange={onTitleChange}
           placeholder="Write a question"
         />
-        <IconButton
-          iconName="faTrashCan"
-          onClick={onDelete}
-        />
+        <IconContainer>
+          <IconButton
+            iconName="faTrashCan"
+            onClick={onDelete}
+          />
+        </IconContainer>
       </Row>
 
       <Column>
@@ -100,6 +102,10 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 66px;
+`;
+
+const IconContainer = styled.div`
+  margin-left: 10px;
 `;
 
 export default Question;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUserAnswer } from 'store';
-import { Title, TaskContainer } from '../components';
+import { TaskContainer } from '../components';
 import Question from './Question';
 
 const FillTask = ({
@@ -11,7 +11,7 @@ const FillTask = ({
   modalId,
 }) => {
   const {
-    id, questions, title, type,
+    id, questions, title, type, media,
   } = task;
 
   const dispatch = useDispatch();
@@ -43,14 +43,14 @@ const FillTask = ({
   };
 
   return (
-    <TaskContainer>
-      <Title
-        id={id}
-        modalId={modalId}
-        title={title}
-        creator={creator}
-        type={type}
-      />
+    <TaskContainer
+      id={id}
+      modalId={modalId}
+      title={title}
+      creator={creator}
+      type={type}
+      media={media}
+    >
       {questions.map((question, index) => (
         <Question
           key={question.id}

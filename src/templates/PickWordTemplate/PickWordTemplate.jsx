@@ -12,8 +12,11 @@ const PickWordTemplate = ({ onSave, taskId, type }) => {
     updateTemplate,
     template,
     handleSave,
+    addMedia,
+    setMedia,
+    deleteMedia,
   } = useTemplate({ onSave, taskId, type });
-  const { questions, title } = template;
+  const { questions, title, media } = template;
   const settings = useMemo(() => getSettingsByType(type), [type]);
 
   const addQuestion = useCallback(() => {
@@ -96,6 +99,10 @@ const PickWordTemplate = ({ onSave, taskId, type }) => {
       handleSave={handleSave}
       title={title}
       setTitle={setTitle}
+      addMedia={addMedia}
+      media={media}
+      setMedia={setMedia}
+      deleteMedia={deleteMedia}
     >
       <Container>
         {questions?.map((question) => (

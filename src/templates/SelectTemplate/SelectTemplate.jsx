@@ -18,6 +18,9 @@ const SelectTemplate = ({ onSave, taskId }) => {
     updateTemplate,
     template,
     handleSave,
+    addMedia,
+    setMedia,
+    deleteMedia,
   } = useTemplate({
     onSave,
     taskId,
@@ -25,7 +28,7 @@ const SelectTemplate = ({ onSave, taskId }) => {
   });
 
   const {
-    title, questions,
+    title, questions, media,
   } = template;
 
   const handleQuestionChange = useCallback((questionId, questionTitle) => {
@@ -97,6 +100,10 @@ const SelectTemplate = ({ onSave, taskId }) => {
       handleSave={handleSave}
       title={title}
       setTitle={setTitle}
+      addMedia={addMedia}
+      media={media}
+      setMedia={setMedia}
+      deleteMedia={deleteMedia}
     >
       {questions?.map((questionData, index) => (
         <Question
