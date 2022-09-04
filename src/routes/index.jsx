@@ -1,7 +1,5 @@
-import CreatorsRoute from './CreatorsRoute';
-import UserRoute from './UserRoute';
+import MainRoute from './MainRoute';
 
 export {
-  CreatorsRoute,
-  UserRoute,
+  MainRoute,
 };

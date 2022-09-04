@@ -18,3 +18,8 @@ export const COLORS = {
   WARNING_COLOR: '#E4A11B',
   ERROR_COLOR: '#DC4C64',
 };
+
+export const NAVIGATION_ROUTES = [
+  { path: '/', creator: false, name: 'Tasks' },
+  { path: '/templates', creator: true, name: 'Templates' },
+];

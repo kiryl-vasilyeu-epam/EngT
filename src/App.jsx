@@ -1,33 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { ButtonText } from 'components';
 import { COLORS } from 'constants';
-import { CreatorsRoute, UserRoute } from 'routes';
 
-const App = () => {
-  const [route, setRoute] = useState('creator');
+import { Header, Navigation } from 'features';
 
-  return (
-    <Container>
-      <Header>
-        <ButtonText
-          primary={route === 'creator'}
-          title="Creators"
-          onClick={() => setRoute('creator')}
-        />
-        <ButtonText
-          primary={route === 'user'}
-          title="Users"
-          onClick={() => setRoute('user')}
-        />
-      </Header>
-      <Content>
-        {route === 'creator' && <CreatorsRoute />}
-        {route === 'user' && <UserRoute />}
-      </Content>
-    </Container>
-  );
-};
+const App = () => (
+  <Container>
+    <Header />
+    <Content>
+      <Navigation />
+    </Content>
+  </Container>
+);
 
 const Container = styled.div`
   width: 100%;
@@ -44,15 +28,6 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   overflow: auto;
-`;
-
-const Header = styled.div`
-  display: flex;
-  background: rgba(0, 0, 0, 0.6);
-  width: 100%;
-  box-sizing: border-box;
-  justify-content: space-evenly;
-  padding: 25px;
 `;
 
 export default App;
