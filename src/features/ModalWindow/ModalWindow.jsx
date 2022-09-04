@@ -5,6 +5,7 @@ import { find, uniqueId } from 'lodash';
 import { COLORS } from 'constants';
 import { IconButton } from 'components';
 import { initModal, hideModal, deleteModal } from 'store';
+import Card from 'react-bootstrap/Card';
 
 const ModalWindow = ({
   title = 'Title',
@@ -82,7 +83,7 @@ const Wrapper = styled.div`
   animation: ${fadeIn} .2s;
 `;
 
-const Content = styled.div`
+const Content = styled(Card)`
   display: flex;
   flex-direction: column;
   position: relative;
@@ -91,7 +92,6 @@ const Content = styled.div`
   width: 60%;
   height: 80%;
 
-  border-radius: 20px;
   background: ${COLORS.BACKGROUND_COLOR};
 
   overflow: hidden;
@@ -99,16 +99,10 @@ const Content = styled.div`
   box-shadow: 4px 3px 11px 0px rgba(66, 68, 90, 1);
 `;
 
-const Header = styled.div`
-  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
-
+const Header = styled(Card.Header)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  min-width: 0;
-
-  padding: 10px 20px;
 `;
 
 const Title = styled.div`

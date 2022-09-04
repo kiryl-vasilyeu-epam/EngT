@@ -46,7 +46,7 @@ const COMPONENTS_VARIANT = {
 };
 
 const defaultTemplate = {
-  title: DEFAULT_TITLE, type: TEMPLATE_PICK,
+  name: DEFAULT_TITLE, type: TEMPLATE_PICK,
 };
 
 const CreateTemplateModal = ({ handleModalId }) => {
@@ -90,7 +90,7 @@ const CreateTemplateModal = ({ handleModalId }) => {
 
   return (
     <ModalWindow
-      title={currentTemplate.title}
+      title={currentTemplate.name}
       showBackButton={isOnTemplatePicker}
       onBackPress={resetData}
       setModalId={setModalId}

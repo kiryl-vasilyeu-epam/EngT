@@ -1,5 +1,4 @@
 import { Media } from 'components';
-import { COLORS } from 'constants';
 import React from 'react';
 import styled from 'styled-components';
 import Title from './Title';
@@ -24,9 +23,9 @@ const TaskContainer = ({
 
 const Container = styled.div`
   margin: 20px 0;
-  border: 2px solid ${COLORS.BORDER_COLOR};
   border-radius: 8px;
   padding: 20px;
+  box-shadow: -2px 3px 12px 0px rgba(66, 68, 90, 1);
 `;
 
 export default TaskContainer;

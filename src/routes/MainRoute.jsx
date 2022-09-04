@@ -5,7 +5,6 @@ import { Tasks } from 'tasks';
 import { CreateTemplateModal } from 'features';
 import { RoundIconButton, ButtonText } from 'components';
 import { showModal, setChecked } from 'store';
-import { COLORS } from 'constants';
 
 const MainRoute = ({ creator }) => {
   const [modalId, handleModalId] = useState(null);
@@ -33,7 +32,7 @@ const MainRoute = ({ creator }) => {
         ) : (
           <ButtonText
             title={checked ? 'Checked' : 'Check'}
-            primary={!checked}
+            primary={checked ? 'primary' : 'light'}
             onClick={onCheckHandler}
             fullWidth
           />
@@ -58,12 +57,12 @@ const Content = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  border: 2px solid ${COLORS.BORDER_COLOR};
   border-radius: 10px;
   padding: 20px;
   margin: 10px 0;
   width: 100%;
   box-sizing: border-box;
+  box-shadow: -2px 3px 12px 0px rgba(66, 68, 90, 1);
 `;
 
 export default MainRoute;

@@ -1,12 +1,8 @@
 import React, { useCallback } from 'react';
-import styled from 'styled-components';
-
-import {
-  RoundIconButton, TemplateContainer,
-} from 'components';
+import { TemplateContainer } from 'components';
 import { filter } from 'lodash';
 
-import { SELECT_TEMPLATE, COLORS } from 'constants';
+import { SELECT_TEMPLATE } from 'constants';
 
 import { useTemplate } from 'hooks';
 import Question from './Question';
@@ -104,6 +100,7 @@ const SelectTemplate = ({ onSave, taskId }) => {
       media={media}
       setMedia={setMedia}
       deleteMedia={deleteMedia}
+      addQuestion={addQuestion}
     >
       {questions?.map((questionData, index) => (
         <Question
@@ -118,20 +115,8 @@ const SelectTemplate = ({ onSave, taskId }) => {
         />
       ))}
 
-      <ButtonContainer>
-        <RoundIconButton onClick={addQuestion} />
-      </ButtonContainer>
     </TemplateContainer>
   );
 };
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  border: 2px solid ${COLORS.BORDER_COLOR};
-  border-radius: 10px;
-  padding: 20px;
-  margin: 10px 0;
-`;
 
 export default SelectTemplate;

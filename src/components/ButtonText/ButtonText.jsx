@@ -1,23 +1,27 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 
 const ButtonText = ({
   title,
   onClick,
-  primary,
-  secondary,
+  variant = 'primary',
+  outline,
   size = 'lg',
   fullWidth = false,
   withMargin,
   ...props
 }) => {
-  const lightVariant = secondary ? 'outline-secondary' : 'light';
-
+  const ref = useRef(null);
+  const onClickHandler = useCallback(() => {
+    ref?.current?.blur?.();
+    onClick();
+  }, [onClick]);
   return (
     <StyledButton
-      variant={primary ? 'primary' : lightVariant}
-      onClick={onClick}
+      ref={ref}
+      variant={outline ? `outline-${variant}` : variant}
+      onClick={onClickHandler}
       size={size}
       $fullWidth={fullWidth}
       $withMargin={withMargin}
@@ -32,6 +36,9 @@ const StyledButton = styled(Button)`
   ${({ $fullWidth }) => ($fullWidth ? 'width: 100%;' : '')}
   ${({ $withMargin }) => ($withMargin ? 'margin: 10px 0;' : '')}
   box-shadow:none !important;
+  &:focus {
+    background: ''  ;
+  }
 `;
 
 export default ButtonText;

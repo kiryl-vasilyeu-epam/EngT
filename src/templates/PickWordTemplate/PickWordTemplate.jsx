@@ -1,8 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
-import { TemplateContainer, RoundIconButton } from 'components';
+import { TemplateContainer } from 'components';
 import { useTemplate } from 'hooks';
-import { COLORS } from 'constants';
 import { createQuestion, generateOption, getSettingsByType } from './helpers';
 import Question from './Question';
 
@@ -103,6 +102,7 @@ const PickWordTemplate = ({ onSave, taskId, type }) => {
       media={media}
       setMedia={setMedia}
       deleteMedia={deleteMedia}
+      addQuestion={addQuestion}
     >
       <Container>
         {questions?.map((question) => (
@@ -119,10 +119,6 @@ const PickWordTemplate = ({ onSave, taskId, type }) => {
           />
         ))}
       </Container>
-
-      <ButtonContainer>
-        <RoundIconButton onClick={addQuestion} />
-      </ButtonContainer>
     </TemplateContainer>
   );
 };
@@ -130,15 +126,6 @@ const PickWordTemplate = ({ onSave, taskId, type }) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  border: 2px solid ${COLORS.BORDER_COLOR};
-  border-radius: 10px;
-  padding: 20px;
-  margin: 10px 0;
 `;
 
 export default PickWordTemplate;

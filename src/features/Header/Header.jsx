@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import NavContainer from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { COLORS, NAVIGATION_ROUTES } from 'constants';
 
 const Header = () => {
@@ -16,13 +16,13 @@ const Header = () => {
           <Navbar.Brand href="/">EngT</Navbar.Brand>
           <Nav className="me-auto">
             {NAVIGATION_ROUTES.map((route) => (
-              <Link
+              <LinkElement
                 key={route.path}
                 highlighted={pathname === route.path}
-                href={route.path}
+                to={route.path}
               >
                 {route.name}
-              </Link>
+              </LinkElement>
             ))}
           </Nav>
         </NavigationContainer>
@@ -41,12 +41,17 @@ const NavigationContainer = styled(NavContainer)`
   max-width: 1200px;
 `;
 
-const Link = styled(Nav.Link)`
+const LinkElement = styled(Link)`
   border: 2px solid ${({ highlighted }) => (highlighted ? COLORS.BACKGROUND_COLOR : 'transparent')};
-  ${({ highlighted }) => (highlighted ? `color: ${COLORS.BACKGROUND_COLOR};` : '')}
+  color: ${({ highlighted }) => (highlighted ? COLORS.BACKGROUND_COLOR : COLORS.BORDER_COLOR)};
   border-radius: 7px;
   padding: 3px;
   margin: 5px;
+  text-decoration: none;
+  padding: 8px 16px;
+  &:hover {
+    color: ${COLORS.BACKGROUND_COLOR};
+  }
 `;
 
 export default Header;

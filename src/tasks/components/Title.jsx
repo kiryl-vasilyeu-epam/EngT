@@ -43,7 +43,8 @@ const TitleContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   font-size: 30px;
-  font-weight: bold;
+  font-weight: 500;
+  font-family: 'Metropolis', sans-serif;
   margin-bottom: 30px;
 `;
 

@@ -1,15 +1,16 @@
-import { COLORS } from 'constants';
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
+import Card from 'react-bootstrap/Card';
 
 import { ButtonText } from '../ButtonText';
-import { RoundIconButton } from '../RoundIconButton';
-import { IconButton } from '../IconButton';
 
 import { Input } from '../Input';
 
 const TemplateContainer = ({
-  children, handleSave, title, setTitle, media, addMedia, setMedia, deleteMedia,
+  children, handleSave,
+  title, setTitle,
+  media, addMedia, setMedia, deleteMedia,
+  addQuestion,
 }) => {
   const handleMediaChange = useCallback((id) => (value) => {
     setMedia(id, value);
@@ -20,49 +21,68 @@ const TemplateContainer = ({
   return (
     <>
       <ScrollableContainer>
-        <Row>
-          <Title>Exercise Title:</Title>
+        <Margin>
+          <Title>Exercise Title</Title>
           <Input
             value={title}
             onChange={setTitle}
             placeholder="Enter lesson title"
           />
-        </Row>
-        <Row>
-          <Title>Exercise media:</Title>
-          <MediaContainer>
-            {media.map(({ url, id }) => (
-              <InputContainer>
-                <Input
-                  key={id}
-                  value={url}
-                  onChange={handleMediaChange(id)}
-                  placeholder="Paste the link"
+        </Margin>
+        <Margin>
+          <Title>Exercise media</Title>
+          {media.map(({ url, id }) => (
+            <InputContainer>
+              <Input
+                key={id}
+                value={url}
+                onChange={handleMediaChange(id)}
+                placeholder="Paste the link"
+              />
+              <DeleteContainer>
+                <ButtonText
+                  size="sm"
+                  title="Delete"
+                  onClick={handleDelete(id)}
+                  variant="danger"
+                  outline
                 />
-                <IconContainer>
-                  <IconButton
-                    iconName="faTrashCan"
-                    onClick={handleDelete(id)}
-                  />
-                </IconContainer>
-              </InputContainer>
-
-            ))}
-            <ButtonContainer>
-              <RoundIconButton onClick={addMedia} />
-            </ButtonContainer>
-          </MediaContainer>
-        </Row>
+              </DeleteContainer>
+            </InputContainer>
+          ))}
+          <ButtonContainer>
+            <ButtonText
+              size="sm"
+              title="Add media"
+              onClick={addMedia}
+              outline
+            />
+          </ButtonContainer>
+        </Margin>
 
         {children}
+
+        <Card>
+          <Card.Body>
+            <ButtonText
+              size="sm"
+              title="Add question"
+              onClick={addQuestion}
+              primary
+            />
+          </Card.Body>
+        </Card>
       </ScrollableContainer>
 
-      <ButtonText
-        title="Save"
-        onClick={handleSave}
-        primary
-        fullWidth
-      />
+      <SaveContainer>
+
+        <ButtonText
+          title="Save"
+          onClick={handleSave}
+          fullWidth
+        />
+      </SaveContainer>
+
     </>
   );
 };
@@ -76,23 +96,17 @@ const ScrollableContainer = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 25px;
-  font-weight: bold;
-  margin-right: 10px;
-  white-space: nowrap;
-`;
-
-const Row = styled.div`
-  width: 100%;
   display: flex;
-  margin: 10px 0;
+  font-size: 25px;
+  font-weight: 500;
+  margin-right: 10px;
 `;
 
-const MediaContainer = styled.div`
-  flex: 1;
-  border: 2px solid ${COLORS.BORDER_COLOR};
-  padding: 10px;
-  border-radius: 7px;
+const Margin = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  padding: 0 20px;
 `;
 
 const InputContainer = styled.div`
@@ -100,15 +114,26 @@ const InputContainer = styled.div`
   flex-direction: row;
   margin: 5px 0;
 `;
-const IconContainer = styled.div`
+
+const DeleteContainer = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
+  margin-left: 30px;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
-  border-radius: 10px;
+  justify-content: flex-start;
+  margin: 5px 0;
+`;
+
+const SaveContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+  padding: 10px 20px;
 `;
 
 export default TemplateContainer;

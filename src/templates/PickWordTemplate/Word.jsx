@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { ButtonText, RoundIconButton } from 'components';
 import styled from 'styled-components';
-import { COLORS } from 'constants';
 
 const Word = ({
   word, toggleActive, divideWords, index: wordIndex,
@@ -21,42 +20,48 @@ const Word = ({
     <Title>
       {words.map((wordPart, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <Container key={`${id}_${index}`}>
+        <TitleContainer key={`${id}_${index}`}>
           {wordPart}
           {index + 1 !== words.length && (
             <Margin>
               <RoundIconButton
                 key={`plus_${word.id}`}
                 onClick={onDivide(index)}
-                secondary={isActive}
+                variant="light"
                 minus
                 small
                 href=""
               />
             </Margin>
           )}
-        </Container>
+        </TitleContainer>
       ))}
     </Title>
   ), [title, isActive]);
 
   return (
-    <ButtonText
-      primary={isActive}
-      onClick={onClickHandler}
-      size="sm"
-      title={titleElement}
-    />
+    <Container>
+      <ButtonText
+        outline={!isActive}
+        onClick={onClickHandler}
+        size="sm"
+        title={titleElement}
+      />
+    </Container>
+
   );
 };
+
+const Container = styled.div`
+  margin-right: 5px;
+`;
 
 const Title = styled.div`
   display: flex;
   flex-direction: row;
-  border-bottom: 3px solid ${COLORS.BORDER_COLOR}
 `;
 
-const Container = styled.div`
+const TitleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

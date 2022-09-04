@@ -2,8 +2,10 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import {
-  RoundIconButton,
+  ButtonText,
 } from 'components';
+import Card from 'react-bootstrap/Card';
+
 import { COLORS } from 'constants';
 import Option from './Option';
 
@@ -17,53 +19,42 @@ const Options = ({
     addOption(questionId, word.id);
   }, [questionId, word, addOption]);
   return (
-    <Container>
-      <TitleContainer>
-        {word.title}
-      </TitleContainer>
-      <OptionsContainer>
-        {options.map((option) => (
-          <Option
-            key={option.id}
-            option={option}
-            questionId={questionId}
-            wordId={word.id}
-            handleOptionsChange={handleOptionsChange}
-            deleteOption={deleteOption}
+    <Card>
+      <Header>{word.title}</Header>
+
+      <Card.Body>
+        <OptionsContainer>
+          {options.map((option) => (
+            <Option
+              key={option.id}
+              option={option}
+              questionId={questionId}
+              wordId={word.id}
+              handleOptionsChange={handleOptionsChange}
+              deleteOption={deleteOption}
+            />
+          ))}
+          <ButtonText
+            size="sm"
+            title="Add option"
+            onClick={onAddOption}
+            outline
           />
-        ))}
-        <RoundIconButton onClick={onAddOption} />
-      </OptionsContainer>
-    </Container>
+        </OptionsContainer>
+      </Card.Body>
+    </Card>
   );
 };
 
-const Container = styled.div`
-  border: 2px solid ${COLORS.BORDER_COLOR};
-  border-radius: 7px;
-  padding: 10px;
-  margin: 10px 0;
-  display: flex;
-  flex: 1;
-  align-items: flex-start;
-`;
-
-const TitleContainer = styled.div`
-  display: flex;
-  align-items: center;
-  height: 51px;
-  color: white;
-  padding 0 20px;
-  background: ${COLORS.PRIMARY_COLOR};
-  border-radius: 7px;
-  cursor: default;
+const Header = styled(Card.Header)`
+  color: ${COLORS.PRIMARY_COLOR};
+  font-weight: 500;
 `;
 
 const OptionsContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  align-items: flex-end;
 `;
 
 export default Options;

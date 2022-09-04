@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import {
-  Input, Check, IconButton,
+  Input, Check, ButtonText,
 } from 'components';
 import styled from 'styled-components';
 import { Row } from './common';
@@ -33,28 +33,38 @@ const Answer = ({
 
   return (
     <Row>
-      <Check
-        checked={isCorrect}
-        onChange={onCorrectionChange}
+      <Input
+        value={title}
+        onChange={onTitleChange}
+        placeholder="Write an answer"
       />
+
       <Margin>
-        <Input
-          value={title}
-          onChange={onTitleChange}
-          placeholder="Write an answer"
+        {isCorrect ? 'Correct' : 'Incorrect'}
+        <Check
+          checked={isCorrect}
+          onChange={onCorrectionChange}
         />
       </Margin>
-      <IconButton
-        iconName="faDeleteLeft"
+
+      <ButtonText
+        size="sm"
+        title="Delete"
         onClick={onDeleteAnswer}
+        variant="danger"
+        outline
       />
     </Row>
   );
 };
 
 const Margin = styled.div`
-  flex: 1;
-  margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 5px;
+  width: 140px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default Answer;

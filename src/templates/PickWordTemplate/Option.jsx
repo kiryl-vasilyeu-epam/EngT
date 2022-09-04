@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import {
-  Input, IconButton,
+  Input, ButtonText,
 } from 'components';
 
 const Option = ({
@@ -24,9 +24,12 @@ const Option = ({
           placeholder="Write an option"
         />
       </Margin>
-      <IconButton
-        iconName="faDeleteLeft"
+      <ButtonText
+        size="sm"
+        title="Delete"
         onClick={onDeletePress}
+        variant="danger"
+        outline
       />
     </HorizontalContainer>
   );
@@ -34,7 +37,7 @@ const Option = ({
 
 const Margin = styled.div`
   flex: 1;
-  margin: 0 20px;
+  margin-right: 30px;
 `;
 
 const HorizontalContainer = styled.div`

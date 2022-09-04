@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
+import Card from 'react-bootstrap/Card';
 
 import {
-  Input, RoundIconButton, IconButton,
+  Input, ButtonText,
 } from 'components';
-import { COLORS } from 'constants';
 import { Row } from './common';
 import Answer from './Answer';
 
@@ -29,32 +29,29 @@ const Question = ({
   }, [id, addAnswer]);
 
   return (
-    <Container>
-
-      <Row>
-        <Subtitle>
-          Question:
-        </Subtitle>
-        <Input
-          value={title}
-          onChange={onTitleChange}
-          placeholder="Write a question"
-        />
-        <IconContainer>
-          <IconButton
-            iconName="faTrashCan"
-            onClick={onDelete}
-          />
-        </IconContainer>
-      </Row>
-
-      <Column>
-
-        <Subtitle>
-          Answers:
-        </Subtitle>
-
-        <Answers>
+    <CardElement>
+      <Card.Body>
+        <Margin>
+          Question
+          <Row>
+            <InputMargin>
+              <Input
+                value={title}
+                onChange={onTitleChange}
+                placeholder="Write a question"
+              />
+            </InputMargin>
+            <ButtonText
+              size="sm"
+              title="Delete"
+              onClick={onDelete}
+              variant="danger"
+              outline
+            />
+          </Row>
+        </Margin>
+        <Margin>
+          Answers
           {answers.map((answer) => (
             <Answer
               key={answer.id}
@@ -64,48 +61,33 @@ const Question = ({
               deleteAnswer={deleteAnswer}
             />
           ))}
-        </Answers>
+          <ButtonText
+            size="sm"
+            title="Add answer"
+            onClick={onAddAnswer}
+            outline
+          />
+        </Margin>
+      </Card.Body>
 
-        <ButtonContainer>
-          <RoundIconButton onClick={onAddAnswer} />
-        </ButtonContainer>
-
-      </Column>
-
-    </Container>
+    </CardElement>
   );
 };
 
-const Container = styled.div`
-  border: 2px solid ${COLORS.BORDER_COLOR};
-  padding: 16px 20px;
-  border-radius: 10px;
-  margin: 10px 0;
+const CardElement = styled(Card)`
+  margin-bottom: 30px;
 `;
 
-const Column = styled.div`
-  padding-top: 20px;
+const Margin = styled.div`
   display: flex;
+  align-items: flex-start;
   flex-direction: column;
-`;
-
-const Subtitle = styled.div`
   font-size: 20px;
-  margin-right: 10px;
 `;
 
-const Answers = styled.div`
-  margin-left: 20px;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 66px;
-`;
-
-const IconContainer = styled.div`
-  margin-left: 10px;
+const InputMargin = styled.div`
+  margin-right: 30px;
+  flex: 1;
 `;
 
 export default Question;
