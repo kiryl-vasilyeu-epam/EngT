@@ -1,7 +1,7 @@
 {
   "name": "engt",
   "version": "0.1.0",
-  "homepage": "https://kiryl-vasilyeu-epam.github.io/engt",
+  "homepage": "http://www.engtcourse.com/",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
