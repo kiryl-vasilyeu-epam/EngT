@@ -1,5 +1,6 @@
 import { Dropdown } from 'components';
-import React, { useCallback } from 'react';
+import { sortBy } from 'lodash';
+import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 
 const Word = ({
@@ -9,10 +10,10 @@ const Word = ({
   const {
     title, options, isActive, userAnswer,
   } = word;
-  const values = [
+  const values = useMemo(() => sortBy([
     ...options,
     { title, id: title },
-  ];
+  ], ['title']), [options, title]);
 
   const onChange = useCallback((answer) => {
     onAnswerHandler(questionId, word.id, answer);
@@ -40,7 +41,6 @@ const Word = ({
 
 const Container = styled.div`
   margin-right: 5px;
-  // border: 1px solid red;
 `;
 
 export default Word;

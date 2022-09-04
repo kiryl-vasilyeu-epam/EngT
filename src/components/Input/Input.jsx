@@ -2,6 +2,7 @@ import React, {
   useRef, useCallback, useEffect, useState,
 } from 'react';
 import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 const Input = ({
   value, onChange, placeholder, ...inputProps
@@ -24,16 +25,19 @@ const Input = ({
   }, [value, height, ref]);
 
   return (
-    <Form.Control
-      ref={ref}
-      value={value}
-      onChange={onChangeHandler}
-      placeholder={placeholder}
-      as="textarea"
-      rows={1}
-      style={{ height, borderWidth: 2 }}
-      {...inputProps}
-    />
+    <InputGroup>
+      <Form.Control
+        ref={ref}
+        value={value}
+        onChange={onChangeHandler}
+        placeholder={placeholder}
+        as="textarea"
+        rows={1}
+        style={{ height, borderWidth: 2 }}
+        {...inputProps}
+      />
+    </InputGroup>
+
   );
 };
 

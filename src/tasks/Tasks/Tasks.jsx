@@ -27,10 +27,10 @@ const Tasks = ({
   const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!userAnswers.length || userAnswers.length !== tasks.length) {
+    if (!creator) {
       dispatch(initUserAnswers(tasks));
     }
-  }, [tasks, userAnswers]);
+  }, [tasks, creator]);
   const data = creator ? tasks : userAnswers;
 
   return (
@@ -39,7 +39,7 @@ const Tasks = ({
         const Component = COMPONENTS_VARIANT[task.type];
         return (
           <Component
-            key={task.id}
+            key={`${task.id}_${creator}`}
             task={task}
             creator={creator}
             checked={checked}

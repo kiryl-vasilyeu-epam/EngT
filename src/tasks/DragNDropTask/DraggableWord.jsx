@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const DraggableWord = ({
   word, inactive, onAnswerHandler, toggleActiveWord, activeWord,
-  creator, checked,
+  checked,
 }) => {
   const [dragInProcess, setDragInProcess] = useState(false);
 
@@ -25,6 +25,7 @@ const DraggableWord = ({
   }, [setDragInProcess, inactive]);
 
   const onClick = useCallback(() => {
+    if (checked) return;
     if (!inactive) {
       toggleActiveWord(word);
     } else {
@@ -42,7 +43,7 @@ const DraggableWord = ({
   return (
     <Container>
       <Element
-        draggable={!inactive && !checked && !creator}
+        draggable={!inactive && !checked}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         style={{ opacity: (inactive || dragInProcess) ? 0.2 : 1 }}
@@ -59,13 +60,14 @@ const DraggableWord = ({
 const Container = styled.div`
   margin 5px 10px;
   border-radius: 7px;
-  overflow: hidden;
-  opacity: 0.999
 `;
 const Element = styled.div`
-  border: 3px solid ${({ withOutline }) => (withOutline ? COLORS.PRIMARY_COLOR : COLORS.BORDER_COLOR)};
+  border: 1px solid ${({ withOutline }) => (withOutline ? COLORS.PRIMARY_COLOR : COLORS.BORDER_COLOR)};
+  ${({ withOutline }) => (withOutline
+    ? `outline: 1px solid ${COLORS.PRIMARY_COLOR}`
+    : '')};
   border-radius: 7px;
-  padding: 0px 10px;
+  padding: 0px 20px;
   cursor: ${({ inactive }) => (inactive ? 'pointer' : 'move')};
   background-color: ${COLORS.BACKGROUND_COLOR};
   transition: opacity .5s;

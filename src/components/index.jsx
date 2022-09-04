@@ -5,5 +5,5 @@ export { Input } from './Input';
 export { RoundIconButton } from './RoundIconButton';
 export { TemplateContainer } from './TemplateContainer';
 export { Dropdown } from './Dropdown';
-export { ColoredBorder } from './ColoredBorder';
+export { ColoredContainer } from './ColoredContainer';
 export { Media } from './Media';

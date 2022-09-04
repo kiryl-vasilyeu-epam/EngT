@@ -68,7 +68,6 @@ const TemplateContainer = ({
               size="sm"
               title="Add question"
               onClick={addQuestion}
-              primary
             />
           </Card.Body>
         </Card>

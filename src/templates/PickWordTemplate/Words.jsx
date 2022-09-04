@@ -23,7 +23,7 @@ const Words = ({
         return word;
       }),
     );
-  }, [words]);
+  }, [words, handleWordsChange]);
 
   const combineWords = useCallback((index) => () => {
     const leftWord = words[index];

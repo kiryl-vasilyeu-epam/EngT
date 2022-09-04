@@ -38,16 +38,23 @@ const SelectTemplate = ({ onSave, taskId }) => {
 
   const handleAnswerChange = useCallback((questionId, answerId, answerChanges) => {
     updateTemplate({
-      questions: questions.map((question) => (question.id === questionId ? {
-        ...question,
-        multiline: !!filter(question.answers, { isCorrect: true }).length,
-        answers: question.answers.map(
-          (answer) => (answer.id === answerId ? {
-            ...answer,
-            ...answerChanges,
-          } : answer),
-        ),
-      } : question)),
+      questions: questions.map((question) => {
+        if (question.id === questionId) {
+          const answers = question.answers.map(
+            (answer) => (answer.id === answerId ? {
+              ...answer,
+              ...answerChanges,
+            } : answer),
+          );
+          return {
+            ...question,
+            multiline: filter(answers, { isCorrect: true }).length > 1,
+            answers,
+          };
+        }
+
+        return question;
+      }),
     });
   }, [questions]);
 

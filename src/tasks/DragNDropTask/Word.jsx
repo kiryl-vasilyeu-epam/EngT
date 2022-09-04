@@ -1,6 +1,8 @@
 import { COLORS } from 'constants';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
 import styled from 'styled-components';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 const Word = ({
   word, questionId, onAnswerHandler,
@@ -57,22 +59,31 @@ const Word = ({
     }
   }, [questionId, word, onAnswerHandler, activeWord]);
 
+  const TooltipComponent = useMemo(() => (
+    <Tooltip style={{ position: 'absolute' }}>{title}</Tooltip>
+  ), [title, isCorrect]);
+
   return (
     <Container>
       {isActive ? (
-        <DragPoints
-          onDragEnter={onDragEnter}
-          onDragOver={onDragOver}
-          onDragLeave={onDragLeave}
-          withHighlight={withHighlight}
-          onDrop={onDrop}
-          onClick={onClick}
-          isCorrect={isCorrect}
-          isIncorrect={isIncorrect}
-          withHover={!!activeWord}
+        <OverlayTrigger
+          overlay={TooltipComponent}
+          show={checked && isIncorrect ? undefined : false}
         >
-          {value || '\xa0'}
-        </DragPoints>
+          <DragPoints
+            onDragEnter={onDragEnter}
+            onDragOver={onDragOver}
+            onDragLeave={onDragLeave}
+            withHighlight={withHighlight}
+            onDrop={onDrop}
+            onClick={onClick}
+            isCorrect={isCorrect}
+            isIncorrect={isIncorrect}
+            withHover={!!activeWord}
+          >
+            {value || '\xa0'}
+          </DragPoints>
+        </OverlayTrigger>
       ) : title}
     </Container>
   );
@@ -83,7 +94,7 @@ const Container = styled.div`
 `;
 
 const DragPoints = styled.div`
-  border: 2px solid ${COLORS.BORDER_COLOR};
+  border: 1px solid ${COLORS.BORDER_COLOR};
   outline: 2px solid ${
   ({ withHighlight, isCorrect, isIncorrect }) => {
     if (isCorrect) {
@@ -101,9 +112,11 @@ const DragPoints = styled.div`
   min-width: 100px;
   transition: outline .3s;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
 
   &:hover {
-    ${({ withHover }) => (withHover ? `outline: 3px solid ${COLORS.PRIMARY_COLOR};` : '')}
+    ${({ withHover }) => (withHover ? `outline: 2px solid ${COLORS.PRIMARY_COLOR};` : '')}
   }
 `;
 

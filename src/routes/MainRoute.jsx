@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Tasks } from 'tasks';
 import { CreateTemplateModal } from 'features';
-import { RoundIconButton, ButtonText } from 'components';
+import { ButtonText } from 'components';
 import { showModal, setChecked } from 'store';
 
 const MainRoute = ({ creator }) => {
@@ -20,19 +20,22 @@ const MainRoute = ({ creator }) => {
 
   return (
     <Content>
-      <Tasks creator={creator} modalId={modalId} />
+      <Tasks checked={checked} creator={creator} modalId={modalId} />
       {
         creator ? (
           <>
-            <ButtonContainer>
-              <RoundIconButton onClick={openModal} />
-            </ButtonContainer>
+            <ButtonText
+              title="Add task"
+              outline
+              onClick={openModal}
+              fullWidth
+            />
             <CreateTemplateModal handleModalId={handleModalId} />
           </>
         ) : (
           <ButtonText
             title={checked ? 'Checked' : 'Check'}
-            primary={checked ? 'primary' : 'light'}
+            variant={checked ? 'light' : 'primary'}
             onClick={onCheckHandler}
             fullWidth
           />
@@ -49,20 +52,9 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   width: 80%;
-  max-width: 1200px;
+  max-width: 1000px;
 
   padding: 20px;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 10px 0;
-  width: 100%;
-  box-sizing: border-box;
-  box-shadow: -2px 3px 12px 0px rgba(66, 68, 90, 1);
 `;
 
 export default MainRoute;

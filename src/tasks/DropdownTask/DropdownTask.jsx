@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUserAnswer } from 'store';
 import { TaskContainer } from '../components';
@@ -16,7 +16,7 @@ const DropdownTask = ({
 
   const dispatch = useDispatch();
 
-  const onAnswerHandler = (questionId, wordId, userAnswer) => {
+  const onAnswerHandler = useCallback((questionId, wordId, userAnswer) => {
     if (checked || creator) return;
 
     dispatch(updateUserAnswer({
@@ -40,7 +40,7 @@ const DropdownTask = ({
         )),
       },
     }));
-  };
+  }, [checked, creator, task]);
 
   return (
     <TaskContainer

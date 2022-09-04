@@ -1,4 +1,6 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, {
+  useMemo, useState, useCallback, useEffect,
+} from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUserAnswer } from 'store';
 import { xorBy } from 'lodash';
@@ -19,6 +21,10 @@ const DragNDropTask = ({
 
   const [activeWord, setActiveWord] = useState(null);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setActiveWord(null);
+  }, [checked, setActiveWord]);
 
   const onAnswerHandler = ({
     questionId,
@@ -74,7 +80,7 @@ const DragNDropTask = ({
       type={type}
       media={media}
     >
-      {!!draggableWords.length && (
+      {!!draggableWords.length && !creator && (
         <DraggableWords
           draggableWords={draggableWords}
           answers={answers}
@@ -82,7 +88,6 @@ const DragNDropTask = ({
           toggleActiveWord={toggleActiveWord}
           activeWord={activeWord}
           checked={checked}
-          creator={creator}
         />
       )}
       {questions.map((question, index) => (

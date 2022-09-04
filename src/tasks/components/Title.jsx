@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { removeTask, showModal } from 'store';
 import {
-  IconButton,
+  ButtonText,
 } from 'components';
 
 const Title = ({
@@ -23,14 +23,22 @@ const Title = ({
       {title}
       {creator && (
       <CreatorButtons>
-        <IconButton
-          iconName="faPen"
+        <ButtonText
+          size="sm"
+          title="Edit"
           onClick={onEditHandler}
+          outline
         />
-        <IconButton
-          iconName="faTrash"
-          onClick={onDeleteTaskHandler}
-        />
+        <Margin>
+          <ButtonText
+            size="sm"
+            title="Delete"
+            onClick={onDeleteTaskHandler}
+            variant="danger"
+            outline
+          />
+        </Margin>
+
       </CreatorButtons>
 
       )}
@@ -44,12 +52,15 @@ const TitleContainer = styled.div`
   align-items: center;
   font-size: 30px;
   font-weight: 500;
-  font-family: 'Metropolis', sans-serif;
-  margin-bottom: 30px;
 `;
 
 const CreatorButtons = styled.div`
   display: flex;
+`;
+const Margin = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-left: 30px;
 `;
 
 export default Title;

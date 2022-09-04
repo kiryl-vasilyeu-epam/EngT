@@ -14,10 +14,15 @@ const Dropdown = ({
 }) => {
   const [width, setWidth] = useState(10);
   const ref = useRef(null);
+  const dropDownRef = useRef(null);
 
   const handleChange = useCallback((title) => () => {
     onChange(title);
   }, [onChange]);
+
+  useEffect(() => {
+    dropDownRef?.current?.blur?.();
+  }, [value]);
 
   useEffect(() => {
     const newWidth = ref?.current?.offsetWidth;
@@ -37,7 +42,7 @@ const Dropdown = ({
     >
       {val.title}
     </BootstrapDropdown.Item>
-  )), [values]);
+  )), [values, onChange]);
 
   // eslint-disable-next-line no-nested-ternary
   const variant = isCorrect
@@ -60,7 +65,14 @@ const Dropdown = ({
       >
         <BootstrapDropdown>
 
-          <StyledDropdown size="sm" style={{ width }} variant={variant}>
+          <StyledDropdown
+            size="sm"
+            style={{ width }}
+            variant={variant}
+            $isCorrect={isCorrect}
+            $isIncorrect={isIncorrect}
+            ref={dropDownRef}
+          >
             {value || '\xa0'}
           </StyledDropdown>
 
@@ -83,7 +95,17 @@ const StyledDropdown = styled(BootstrapDropdown.Toggle)`
   align-items: center;
   &:after {
     display: none;
-  }
+  };
+  ${({ $isCorrect, $isIncorrect }) => ((!$isCorrect && !$isIncorrect)
+    ? `
+      &:hover {
+        background-color: #C5C9D0;
+      };
+      &:focus {
+        background-color: #C5C9D0;
+      };`
+    : '')}
+  
 `;
 
 const StyledMenu = styled(BootstrapDropdown.Menu)`

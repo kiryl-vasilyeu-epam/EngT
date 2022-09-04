@@ -18,7 +18,7 @@ const Header = () => {
             {NAVIGATION_ROUTES.map((route) => (
               <LinkElement
                 key={route.path}
-                highlighted={pathname === route.path}
+                $highlighted={pathname === route.path}
                 to={route.path}
               >
                 {route.name}
@@ -38,12 +38,12 @@ const Container = styled(NavContainer)`
 
 const NavigationContainer = styled(NavContainer)`
   width: 80%;
-  max-width: 1200px;
+  max-width: 1000px;
 `;
 
 const LinkElement = styled(Link)`
-  border: 2px solid ${({ highlighted }) => (highlighted ? COLORS.BACKGROUND_COLOR : 'transparent')};
-  color: ${({ highlighted }) => (highlighted ? COLORS.BACKGROUND_COLOR : COLORS.BORDER_COLOR)};
+  border: 2px solid ${({ $highlighted }) => ($highlighted ? COLORS.BACKGROUND_COLOR : 'transparent')};
+  color: ${({ $highlighted }) => ($highlighted ? COLORS.BACKGROUND_COLOR : COLORS.BORDER_COLOR)};
   border-radius: 7px;
   padding: 3px;
   margin: 5px;

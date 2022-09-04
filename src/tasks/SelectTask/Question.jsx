@@ -1,7 +1,7 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { filter } from 'lodash';
-import { ColoredBorder } from 'components';
+import { ColoredContainer } from 'components';
 import Answer from './Answer';
 import { getCorrection } from '../helpers';
 
@@ -12,25 +12,26 @@ const Question = ({
     answers, title, multiline, id,
   } = question;
   let correction = null;
-  const predicate = useCallback(
-    ({ isCorrect, userAnswer }) => userAnswer && userAnswer === isCorrect,
-    [],
+
+  const userAnswers = useMemo(
+    () => filter(answers, ({ userAnswer }) => !!userAnswer),
+    [answers],
   );
   const correctAnswersList = useMemo(
     () => filter(answers, { isCorrect: true }),
     [answers],
   );
   const userCorrectAnswersList = useMemo(
-    () => filter(answers, predicate),
-    [answers],
+    () => filter(userAnswers, ({ isCorrect, userAnswer }) => userAnswer === isCorrect),
+    [userAnswers],
   );
 
   if (checked) {
-    correction = getCorrection(correctAnswersList, userCorrectAnswersList);
+    correction = getCorrection(correctAnswersList, userCorrectAnswersList, userAnswers);
   }
 
   return (
-    <ColoredBorder correction={correction}>
+    <ColoredContainer correction={correction}>
       <Subtitle>{`${index + 1}. ${title}`}</Subtitle>
       <AnswerContainer>
         {answers.map((answer) => (
@@ -45,7 +46,7 @@ const Question = ({
           />
         ))}
       </AnswerContainer>
-    </ColoredBorder>
+    </ColoredContainer>
   );
 };
 
@@ -56,7 +57,6 @@ const Subtitle = styled.div`
 const AnswerContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 10px 0;
 `;
 
 export default Question;

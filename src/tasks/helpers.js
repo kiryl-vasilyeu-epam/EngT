@@ -1,7 +1,10 @@
-export const getCorrection = (correctAnswersList, userCorrectAnswersList) => {
+export const getCorrection = (correctAnswersList, userCorrectAnswersList, allAnswers) => {
   let correction = null;
 
-  if (correctAnswersList.length === userCorrectAnswersList.length) {
+  const hasIncorrectAnswers = allAnswers
+    ? allAnswers.length !== userCorrectAnswersList.length
+    : false;
+  if (!hasIncorrectAnswers && correctAnswersList.length === userCorrectAnswersList.length) {
     correction = 'correct';
   } else if (userCorrectAnswersList.length > 0) {
     correction = 'partially';
