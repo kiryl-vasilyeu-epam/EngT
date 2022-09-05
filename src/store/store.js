@@ -5,7 +5,7 @@ import userAnswersSlice from './userAnswersSlice';
 import modalsControlSlice from './modalsControlSlice';
 import templateCreationSlice from './templateCreationSlice';
 
-const logger = (store) => (next) => (action) => {
+export const logger = (store) => (next) => (action) => {
   console.group(`%c${action.type}`, 'color: #e3445f');
   const currentState = store.getState();
   console.log('%ccurrent state', 'color: #52b1fa', currentState);
@@ -31,5 +31,8 @@ export default configureStore({
     modal: modalsControlSlice.reducer,
     template: templateCreationSlice.reducer,
   },
-  middleware: [logger],
+  middleware: (getDefaultMiddleware) => [
+    ...getDefaultMiddleware(),
+    // logger,
+  ],
 });

@@ -23,3 +23,9 @@ export const NAVIGATION_ROUTES = [
   { path: '/', creator: false, name: 'Tasks' },
   { path: '/templates', creator: true, name: 'Templates' },
 ];
+
+export const LOCAL_STORAGE_KEYS = {
+  LESSON_ID: 'LESSON_ID',
+  USER_ANSWERS: 'USER_ANSWERS',
+  CHECKED: 'CHECKED',
+};

@@ -6,7 +6,7 @@ import {
 } from 'store';
 
 export const useTemplate = ({ taskId, type, onSave }) => {
-  const task = useSelector((state) => find(state.tasks, { id: taskId }));
+  const task = useSelector((state) => find(state.tasks.list, { id: taskId }));
   const dispatch = useDispatch();
   const template = useSelector((state) => state.template);
 

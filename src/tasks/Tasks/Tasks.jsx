@@ -23,14 +23,14 @@ const COMPONENTS_VARIANT = {
 const Tasks = ({
   creator, checked, modalId,
 }) => {
-  const userAnswers = useSelector((state) => state.userAnswers.tasks);
-  const tasks = useSelector((state) => state.tasks);
+  const { tasks: userAnswers, id: userAnswersId } = useSelector((state) => state.userAnswers);
+  const { list: tasks, id: tasksId } = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!creator) {
-      dispatch(initUserAnswers(tasks));
+    if (!creator && userAnswersId !== tasksId) {
+      dispatch(initUserAnswers({ tasks, id: tasksId }));
     }
-  }, [tasks, creator]);
+  }, [tasks, creator, tasksId, userAnswersId]);
   const data = creator ? tasks : userAnswers;
 
   return (
