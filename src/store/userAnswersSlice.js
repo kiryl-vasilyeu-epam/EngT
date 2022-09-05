@@ -1,5 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 import { LOCAL_STORAGE_KEYS } from 'constants';
+import { getScore } from './helpers';
 
 const updateUserAnswersCash = (newState) => {
   const state = JSON.stringify(newState);
@@ -30,9 +31,11 @@ const userAnswersSlice = createSlice({
       };
     },
     setChecked: (state, { payload: checked = true }) => {
+      const userScore = getScore(current(state.tasks));
       const newState = {
         ...state,
         checked,
+        userScore,
       };
       updateUserAnswersCash(newState);
       return newState;

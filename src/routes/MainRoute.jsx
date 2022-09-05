@@ -15,7 +15,7 @@ const MainRoute = ({ creator }) => {
   const openModal = useCallback(() => {
     dispatch(showModal({ modalId }));
   }, [modalId]);
-  const { checked } = useSelector((state) => state.userAnswers);
+  const { checked, userScore } = useSelector((state) => state.userAnswers);
   const { list: tasks, loading, id } = useSelector((state) => state.tasks);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const MainRoute = ({ creator }) => {
           </>
         ) : (
           <ButtonText
-            title={checked ? 'Checked' : 'Check'}
+            title={checked ? `Grade: ${userScore}` : 'Check'}
             variant={checked ? 'light' : 'primary'}
             onClick={onCheckHandler}
             // disabled={loading || checked}

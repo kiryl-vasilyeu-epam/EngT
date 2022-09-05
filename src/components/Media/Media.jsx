@@ -7,8 +7,9 @@ const AUDIO_TYPES = ['mp3', 'wav'];
 
 const Media = ({ src }) => {
   if (src.includes('youtu')) {
-    const reg = /(www.youtube.com\/watch\?v=)*(youtu.be\/)*(\w*)(&|\?)/g.exec(src);
-    const uSrc = `https://www.youtube.com/embed/${reg?.[3] || 'dQw4w9WgXcQ'}`;
+    const reg = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-_]*)(&(amp;)?[\w?=]*)?/g.exec(src);
+    const uSrc = `https://www.youtube.com/embed/${reg?.[1] || 'dQw4w9WgXcQ'}`;
+
     return (
       <Container>
         <IFrame
