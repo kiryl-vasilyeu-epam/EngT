@@ -7,6 +7,7 @@ import { ButtonText } from 'components';
 import { showModal, setChecked, loadTasks } from 'store';
 import { isNull } from 'lodash';
 import Spinner from 'react-bootstrap/Spinner';
+import CreatorsControls from './CreatorsControls';
 
 const MainRoute = ({ creator }) => {
   const [modalId, handleModalId] = useState(null);
@@ -27,18 +28,6 @@ const MainRoute = ({ creator }) => {
     dispatch(setChecked(!checked));
   }, [setChecked, checked]);
 
-  const downloadState = useCallback(() => {
-    const jsonString = `data:text/json;chatset=utf-8,${JSON.stringify({
-      tasks,
-      id,
-    })}`;
-    const link = document.createElement('a');
-    link.href = jsonString;
-    link.download = 'Lesson.json';
-
-    link.click();
-  }, [tasks, id]);
-
   return (
     <Content>
       {loading ? (
@@ -51,26 +40,7 @@ const MainRoute = ({ creator }) => {
       {
         creator ? (
           <>
-            <Buttons>
-              <ButtonContainer>
-                <ButtonText
-                  title="Download"
-                  onClick={downloadState}
-                  fullWidth
-                  disabled={loading}
-                />
-              </ButtonContainer>
-
-              <ButtonContainer>
-                <ButtonText
-                  title="Add task"
-                  outline
-                  onClick={openModal}
-                  disabled={loading}
-                  fullWidth
-                />
-              </ButtonContainer>
-            </Buttons>
+            <CreatorsControls id={id} tasks={tasks} openModal={openModal} loading={loading} />
             <CreateTemplateModal handleModalId={handleModalId} />
           </>
         ) : (
@@ -100,23 +70,6 @@ const Content = styled.div`
   max-width: 1300px;
 
   padding: 20px;
-`;
-
-const Buttons = styled.div`
-  display: flex;
-  flex-direction: row;
-  @media (max-width: 1100px) {
-    flex-direction: column;
-  };
-  width: 100%;
-`;
-
-const ButtonContainer = styled.div`
-  margin: 10px 10px 0 10px;
-  @media (max-width: 1100px) {
-    margin: 5px;
-  };
-  flex: 1;
 `;
 
 const SpinnerContainer = styled.div`
