@@ -13,7 +13,7 @@ const Header = () => {
     <Container>
       <NavBarElement bg="dark" variant="dark">
         <NavigationContainer>
-          <Navbar.Brand href="/">EngT</Navbar.Brand>
+          <Navbar.Brand href="/EngT/">EngT</Navbar.Brand>
           <Nav className="me-auto">
             {NAVIGATION_ROUTES.map((route) => (
               <LinkElement
