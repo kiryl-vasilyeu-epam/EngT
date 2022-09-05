@@ -32,9 +32,8 @@ const TemplateContainer = ({
         <Margin>
           <Title>Exercise media</Title>
           {media.map(({ url, id }) => (
-            <InputContainer>
+            <InputContainer key={id}>
               <Input
-                key={id}
                 value={url}
                 onChange={handleMediaChange(id)}
                 placeholder="Paste the link"

@@ -47,6 +47,7 @@ const Word = ({
 };
 
 const Container = styled.div`
+  position: relative;
   margin: 5px 5px 5px 0px;
 `;
 

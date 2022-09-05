@@ -11,6 +11,7 @@ const userAnswersSlice = createSlice({
   initialState: {
     tasks: [],
     checked: false,
+    userScore: 0,
     id: '',
   },
   reducers: {
