@@ -29,3 +29,5 @@ export const LOCAL_STORAGE_KEYS = {
   USER_ANSWERS: 'USER_ANSWERS',
   CHECKED: 'CHECKED',
 };
+
+export const OKTO_TOKEN = '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';
