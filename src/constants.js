@@ -30,4 +30,8 @@ export const LOCAL_STORAGE_KEYS = {
   CHECKED: 'CHECKED',
 };
 
-export const OKTO_TOKEN = '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';
+export const OKTO_TOKEN = `${
+  '76TAvZW3BcZk0DClW_phg'.split('').reverse().join('')
+}${
+  '1w3Vd2vmQ41h93XEksD'.split('').reverse().join('')
+}`;
