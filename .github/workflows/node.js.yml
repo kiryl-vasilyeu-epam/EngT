@@ -4,6 +4,11 @@
 name: Node.js CI
 
 on:
+  push:
+    branches:
+    - lesson
+    - "!main"
+    
   pull_request:
     branches:
     - lesson

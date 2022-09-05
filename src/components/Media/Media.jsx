@@ -7,11 +7,12 @@ const AUDIO_TYPES = ['mp3', 'wav'];
 
 const Media = ({ src }) => {
   if (src.includes('youtu')) {
-    const youtubeSrc = src.replace('watch?v=', 'embed/').split('&ab_channel=')[0];
+    const reg = /(www.youtube.com\/watch\?v=)*(youtu.be\/)*(\w*)(&|\?)/g.exec(src);
+    const uSrc = `https://www.youtube.com/embed/${reg?.[3] || 'dQw4w9WgXcQ'}`;
     return (
       <Container>
         <IFrame
-          src={youtubeSrc}
+          src={uSrc}
           title="YouTube video player"
           frameBorder="0"
           allowFullScreen

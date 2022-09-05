@@ -81,6 +81,8 @@ const Wrapper = styled.div`
   background: rgba(0, 0, 0, 0.4);
 
   animation: ${fadeIn} .2s;
+
+  z-index: 1;
 `;
 
 const Content = styled(Card)`

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { some } from 'lodash';
+import { some, sortBy } from 'lodash';
 import { ColoredContainer } from 'components';
 import DraggableWord from './DraggableWord';
 
@@ -14,7 +14,7 @@ const DraggableWords = ({
 }) => (
   <ColoredContainer>
     <Container>
-      {draggableWords.map((word) => (
+      {sortBy(draggableWords, ['title']).map((word) => (
         <DraggableWord
           key={word.id}
           word={word}
