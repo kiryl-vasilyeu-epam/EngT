@@ -11,7 +11,7 @@ const Header = () => {
 
   return (
     <Container>
-      <Navbar bg="dark" variant="dark">
+      <NavBarElement bg="dark" variant="dark">
         <NavigationContainer>
           <Navbar.Brand href="/">EngT</Navbar.Brand>
           <Nav className="me-auto">
@@ -26,19 +26,32 @@ const Header = () => {
             ))}
           </Nav>
         </NavigationContainer>
-      </Navbar>
+      </NavBarElement>
     </Container>
   );
 };
 
 const Container = styled(NavContainer)`
+  display: flex;
   padding: 0;
   max-width: 100%;
 `;
 
+const NavBarElement = styled(Navbar)`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+`;
+
 const NavigationContainer = styled(NavContainer)`
+  display: flex;
+  margin: 0;
   width: 80%;
-  max-width: 1000px;
+  max-width: 1300px;
+  flex: 1;
+  @media (max-width: 1100px) {
+    max-width: 100%;
+  };
 `;
 
 const LinkElement = styled(Link)`

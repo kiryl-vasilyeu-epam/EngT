@@ -91,6 +91,9 @@ const Content = styled(Card)`
 
   width: 60%;
   height: 80%;
+  @media (max-width: 1100px) {
+    width: 95%;
+  };
 
   background: ${COLORS.BACKGROUND_COLOR};
 

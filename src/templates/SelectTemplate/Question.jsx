@@ -86,7 +86,9 @@ const Margin = styled.div`
 `;
 
 const InputMargin = styled.div`
-  margin-right: 30px;
+  @media (min-width: 1100px) {
+    margin-right: 30px;
+  };
   flex: 1;
 `;
 

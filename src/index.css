@@ -12,7 +12,6 @@ html, body, #root {
 
   font-size: 20px;
   font-family: 'Metropolis', Arial, Helvetica, sans-serif;
-  color: rgb(0, 0, 30);
 }
 
 body.modal-opened {

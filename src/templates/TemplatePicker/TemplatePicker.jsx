@@ -33,6 +33,9 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   width: 50%;
+  @media (max-width: 1100px) {
+    width: 80%;
+  };
 `;
 
 export default TemplatePicker;

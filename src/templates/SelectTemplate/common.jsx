@@ -5,4 +5,9 @@ export const Row = styled.div`
   display: flex;
   align-items: center;
   margin: 10px 0;
+
+  @media (max-width: 1100px) {
+    align-items: stretch;
+    flex-direction: column;
+  };
 `;

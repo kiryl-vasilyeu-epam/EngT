@@ -88,6 +88,13 @@ const Margin = styled.div`
 const InputMargin = styled.div`
   margin-right: 30px;
   flex: 1;
+
+  @media (max-width: 1100px) {
+    margin-right: 0;
+    margin-bottom: 10px;
+    align-items: stretch;
+    flex-direction: column;
+  };
 `;
 
 export const Row = styled.div`
@@ -95,6 +102,11 @@ export const Row = styled.div`
   display: flex;
   align-items: center;
   margin: 10px 0;
+
+  @media (max-width: 1100px) {
+    align-items: stretch;
+    flex-direction: column;
+  };
 `;
 
 export default Question;

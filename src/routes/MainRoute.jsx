@@ -51,8 +51,11 @@ const Content = styled.div`
   flex: 1;
   flex-direction: column;
   align-items: center;
+  @media (max-width: 1100px) {
+    width: 100%;
+  };
   width: 80%;
-  max-width: 1000px;
+  max-width: 1300px;
 
   padding: 20px;
 `;

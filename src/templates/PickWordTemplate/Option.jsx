@@ -38,6 +38,13 @@ const Option = ({
 const Margin = styled.div`
   flex: 1;
   margin-right: 30px;
+
+  @media (max-width: 1100px) {
+    margin-right: 0;
+    margin-bottom: 10px;
+    align-items: stretch;
+    flex-direction: column;
+  };
 `;
 
 const HorizontalContainer = styled.div`
@@ -47,6 +54,11 @@ const HorizontalContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+
+  @media (max-width: 1100px) {
+    align-items: stretch;
+    flex-direction: column;
+  };
 `;
 
 export default Option;
