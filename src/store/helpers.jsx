@@ -59,5 +59,5 @@ export const getScore = (tasks) => {
     questionsCount += questions;
   });
 
-  return +((userScore / questionsCount) * 10).toFixed(1);
+  return +((userScore / questionsCount) * 10).toFixed(1) || 10;
 };
