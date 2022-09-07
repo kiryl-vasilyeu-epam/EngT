@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { LOCAL_STORAGE_KEYS } from 'constants';
 import { uniqueId } from 'lodash';
+import { Lesson } from 'data';
 
 const initialState = {
   list: [],
@@ -12,15 +13,7 @@ const loadTasks = createAsyncThunk(
   'tasks/loadTasks',
   async () => {
     try {
-      const resp = await fetch('Lesson.json', {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      });
-      const data = await resp.json();
-      const { tasks, id } = data;
-
+      const { tasks, id } = Lesson;
       localStorage.setItem(LOCAL_STORAGE_KEYS.LESSON_ID, id);
 
       return { tasks: tasks || [], id: id || '' };

@@ -34,7 +34,7 @@ const CreatorsControls = ({
       owner: 'kiryl-vasilyeu-epam',
       ref: 'lesson',
       repo: 'EngT',
-      path: 'public/Lesson.json',
+      path: 'src/data/Lesson.json',
     });
 
     const sha = shaData?.data?.sha;
@@ -43,7 +43,7 @@ const CreatorsControls = ({
       owner: 'kiryl-vasilyeu-epam',
       repo: 'EngT',
       branch: 'lesson',
-      path: 'public/Lesson.json',
+      path: 'src/data/Lesson.json',
       message: 'Add new lesson',
       content,
       sha,
