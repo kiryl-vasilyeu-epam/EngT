@@ -1,17 +1,16 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateUserAnswer } from 'store';
+import { updateUserAnswer, setChecked } from 'store';
 import { TaskContainer } from '../components';
 import Question from './Question';
 
 const DropdownTask = ({
   task,
   creator,
-  checked,
   modalId,
 }) => {
   const {
-    id, questions, title, type, media,
+    id, questions, title, type, media, checked, userScore,
   } = task;
 
   const dispatch = useDispatch();
@@ -42,6 +41,10 @@ const DropdownTask = ({
     }));
   }, [checked, creator, task]);
 
+  const onCheckHandler = useCallback(() => {
+    dispatch(setChecked(id));
+  }, [id]);
+
   return (
     <TaskContainer
       id={id}
@@ -50,6 +53,10 @@ const DropdownTask = ({
       creator={creator}
       type={type}
       media={media}
+      checked={checked}
+      setChecked={onCheckHandler}
+      userScore={userScore}
+
     >
       {questions.map((question, index) => (
         <Question

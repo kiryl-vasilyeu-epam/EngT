@@ -11,9 +11,8 @@ const userAnswersSlice = createSlice({
   name: 'userAnswers',
   initialState: {
     tasks: [],
-    checked: false,
-    userScore: 0,
     id: '',
+    userScore: 0,
   },
   reducers: {
     initUserAnswers: (state, { payload: { tasks, id } }) => {
@@ -30,12 +29,30 @@ const userAnswersSlice = createSlice({
         id,
       };
     },
-    setChecked: (state, { payload: checked = true }) => {
-      const userScore = getScore(current(state.tasks));
+    setChecked: (state, { payload: id }) => {
+      const tasks = current(state.tasks);
+      let checkedTasksCount = 0;
+      let scoreSum = 0;
       const newState = {
         ...state,
-        checked,
-        userScore,
+        tasks: tasks.map((task) => {
+          if (task.id === id) {
+            const newTask = {
+              ...task,
+              checked: !task.checked,
+              userScore: getScore(task),
+            };
+            if (newTask.checked) {
+              checkedTasksCount += 1;
+              scoreSum += newTask.userScore;
+            }
+            return newTask;
+          }
+          checkedTasksCount += 1;
+          scoreSum += task.userScore;
+          return task;
+        }),
+        tasksUserScore: +(scoreSum / checkedTasksCount).toFixed(1) || 10,
       };
       updateUserAnswersCash(newState);
       return newState;

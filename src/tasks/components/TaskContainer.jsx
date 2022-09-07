@@ -1,11 +1,20 @@
-import { Media } from 'components';
+import { Media, ButtonText } from 'components';
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import styled from 'styled-components';
 import Title from './Title';
 
 const TaskContainer = ({
-  children, id, modalId, title, creator, type, media,
+  children,
+  id,
+  modalId,
+  title,
+  creator,
+  type,
+  media,
+  checked,
+  setChecked,
+  userScore,
 }) => (
   <Container>
     <Card.Header>
@@ -23,11 +32,24 @@ const TaskContainer = ({
       ))}
       {children}
     </Card.Body>
+    {
+      !creator && (
+        <ButtonText
+          title={checked ? `Score: ${userScore}` : 'Check'}
+          variant={checked ? 'light' : 'primary'}
+          onClick={setChecked}
+          fullWidth
+        />
+      )
+    }
+
   </Container>
 );
 
 const Container = styled(Card)`
   margin-bottom: 30px;
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
 `;
 
 export default TaskContainer;

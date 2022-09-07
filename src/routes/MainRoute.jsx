@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Tasks } from 'tasks';
 import { CreateTemplateModal } from 'features';
-import { ButtonText } from 'components';
-import { showModal, setChecked, loadTasks } from 'store';
+import { showModal, loadTasks } from 'store';
 import { isNull } from 'lodash';
 import Spinner from 'react-bootstrap/Spinner';
 import CreatorsControls from './CreatorsControls';
@@ -15,7 +14,6 @@ const MainRoute = ({ creator }) => {
   const openModal = useCallback(() => {
     dispatch(showModal({ modalId }));
   }, [modalId]);
-  const { checked, userScore } = useSelector((state) => state.userAnswers);
   const { list: tasks, loading, id } = useSelector((state) => state.tasks);
 
   useEffect(() => {
@@ -24,10 +22,6 @@ const MainRoute = ({ creator }) => {
     }
   }, [loading]);
 
-  const onCheckHandler = useCallback(() => {
-    dispatch(setChecked(!checked));
-  }, [setChecked, checked]);
-
   return (
     <Content>
       {loading ? (
@@ -35,22 +29,17 @@ const MainRoute = ({ creator }) => {
           <Spinner animation="border" variant="primary" />
         </SpinnerContainer>
       ) : (
-        <Tasks checked={checked} creator={creator} modalId={modalId} />
+        <Tasks
+          creator={creator}
+          modalId={modalId}
+        />
       )}
       {
-        creator ? (
+        creator && (
           <>
             <CreatorsControls id={id} tasks={tasks} openModal={openModal} loading={loading} />
             <CreateTemplateModal handleModalId={handleModalId} />
           </>
-        ) : (
-          <ButtonText
-            title={checked ? `Grade: ${userScore}` : 'Check'}
-            variant={checked ? 'light' : 'primary'}
-            onClick={onCheckHandler}
-            // disabled={loading || checked}
-            fullWidth
-          />
         )
       }
 

@@ -12,7 +12,9 @@ const Question = ({
   const { words, id } = question;
   let correction = null;
   const predicate = useCallback(
-    ({ isActive, userAnswer, title }) => isActive && userAnswer === title,
+    ({ isActive, userAnswer, title }) => (
+      isActive && userAnswer.toLowerCase() === title.toLowerCase()
+    ),
     [],
   );
   const correctAnswersList = useMemo(

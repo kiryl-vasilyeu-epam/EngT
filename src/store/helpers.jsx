@@ -11,7 +11,7 @@ const countByType = {
       words.forEach(({ isActive, title, userAnswer }) => {
         if (isActive) {
           questions += 1;
-          if (title === (userAnswer?.title || userAnswer)) {
+          if (title.toLowerCase() === (userAnswer?.title || userAnswer).toLowerCase()) {
             taskScore += 1;
           }
         }
@@ -48,16 +48,8 @@ const countByType = {
   },
 };
 
-export const getScore = (tasks) => {
-  let userScore = 0;
-  let questionsCount = 0;
+export const getScore = (task) => {
+  const { taskScore, questions } = countByType[task.type](task);
 
-  tasks.forEach((task) => {
-    const { taskScore, questions } = countByType[task.type](task);
-
-    userScore += taskScore;
-    questionsCount += questions;
-  });
-
-  return +((userScore / questionsCount) * 10).toFixed(1) || 10;
+  return +((taskScore / questions) * 10).toFixed(1) || 10;
 };

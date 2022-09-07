@@ -21,7 +21,7 @@ const COMPONENTS_VARIANT = {
 };
 
 const Tasks = ({
-  creator, checked, modalId,
+  creator, modalId,
 }) => {
   const { tasks: userAnswers, id: userAnswersId } = useSelector((state) => state.userAnswers);
   const { list: tasks, id: tasksId } = useSelector((state) => state.tasks);
@@ -42,7 +42,6 @@ const Tasks = ({
             key={`${task.id}_${creator}`}
             task={task}
             creator={creator}
-            checked={checked}
             modalId={modalId}
           />
         );

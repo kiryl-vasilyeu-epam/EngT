@@ -5,9 +5,11 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useLocation, Link } from 'react-router-dom';
 import { COLORS, NAVIGATION_ROUTES } from 'constants';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
   const { pathname } = useLocation();
+  const { tasksUserScore } = useSelector((store) => store.userAnswers);
 
   return (
     <Container>
@@ -24,6 +26,9 @@ const Header = () => {
                 {route.name}
               </LinkElement>
             ))}
+            <Score>
+              {`Global Score: ${tasksUserScore}`}
+            </Score>
           </Nav>
         </NavigationContainer>
       </NavBarElement>
@@ -65,6 +70,14 @@ const LinkElement = styled(Link)`
   &:hover {
     color: ${COLORS.BACKGROUND_COLOR};
   }
+`;
+const Score = styled.div`
+  border: 2px solid ${COLORS.BACKGROUND_COLOR};
+  color: ${COLORS.BACKGROUND_COLOR};
+  border-radius: 7px;
+  padding: 3px;
+  margin: 5px;
+  padding: 8px 16px;
 `;
 
 export default Header;

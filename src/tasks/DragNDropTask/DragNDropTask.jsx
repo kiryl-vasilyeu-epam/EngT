@@ -2,7 +2,7 @@ import React, {
   useMemo, useState, useCallback, useEffect,
 } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateUserAnswer } from 'store';
+import { updateUserAnswer, setChecked } from 'store';
 import { xorBy } from 'lodash';
 import { TaskContainer } from '../components';
 import Question from './Question';
@@ -12,11 +12,10 @@ import { getDraggableWords } from './helpers';
 const DragNDropTask = ({
   task,
   creator,
-  checked,
   modalId,
 }) => {
   const {
-    id, questions, title, type, answers, media,
+    id, questions, title, type, answers, media, checked, userScore,
   } = task;
 
   const [activeWord, setActiveWord] = useState(null);
@@ -26,7 +25,7 @@ const DragNDropTask = ({
     setActiveWord(null);
   }, [checked, setActiveWord]);
 
-  const onAnswerHandler = ({
+  const onAnswerHandler = useCallback(({
     questionId,
     wordId,
     userAnswer,
@@ -58,7 +57,11 @@ const DragNDropTask = ({
         )),
       },
     }));
-  };
+  }, [task, creator, setActiveWord]);
+
+  const onCheckHandler = useCallback(() => {
+    dispatch(setChecked(id));
+  }, [id]);
 
   const draggableWords = useMemo(() => getDraggableWords(questions), [questions]);
 
@@ -79,6 +82,10 @@ const DragNDropTask = ({
       creator={creator}
       type={type}
       media={media}
+      checked={checked}
+      setChecked={onCheckHandler}
+      userScore={userScore}
+
     >
       {!!draggableWords.length && !creator && (
         <DraggableWords
