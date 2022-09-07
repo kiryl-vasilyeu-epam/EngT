@@ -16,7 +16,7 @@ const Header = () => {
       <NavBarElement bg="dark" variant="dark">
         <NavigationContainer>
           <Navbar.Brand href="/EngT/">EngT</Navbar.Brand>
-          <Nav className="me-auto">
+          <NavElementsContainer>
             {NAVIGATION_ROUTES.map((route) => (
               <LinkElement
                 key={route.path}
@@ -32,7 +32,7 @@ const Header = () => {
             <Score>
               {`Global Score: ${tasksChecked ? tasksUserScore : 0}`}
             </Score>
-          </Nav>
+          </NavElementsContainer>
         </NavigationContainer>
       </NavBarElement>
     </Container>
@@ -43,6 +43,13 @@ const Container = styled(NavContainer)`
   display: flex;
   padding: 0;
   max-width: 100%;
+`;
+
+const NavElementsContainer = styled(Nav)`
+  display: flex;
+  @media (max-width: 780px) {
+    flex-direction: column !important;
+  };
 `;
 
 const NavBarElement = styled(Navbar)`
