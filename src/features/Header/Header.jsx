@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 const Header = () => {
   const { pathname } = useLocation();
-  const { tasksUserScore } = useSelector((store) => store.userAnswers);
+  const { tasksUserScore, tasksChecked } = useSelector((store) => store.userAnswers);
 
   return (
     <Container>
@@ -27,7 +27,10 @@ const Header = () => {
               </LinkElement>
             ))}
             <Score>
-              {`Global Score: ${tasksUserScore}`}
+              {`Tasks checked: ${tasksChecked}`}
+            </Score>
+            <Score>
+              {`Global Score: ${tasksChecked ? tasksUserScore : 0}`}
             </Score>
           </Nav>
         </NavigationContainer>

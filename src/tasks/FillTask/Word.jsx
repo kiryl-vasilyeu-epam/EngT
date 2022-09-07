@@ -17,7 +17,7 @@ const Word = ({
   }, [word, questionId, onAnswerHandler]);
 
   const value = creator ? title : userAnswer;
-  const isCorrect = creator || (checked && title.toLowerCase() === userAnswer?.toLowerCase());
+  const isCorrect = creator || (checked && title?.toLowerCase() === userAnswer?.toLowerCase());
   const isIncorrect = checked && !isCorrect;
 
   const TooltipComponent = useMemo(() => (

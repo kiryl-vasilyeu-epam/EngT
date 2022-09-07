@@ -13,7 +13,7 @@ const Question = ({
   let correction = null;
   const predicate = useCallback(
     ({ isActive, userAnswer, title }) => (
-      isActive && userAnswer.toLowerCase() === title.toLowerCase()
+      isActive && userAnswer?.toLowerCase() === title?.toLowerCase()
     ),
     [],
   );
