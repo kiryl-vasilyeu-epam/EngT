@@ -3,12 +3,10 @@ import styled from 'styled-components';
 import NavContainer from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { useLocation, Link } from 'react-router-dom';
-import { COLORS, NAVIGATION_ROUTES } from 'constants';
+import { COLORS } from 'constants';
 import { useSelector } from 'react-redux';
 
 const Header = () => {
-  const { pathname } = useLocation();
   const { tasksUserScore, tasksChecked } = useSelector((store) => store.userAnswers);
 
   return (
@@ -17,15 +15,6 @@ const Header = () => {
         <NavigationContainer>
           <Navbar.Brand href="/EngT/">EngT</Navbar.Brand>
           <NavElementsContainer>
-            {NAVIGATION_ROUTES.map((route) => (
-              <LinkElement
-                key={route.path}
-                $highlighted={pathname === route.path}
-                to={route.path}
-              >
-                {route.name}
-              </LinkElement>
-            ))}
             <Score>
               {`Tasks checked: ${tasksChecked}`}
             </Score>
@@ -69,18 +58,6 @@ const NavigationContainer = styled(NavContainer)`
   };
 `;
 
-const LinkElement = styled(Link)`
-  border: 2px solid ${({ $highlighted }) => ($highlighted ? COLORS.BACKGROUND_COLOR : 'transparent')};
-  color: ${({ $highlighted }) => ($highlighted ? COLORS.BACKGROUND_COLOR : COLORS.BORDER_COLOR)};
-  border-radius: 7px;
-  padding: 3px;
-  margin: 5px;
-  text-decoration: none;
-  padding: 8px 16px;
-  &:hover {
-    color: ${COLORS.BACKGROUND_COLOR};
-  }
-`;
 const Score = styled.div`
   border: 2px solid ${COLORS.BACKGROUND_COLOR};
   color: ${COLORS.BACKGROUND_COLOR};

@@ -35,3 +35,5 @@ export const OKTO_TOKEN = `${
 }${
   '1w3Vd2vmQ41h93XEksD'.split('').reverse().join('')
 }`;
+
+export const P_VAL = 'fynjykj[';

@@ -1,5 +1,7 @@
-import MainRoute from './MainRoute';
+import TasksRoute from './TasksRoute';
+import TemplatesRoute from './TemplatesRoute';
 
 export {
-  MainRoute,
+  TasksRoute,
+  TemplatesRoute,
 };

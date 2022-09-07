@@ -14,6 +14,7 @@ const ModalWindow = ({
   onBackPress,
   onClose,
   setModalId,
+  withoutUserClose,
 }) => {
   const [modalId] = useState(uniqueId('modal_'));
   const dispatch = useDispatch();
@@ -27,9 +28,10 @@ const ModalWindow = ({
 
   const visible = useSelector((state) => find(state.modal, { id: modalId })?.visible);
   const closeModal = useCallback(() => {
+    if (withoutUserClose) return;
     onClose();
     dispatch(hideModal({ modalId }));
-  }, [modalId]);
+  }, [modalId, withoutUserClose]);
 
   const handleContentClick = useCallback((e) => {
     e.stopPropagation();
@@ -52,7 +54,13 @@ const ModalWindow = ({
           <Title>
             {title}
           </Title>
-          <IconButton onClick={closeModal} iconName="faXmark" />
+          <div style={{ width: 40 }}>
+            {
+              !withoutUserClose && (
+                <IconButton onClick={closeModal} iconName="faXmark" />
+              )
+            }
+          </div>
         </Header>
         {children}
       </Content>

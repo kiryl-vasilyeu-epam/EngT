@@ -38,6 +38,7 @@ const TaskContainer = ({
           title={checked ? `Score: ${userScore}` : 'Check'}
           variant={checked ? 'light' : 'primary'}
           onClick={setChecked}
+          disabled={checked}
           fullWidth
         />
       )

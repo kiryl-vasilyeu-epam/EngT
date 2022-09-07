@@ -1,20 +1,14 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Tasks } from 'tasks';
-import { CreateTemplateModal } from 'features';
-import { showModal, loadTasks } from 'store';
+import { loadTasks } from 'store';
 import { isNull } from 'lodash';
 import Spinner from 'react-bootstrap/Spinner';
-import CreatorsControls from './CreatorsControls';
 
-const MainRoute = ({ creator }) => {
-  const [modalId, handleModalId] = useState(null);
+const MainRoute = () => {
   const dispatch = useDispatch();
-  const openModal = useCallback(() => {
-    dispatch(showModal({ modalId }));
-  }, [modalId]);
-  const { list: tasks, loading, id } = useSelector((state) => state.tasks);
+  const { loading } = useSelector((state) => state.tasks);
 
   useEffect(() => {
     if (isNull(loading)) {
@@ -29,20 +23,8 @@ const MainRoute = ({ creator }) => {
           <Spinner animation="border" variant="primary" />
         </SpinnerContainer>
       ) : (
-        <Tasks
-          creator={creator}
-          modalId={modalId}
-        />
+        <Tasks />
       )}
-      {
-        creator && (
-          <>
-            <CreatorsControls id={id} tasks={tasks} openModal={openModal} loading={loading} />
-            <CreateTemplateModal handleModalId={handleModalId} />
-          </>
-        )
-      }
-
     </Content>
   );
 };
