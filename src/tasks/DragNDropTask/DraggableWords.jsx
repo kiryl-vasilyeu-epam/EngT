@@ -12,25 +12,34 @@ const DraggableWords = ({
   activeWord,
   checked,
 }) => (
-  <ColoredContainer>
-    <Container>
-      {sortBy(draggableWords, ['title']).map((word) => (
-        <DraggableWord
-          key={word.id}
-          word={word}
-          inactive={some(answers, { id: word.id })}
-          onAnswerHandler={onAnswerHandler}
-          toggleActiveWord={toggleActiveWord}
-          activeWord={activeWord}
-          checked={checked}
-        />
-      ))}
-    </Container>
-  </ColoredContainer>
+  <StickyContainer>
+    <ColoredContainer correction={!checked && 'active'}>
+      <Container>
+        {sortBy(draggableWords, ['title']).map((word) => (
+          <DraggableWord
+            key={word.id}
+            word={word}
+            inactive={some(answers, { id: word.id })}
+            onAnswerHandler={onAnswerHandler}
+            toggleActiveWord={toggleActiveWord}
+            activeWord={activeWord}
+            checked={checked}
+          />
+        ))}
+      </Container>
+    </ColoredContainer>
+  </StickyContainer>
+
 );
 
 const Container = styled.div`
   display: flex;
+  flex-wrap: wrap;
+`;
+const StickyContainer = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `;
 
 export default DraggableWords;

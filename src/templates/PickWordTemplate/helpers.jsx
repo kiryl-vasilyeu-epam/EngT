@@ -1,4 +1,5 @@
 import {
+  NEW_LINE,
   DRAG_N_DROP_TEMPLATE,
   DROPDOWN_TEMPLATE,
   FILL_TEMPLATE,
@@ -24,14 +25,15 @@ export const generateOption = (id) => ({
 export const generateWordFromTitle = (title) => {
   const id = uniqueId('template_word');
   return {
-    title,
+    title: title.trim(),
     isActive: false,
     id,
     options: [generateOption(id)],
   };
 };
 
-export const generateWordsFromTitle = (title) => title.split(' ')
+export const generateWordsFromTitle = (title) => title.replace(/(?:\r\n|\r|\n)/g, ` ${NEW_LINE} `)
+  .split(' ')
   .filter((text) => !!text)
   .map(((word) => generateWordFromTitle(word)));
 

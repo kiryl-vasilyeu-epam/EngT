@@ -8,9 +8,11 @@ import ActiveWords from './ActiveWords';
 const Question = ({
   question, deleteQuestion,
   handleQuestionChange, handleWordsChange, handleOptionsChange,
-  addOption, deleteOption, settings,
+  addOption, deleteOption, settings, handlePictureChange,
 }) => {
-  const { title, id, words } = question;
+  const {
+    title, id, words, picture,
+  } = question;
   const { withOptions } = settings;
 
   const onDelete = useCallback(() => {
@@ -21,9 +23,26 @@ const Question = ({
     handleQuestionChange(id, value);
   }, [handleQuestionChange, question]);
 
+  const onPictureChange = useCallback((pictureLink) => {
+    handlePictureChange(id, pictureLink);
+  }, [handlePictureChange]);
+
   return (
     <CardElement>
       <Card.Body>
+
+        <Margin>
+          Picture
+          <Row>
+            <InputMargin>
+              <Input
+                value={picture}
+                onChange={onPictureChange}
+                placeholder="Enter picture link"
+              />
+            </InputMargin>
+          </Row>
+        </Margin>
 
         <Margin>
           Question
@@ -83,11 +102,13 @@ const Margin = styled.div`
   align-items: flex-start;
   flex-direction: column;
   font-size: 20px;
+  margin: 10px 0;
 `;
 
 const InputMargin = styled.div`
   margin-right: 30px;
   flex: 1;
+  width: 100%;
 
   @media (max-width: 1100px) {
     margin-right: 0;

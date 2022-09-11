@@ -3,6 +3,7 @@ import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import { NEW_LINE } from 'constants';
 
 const Word = ({
   word, questionId, onAnswerHandler,
@@ -17,12 +18,17 @@ const Word = ({
   }, [word, questionId, onAnswerHandler]);
 
   const value = creator ? title : userAnswer;
-  const isCorrect = creator || (checked && title?.toLowerCase() === userAnswer?.toLowerCase());
+  const isCorrect = creator
+  || (checked && title?.toLowerCase()?.trim() === userAnswer?.toLowerCase()?.trim());
   const isIncorrect = checked && !isCorrect;
 
   const TooltipComponent = useMemo(() => (
     <Tooltip style={{ position: 'absolute' }}>{title}</Tooltip>
   ), [title, isCorrect]);
+
+  if (title === NEW_LINE) {
+    return <LineBreak />;
+  }
 
   return (
     <Container>
@@ -49,6 +55,9 @@ const Word = ({
 const Container = styled.div`
   position: relative;
   margin: 5px 5px 5px 0px;
+`;
+const LineBreak = styled.div`
+  width: 100%;
 `;
 
 export default Word;

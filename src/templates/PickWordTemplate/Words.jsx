@@ -1,4 +1,5 @@
 import { RoundIconButton } from 'components';
+import { NEW_LINE } from 'constants';
 import { useUpdate } from 'hooks';
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
@@ -58,7 +59,7 @@ const Words = ({
 
   return (
     <WordsContainer>
-      {words.map((word, index) => (
+      {words.map((word, index) => (word.title === NEW_LINE ? null : (
         <Container key={word.id}>
           <Word
             index={index}
@@ -73,7 +74,7 @@ const Words = ({
             />
           )}
         </Container>
-      ))}
+      )))}
     </WordsContainer>
   );
 };

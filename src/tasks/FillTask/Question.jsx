@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import { ColoredContainer } from 'components';
 import { filter } from 'lodash';
+import { COLORS } from 'constants';
 import { getCorrection } from '../helpers';
 
 import Word from './Word';
@@ -9,11 +10,11 @@ import Word from './Word';
 const Question = ({
   question, checked, creator, onAnswerHandler, index,
 }) => {
-  const { words, id } = question;
+  const { words, id, picture } = question;
   let correction = null;
   const predicate = useCallback(
     ({ isActive, userAnswer, title }) => (
-      isActive && userAnswer?.toLowerCase() === title?.toLowerCase()
+      isActive && userAnswer?.toLowerCase()?.trim() === title?.toLowerCase()?.trim()
     ),
     [],
   );
@@ -32,6 +33,13 @@ const Question = ({
 
   return (
     <ColoredContainer correction={correction}>
+      {
+        picture && (
+          <ImageContainer>
+            <Image src={picture} />
+          </ImageContainer>
+        )
+      }
       <WordsContainer>
         <NumContainer>
           {`${index + 1}.`}
@@ -51,6 +59,19 @@ const Question = ({
     </ColoredContainer>
   );
 };
+
+const ImageContainer = styled.div`
+  outline: 1px solid ${COLORS.BORDER_COLOR};
+  border-radius: 7px;
+  width: 300px;
+  height: 300px;
+  margin: 15px;
+`;
+const Image = styled.img`
+  object-fit: contain;
+  width: 300px;
+  height: 300px;
+`;
 
 const NumContainer = styled.div`
   padding-right: 5px;

@@ -1,4 +1,5 @@
 import { Dropdown } from 'components';
+import { NEW_LINE } from 'constants';
 import { sortBy } from 'lodash';
 import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
@@ -22,6 +23,9 @@ const Word = ({
   const value = creator ? title : userAnswer;
   const isCorrect = creator || (checked && title === userAnswer);
   const isIncorrect = checked && !isCorrect;
+  if (title === NEW_LINE) {
+    return <LineBreak />;
+  }
 
   return (
     <Container>
@@ -41,6 +45,10 @@ const Word = ({
 
 const Container = styled.div`
   margin-right: 5px;
+`;
+
+const LineBreak = styled.div`
+  width: 100%;
 `;
 
 export default Word;

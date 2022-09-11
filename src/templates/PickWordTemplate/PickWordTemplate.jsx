@@ -42,6 +42,15 @@ const PickWordTemplate = ({ onSave, taskId, type }) => {
     });
   }, [questions]);
 
+  const handlePictureChange = useCallback((questionId, pictureLink) => {
+    updateTemplate({
+      questions: questions.map((question) => (question.id === questionId ? {
+        ...question,
+        picture: pictureLink,
+      } : question)),
+    });
+  }, [questions]);
+
   const handleWordsChange = useCallback((questionId, words) => {
     updateTemplate({
       questions: questions.map((question) => (question.id === questionId ? {
@@ -116,6 +125,7 @@ const PickWordTemplate = ({ onSave, taskId, type }) => {
             addOption={addOption}
             deleteOption={deleteOption}
             settings={settings}
+            handlePictureChange={handlePictureChange}
           />
         ))}
       </Container>

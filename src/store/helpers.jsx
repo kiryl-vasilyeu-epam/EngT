@@ -11,7 +11,10 @@ const countByType = {
       words.forEach(({ isActive, title, userAnswer }) => {
         if (isActive) {
           questions += 1;
-          if (title?.toLowerCase() === (userAnswer?.title || userAnswer)?.toLowerCase()) {
+          if (
+            title?.toLowerCase()?.trim()
+            === (userAnswer?.title || userAnswer)?.toLowerCase()?.trim()
+          ) {
             taskScore += 1;
           }
         }

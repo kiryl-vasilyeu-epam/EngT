@@ -1,4 +1,4 @@
-import { COLORS } from 'constants';
+import { COLORS, NEW_LINE } from 'constants';
 import React, { useCallback, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -63,6 +63,10 @@ const Word = ({
     <Tooltip style={{ position: 'absolute' }}>{title}</Tooltip>
   ), [title, isCorrect]);
 
+  if (title === NEW_LINE) {
+    return <LineBreak />;
+  }
+
   return (
     <Container>
       {isActive ? (
@@ -118,6 +122,9 @@ const DragPoints = styled.div`
   &:hover {
     ${({ withHover }) => (withHover ? `outline: 2px solid ${COLORS.PRIMARY_COLOR};` : '')}
   }
+`;
+const LineBreak = styled.div`
+  width: 100%;
 `;
 
 export default Word;
