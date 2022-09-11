@@ -66,6 +66,7 @@ const ImageContainer = styled.div`
   width: 300px;
   height: 300px;
   margin: 15px;
+  overflow: hidden;
 `;
 const Image = styled.img`
   object-fit: contain;
