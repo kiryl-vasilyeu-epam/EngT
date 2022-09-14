@@ -14,3 +14,9 @@ export const getCorrection = (correctAnswersList, userCorrectAnswersList, allAns
 
   return correction;
 };
+
+export const normalizeString = (string = '') => {
+  const punctuation = string.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, '');
+  const spaces = punctuation.replace(/\s{2,}/g, ' ');
+  return spaces.toLowerCase().trim();
+};

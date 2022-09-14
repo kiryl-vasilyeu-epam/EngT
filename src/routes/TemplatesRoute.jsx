@@ -2,13 +2,13 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Tasks } from 'tasks';
-import { CreateTemplateModal, CheckPasswordModal } from 'features';
+import { CreateTemplateModal, CheckPasswordModal, ControlPanel } from 'features';
 import { showModal, loadTasks } from 'store';
 import { isNull } from 'lodash';
 import Spinner from 'react-bootstrap/Spinner';
 import CreatorsControls from './CreatorsControls';
 
-const MainRoute = () => {
+const TemplatesRoute = () => {
   const [modalId, handleModalId] = useState(null);
   const [passwordChecked, setPasswordChecked] = useState(null);
   const dispatch = useDispatch();
@@ -31,11 +31,14 @@ const MainRoute = () => {
         </SpinnerContainer>
       ) : (
         <>
-          <Tasks
-            creator
-            modalId={modalId}
-          />
-          <CreatorsControls id={id} tasks={tasks} openModal={openModal} loading={loading} />
+          <ControlPanel />
+          <TemplatesContainer>
+            <Tasks
+              creator
+              modalId={modalId}
+            />
+            <CreatorsControls id={id} tasks={tasks} openModal={openModal} loading={loading} />
+          </TemplatesContainer>
         </>
       )}
       <CreateTemplateModal handleModalId={handleModalId} />
@@ -47,14 +50,7 @@ const MainRoute = () => {
 const Content = styled.div`
   display: flex;
   flex: 1;
-  flex-direction: column;
-  align-items: center;
-  @media (max-width: 1100px) {
-    width: 100%;
-  };
-  width: 80%;
-  max-width: 1300px;
-
+  flex-direction: row;
   padding: 20px;
 `;
 
@@ -65,4 +61,6 @@ const SpinnerContainer = styled.div`
   justify-content: center;
 `;
 
-export default MainRoute;
+const TemplatesContainer = styled.div``;
+
+export default TemplatesRoute;

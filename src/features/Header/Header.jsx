@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import NavContainer from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { COLORS } from 'constants';
-import { useSelector } from 'react-redux';
+import { COLORS, CONTROL_PANEL } from 'constants';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { showModal } from 'store';
 
 const Header = () => {
   const { tasksUserScore, tasksChecked } = useSelector((store) => store.userAnswers);
+  const dispatch = useDispatch();
+  const openModal = useCallback(() => {
+    dispatch(showModal({ modalId: CONTROL_PANEL }));
+  }, []);
 
   return (
     <Container>
       <NavBarElement bg="dark" variant="dark">
         <NavigationContainer>
-          <Navbar.Brand href="/EngT/">EngT</Navbar.Brand>
+          <Toggle onClick={openModal} />
+          <Navbar.Brand href="/EngT/">
+            EngT
+          </Navbar.Brand>
+          <Link to="/">Main</Link>
+          <Link to="/templates">Templates</Link>
+
           <NavElementsContainer>
             <Score>
               {`Tasks checked: ${tasksChecked}`}
@@ -65,6 +77,10 @@ const Score = styled.div`
   padding: 3px;
   margin: 5px;
   padding: 8px 16px;
+`;
+
+const Toggle = styled(Navbar.Toggle)`
+  display: flex !important;
 `;
 
 export default Header;

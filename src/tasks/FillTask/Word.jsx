@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { NEW_LINE } from 'constants';
+import { normalizeString } from '../helpers';
 
 const Word = ({
   word, questionId, onAnswerHandler,
@@ -19,7 +20,7 @@ const Word = ({
 
   const value = creator ? title : userAnswer;
   const isCorrect = creator
-  || (checked && title?.toLowerCase()?.trim() === userAnswer?.toLowerCase()?.trim());
+  || (checked && normalizeString(title) === normalizeString(userAnswer));
   const isIncorrect = checked && !isCorrect;
 
   const TooltipComponent = useMemo(() => (

@@ -6,7 +6,7 @@ import { loadTasks } from 'store';
 import { isNull } from 'lodash';
 import Spinner from 'react-bootstrap/Spinner';
 
-const MainRoute = () => {
+const TasksRoute = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.tasks);
 
@@ -50,4 +50,4 @@ const SpinnerContainer = styled.div`
   justify-content: center;
 `;
 
-export default MainRoute;
+export default TasksRoute;

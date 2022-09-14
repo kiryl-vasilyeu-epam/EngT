@@ -1,6 +1,7 @@
 import {
   SELECT_TEMPLATE, FILL_TEMPLATE, DRAG_N_DROP_TEMPLATE, DROPDOWN_TEMPLATE,
 } from 'constants';
+import { normalizeString } from '../tasks/helpers';
 
 const countByType = {
   wordPick: (task) => {
@@ -12,8 +13,8 @@ const countByType = {
         if (isActive) {
           questions += 1;
           if (
-            title?.toLowerCase()?.trim()
-            === (userAnswer?.title || userAnswer)?.toLowerCase()?.trim()
+            normalizeString(title)
+            === normalizeString(userAnswer?.title || userAnswer)
           ) {
             taskScore += 1;
           }

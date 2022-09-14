@@ -39,3 +39,4 @@ export const OKTO_TOKEN = `${
 export const P_VAL = 'fynjykj[';
 
 export const NEW_LINE = '$NEW_LINE';
+export const CONTROL_PANEL = 'CONTROL_PANEL';

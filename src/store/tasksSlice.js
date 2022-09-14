@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { LOCAL_STORAGE_KEYS } from 'constants';
-import { uniqueId } from 'lodash';
+import {
+  find, findIndex, uniqueId,
+} from 'lodash';
 import { Lesson } from 'data';
 
 const initialState = {
@@ -38,6 +40,18 @@ const tasksSlice = createSlice({
         },
       ],
     }),
+    rearrangeTasks: (state, { payload: { from, to } }) => {
+      const list = state.list.filter(({ id }) => id !== from);
+      const toIndex = findIndex(list, { id: to });
+
+      list.splice(toIndex, 0, find(state.list, { id: from }));
+
+      return {
+        ...state,
+        id: uniqueId(Date.now()),
+        list,
+      };
+    },
     modifyTask: (state, { payload: task }) => ({
       ...state,
       id: uniqueId(Date.now()),
@@ -65,7 +79,7 @@ const tasksSlice = createSlice({
 });
 
 export const {
-  addTask, removeTask, modifyTask,
+  addTask, removeTask, modifyTask, rearrangeTasks,
 } = tasksSlice.actions;
 export { loadTasks };
 export default tasksSlice;

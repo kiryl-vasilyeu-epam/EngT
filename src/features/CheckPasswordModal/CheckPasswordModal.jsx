@@ -18,12 +18,12 @@ const CheckPasswordModal = ({ setPasswordChecked }) => {
   }, [setIsInvalid, setInputValue]);
 
   useEffect(() => {
-    const pass = sessionStorage.getItem('template');
-    if (pass === P_VAL) {
-      setPasswordChecked(true);
-    } else {
-      dispatch(showModal({ modalId }));
-    }
+    // const pass = sessionStorage.getItem('template');
+    // if (pass === P_VAL) {
+    setPasswordChecked(true);
+    // } else {
+    //   dispatch(showModal({ modalId }));
+    // }
   }, [modalId, setPasswordChecked]);
 
   const onClick = useCallback(() => {
