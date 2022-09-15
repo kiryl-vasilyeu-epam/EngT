@@ -1,37 +1,39 @@
 import { createSlice, current } from '@reduxjs/toolkit';
-import { LOCAL_STORAGE_KEYS } from 'constants';
+import { ENDPOINT } from 'constants';
 import { getScore } from './helpers';
 
-const updateUserAnswersCash = (newState) => {
-  const state = JSON.stringify(newState);
-  localStorage.setItem(LOCAL_STORAGE_KEYS.USER_ANSWERS, state);
+const updateUserAnswersCash = async (newState) => {
+  try {
+    await fetch(`${ENDPOINT}/updateUserAnswer/?username=${encodeURIComponent(newState.userName)}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...newState,
+        tasks: JSON.stringify(newState.tasks),
+      }),
+    });
+  } finally {
+    // eslint-disable-next-line no-console
+    console.log('finish');
+  }
 };
 
+const initialState = {
+  tasks: [],
+  userName: '',
+  userScore: 0,
+  tasksChecked: 0,
+};
 const userAnswersSlice = createSlice({
   name: 'userAnswers',
-  initialState: {
-    tasks: [],
-    id: '',
-    userScore: 0,
-    tasksChecked: 0,
-  },
+  initialState,
   reducers: {
-    initUserAnswers: (state, { payload: { tasks, id } }) => {
-      const userAnswers = JSON.parse(
-        localStorage.getItem(LOCAL_STORAGE_KEYS.USER_ANSWERS) || '{}',
-      );
-      if (userAnswers.id === id) {
-        return userAnswers;
-      }
-
-      return {
-        ...state,
-        tasks,
-        id,
-        userScore: 0,
-        tasksChecked: 0,
-      };
-    },
+    initUserAnswers: (state, { payload: answer }) => ({
+      ...initialState,
+      ...answer,
+    }),
     setChecked: (state, { payload: id }) => {
       const tasks = current(state.tasks);
       let tasksChecked = 0;

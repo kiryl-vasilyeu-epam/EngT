@@ -28,6 +28,7 @@ export const LOCAL_STORAGE_KEYS = {
   LESSON_ID: 'LESSON_ID',
   USER_ANSWERS: 'USER_ANSWERS',
   CHECKED: 'CHECKED',
+  USERNAME: 'USERNAME',
 };
 
 export const OKTO_TOKEN = `${
@@ -40,3 +41,5 @@ export const P_VAL = 'fynjykj[';
 
 export const NEW_LINE = '$NEW_LINE';
 export const CONTROL_PANEL = 'CONTROL_PANEL';
+export const USER_NAME = 'USER_NAME';
+export const ENDPOINT = 'http://localhost:1337';

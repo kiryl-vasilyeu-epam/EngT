@@ -1,9 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { Base64 } from 'js-base64';
-import { octokit } from 'api';
 import Spinner from 'react-bootstrap/Spinner';
 import { ButtonText } from 'components';
+import { ENDPOINT } from 'constants';
 
 const CreatorsControls = ({
   tasks, id, loading, openModal,
@@ -24,36 +23,20 @@ const CreatorsControls = ({
 
   const uploadState = useCallback(async () => {
     setUploading(true);
-    const content = Base64.encode(
-      JSON.stringify({
-        tasks,
-        id,
-      }),
-    );
-    const shaData = await octokit.repos.getContent({
-      owner: 'kiryl-vasilyeu-epam',
-      ref: 'lesson',
-      repo: 'EngT',
-      path: 'src/data/Lesson.json',
-    });
-
-    const sha = shaData?.data?.sha;
-
-    const result = await octokit.repos.createOrUpdateFileContents({
-      owner: 'kiryl-vasilyeu-epam',
-      repo: 'EngT',
-      branch: 'lesson',
-      path: 'src/data/Lesson.json',
-      message: 'Add new lesson',
-      content,
-      sha,
-    });
-    if (result.status !== 200) {
-      // eslint-disable-next-line no-alert
-      alert('Error while uploading tasks');
+    try {
+      await fetch(`${ENDPOINT}/updateTasks`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          tasks,
+          id,
+        }),
+      });
+    } finally {
+      setUploading(false);
     }
-
-    setUploading(false);
   }, [tasks, id, setUploading]);
 
   return (
@@ -81,7 +64,7 @@ const CreatorsControls = ({
                   aria-hidden="true"
                 />
               )
-              : 'Upload'
+              : 'Save'
           }
           outline
           onClick={uploadState}

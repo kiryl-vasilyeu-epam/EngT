@@ -3,23 +3,27 @@ import styled from 'styled-components';
 import NavContainer from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { COLORS, CONTROL_PANEL } from 'constants';
+import { COLORS, CONTROL_PANEL, USER_NAME } from 'constants';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { showModal } from 'store';
+import { ButtonText } from 'components';
 
 const Header = () => {
-  const { tasksUserScore, tasksChecked } = useSelector((store) => store.userAnswers);
+  const { tasksUserScore, tasksChecked, userName } = useSelector((store) => store.userAnswers);
   const dispatch = useDispatch();
-  const openModal = useCallback(() => {
+  const openControlModal = useCallback(() => {
     dispatch(showModal({ modalId: CONTROL_PANEL }));
+  }, []);
+  const openUserModal = useCallback(() => {
+    dispatch(showModal({ modalId: USER_NAME }));
   }, []);
 
   return (
     <Container>
       <NavBarElement bg="dark" variant="dark">
         <NavigationContainer>
-          <Toggle onClick={openModal} />
+          <Toggle onClick={openControlModal} />
           <Navbar.Brand href="/EngT/">
             EngT
           </Navbar.Brand>
@@ -33,6 +37,13 @@ const Header = () => {
             <Score>
               {`Global Score: ${tasksChecked ? tasksUserScore : 0}`}
             </Score>
+            <ButtonText
+              title={userName}
+              onClick={openUserModal}
+              variant="light"
+              outline
+              size="sm"
+            />
           </NavElementsContainer>
         </NavigationContainer>
       </NavBarElement>
@@ -71,11 +82,11 @@ const NavigationContainer = styled(NavContainer)`
 `;
 
 const Score = styled.div`
-  border: 2px solid ${COLORS.BACKGROUND_COLOR};
+  border: 1px solid ${COLORS.BACKGROUND_COLOR};
   color: ${COLORS.BACKGROUND_COLOR};
   border-radius: 7px;
+  margin: 0 5px;
   padding: 3px;
-  margin: 5px;
   padding: 8px 16px;
 `;
 

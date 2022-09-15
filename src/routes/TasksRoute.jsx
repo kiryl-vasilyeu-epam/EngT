@@ -1,30 +1,24 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Tasks } from 'tasks';
-import { loadTasks } from 'store';
-import { isNull } from 'lodash';
 import Spinner from 'react-bootstrap/Spinner';
+import { UserNameModal } from 'features';
 
 const TasksRoute = () => {
-  const dispatch = useDispatch();
+  const [userName, setUserName] = useState(null);
   const { loading } = useSelector((state) => state.tasks);
-
-  useEffect(() => {
-    if (isNull(loading)) {
-      dispatch(loadTasks());
-    }
-  }, [loading]);
 
   return (
     <Content>
-      {loading ? (
+      {(loading || !userName) ? (
         <SpinnerContainer>
           <Spinner animation="border" variant="primary" />
         </SpinnerContainer>
       ) : (
         <Tasks />
       )}
+      <UserNameModal setUserName={setUserName} />
     </Content>
   );
 };

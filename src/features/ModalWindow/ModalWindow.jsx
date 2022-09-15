@@ -15,12 +15,13 @@ const ModalWindow = ({
   onClose,
   setModalId,
   withoutUserClose,
+  id,
 }) => {
-  const [modalId] = useState(uniqueId('modal_'));
+  const [modalId] = useState(id || uniqueId('modal_'));
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(initModal(modalId));
-    setModalId(modalId);
+    setModalId?.(modalId);
     return () => {
       dispatch(deleteModal(modalId));
     };

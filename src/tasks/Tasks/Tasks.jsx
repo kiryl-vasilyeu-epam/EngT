@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
   SELECT_TEMPLATE,
@@ -7,7 +7,6 @@ import {
   DRAG_N_DROP_TEMPLATE,
   FILL_TEMPLATE,
 } from 'constants';
-import { initUserAnswers } from 'store';
 import { SelectTask } from '../SelectTask';
 import { FillTask } from '../FillTask';
 import { DropdownTask } from '../DropdownTask';
@@ -23,14 +22,8 @@ const COMPONENTS_VARIANT = {
 const Tasks = ({
   creator, modalId,
 }) => {
-  const { tasks: userAnswers, id: userAnswersId } = useSelector((state) => state.userAnswers);
-  const { list: tasks, id: tasksId } = useSelector((state) => state.tasks);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (!creator && userAnswersId !== tasksId) {
-      dispatch(initUserAnswers({ tasks, id: tasksId }));
-    }
-  }, [tasks, creator, tasksId, userAnswersId]);
+  const { tasks: userAnswers } = useSelector((state) => state.userAnswers);
+  const { list: tasks } = useSelector((state) => state.tasks);
   const data = creator ? tasks : userAnswers;
 
   return (
