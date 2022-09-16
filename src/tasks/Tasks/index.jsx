@@ -1,3 +1,4 @@
 import Tasks from './Tasks';
+import TasksComponent from './TasksComponent';
 
-export { Tasks };
+export { Tasks, TasksComponent };

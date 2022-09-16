@@ -6,7 +6,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 
 const Word = ({
   word, questionId, onAnswerHandler,
-  creator, checked, activeWord,
+  creator, checked, activeWord, viewOnly,
 }) => {
   const {
     title, isActive, userAnswer,
@@ -31,6 +31,7 @@ const Word = ({
   }, []);
 
   const onDrop = useCallback((e) => {
+    if (viewOnly) return;
     setWithHighlight(false);
     const answer = JSON.parse(e.dataTransfer.getData('drag'));
     onAnswerHandler({
@@ -39,9 +40,11 @@ const Word = ({
       userAnswer: answer,
       currentUserAnswer: userAnswer,
     });
-  }, [questionId, word, onAnswerHandler]);
+  }, [questionId, word, onAnswerHandler, viewOnly]);
 
   const onClick = useCallback(() => {
+    if (viewOnly) return;
+
     if (activeWord) {
       onAnswerHandler({
         questionId,
@@ -57,7 +60,7 @@ const Word = ({
         isRemove: true,
       });
     }
-  }, [questionId, word, onAnswerHandler, activeWord]);
+  }, [questionId, word, onAnswerHandler, activeWord, viewOnly]);
 
   const TooltipComponent = useMemo(() => (
     <Tooltip style={{ position: 'absolute' }}>{title}</Tooltip>

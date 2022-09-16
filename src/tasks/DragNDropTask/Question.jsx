@@ -6,7 +6,7 @@ import { QuestionContainer } from '../components';
 import Word from './Word';
 
 const Question = ({
-  question, checked, creator, onAnswerHandler, index, activeWord,
+  question, checked, creator, onAnswerHandler, index, activeWord, viewOnly,
 }) => {
   const { words, id, picture } = question;
 
@@ -43,6 +43,7 @@ const Question = ({
           creator={creator}
           checked={checked}
           activeWord={activeWord}
+          viewOnly={viewOnly}
         />
       ))}
     </QuestionContainer>

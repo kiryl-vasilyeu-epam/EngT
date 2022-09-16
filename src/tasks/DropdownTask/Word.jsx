@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const Word = ({
   word, questionId, onAnswerHandler,
-  creator, checked,
+  creator, checked, viewOnly,
 }) => {
   const {
     title, options, isActive, userAnswer,
@@ -37,6 +37,7 @@ const Word = ({
           isCorrect={isCorrect}
           isIncorrect={isIncorrect}
           tooltip={isIncorrect && title}
+          disabled={checked || creator || viewOnly}
         />
       ) : title}
     </Container>

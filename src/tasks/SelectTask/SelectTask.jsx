@@ -9,6 +9,7 @@ const SelectTask = ({
   task,
   creator,
   modalId,
+  viewOnly,
 }) => {
   const {
     id, questions, title, type, media, checked, userScore,
@@ -17,7 +18,7 @@ const SelectTask = ({
   const dispatch = useDispatch();
 
   const onAnswerHandler = useCallback((questionId, answerId, userAnswer) => {
-    if (checked || creator) return;
+    if (checked || creator || viewOnly) return;
 
     dispatch(updateUserAnswer({
       taskId: id,
@@ -45,11 +46,12 @@ const SelectTask = ({
         )),
       },
     }));
-  }, [task, creator]);
+  }, [task, creator, viewOnly]);
 
   const onCheckHandler = useCallback(() => {
+    if (viewOnly) return;
     dispatch(setChecked(id));
-  }, [id]);
+  }, [id, viewOnly]);
 
   return (
     <TaskContainer
@@ -62,6 +64,7 @@ const SelectTask = ({
       checked={checked}
       setChecked={onCheckHandler}
       userScore={userScore}
+      viewOnly={viewOnly}
     >
       {questions.map((question, index) => (
         <Question

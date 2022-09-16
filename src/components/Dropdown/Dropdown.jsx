@@ -11,6 +11,7 @@ const Dropdown = ({
   onChange,
   isCorrect, isIncorrect,
   tooltip,
+  disabled,
 }) => {
   const [width, setWidth] = useState(10);
   const ref = useRef(null);
@@ -63,7 +64,7 @@ const Dropdown = ({
         show={tooltip ? undefined : false}
         overlay={TooltipComponent}
       >
-        <BootstrapDropdown>
+        <BootstrapDropdown disabled={disabled}>
 
           <StyledDropdown
             size="sm"

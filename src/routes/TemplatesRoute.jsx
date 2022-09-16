@@ -1,11 +1,13 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Tasks } from 'tasks';
-import { CreateTemplateModal, CheckPasswordModal, ControlPanel } from 'features';
-import { showModal, loadTasks } from 'store';
-import { isNull } from 'lodash';
+import {
+  CreateTemplateModal, CheckPasswordModal, ControlPanel, WebsocketProvider,
+} from 'features';
+import { showModal } from 'store';
 import Spinner from 'react-bootstrap/Spinner';
+import { UserAnswerModal } from 'features/UserAnswerModal';
 import CreatorsControls from './CreatorsControls';
 
 const TemplatesRoute = () => {
@@ -15,34 +17,31 @@ const TemplatesRoute = () => {
   const openModal = useCallback(() => {
     dispatch(showModal({ modalId }));
   }, [modalId]);
-  const { list: tasks, loading, id } = useSelector((state) => state.tasks);
-
-  useEffect(() => {
-    if (isNull(loading)) {
-      dispatch(loadTasks());
-    }
-  }, [loading]);
+  const { list: tasks, id } = useSelector((state) => state.tasks);
 
   return (
     <Content>
-      {(loading || !passwordChecked) ? (
-        <SpinnerContainer>
-          <Spinner animation="border" variant="primary" />
-        </SpinnerContainer>
-      ) : (
-        <>
-          <ControlPanel />
-          <TemplatesContainer>
-            <Tasks
-              creator
-              modalId={modalId}
-            />
-            <CreatorsControls id={id} tasks={tasks} openModal={openModal} loading={loading} />
-          </TemplatesContainer>
-        </>
-      )}
-      <CreateTemplateModal handleModalId={handleModalId} />
-      <CheckPasswordModal setPasswordChecked={setPasswordChecked} />
+      <WebsocketProvider>
+        {(!passwordChecked) ? (
+          <SpinnerContainer>
+            <Spinner animation="border" variant="primary" />
+          </SpinnerContainer>
+        ) : (
+          <>
+            <ControlPanel />
+            <TemplatesContainer>
+              <Tasks
+                creator
+                modalId={modalId}
+              />
+              <CreatorsControls id={id} tasks={tasks} openModal={openModal} />
+            </TemplatesContainer>
+            <CreateTemplateModal handleModalId={handleModalId} />
+            <UserAnswerModal />
+          </>
+        )}
+        <CheckPasswordModal setPasswordChecked={setPasswordChecked} />
+      </WebsocketProvider>
     </Content>
   );
 };
@@ -59,6 +58,7 @@ const SpinnerContainer = styled.div`
   flex: 1;
   align-items: center;
   justify-content: center;
+  height: 100%;
 `;
 
 const TemplatesContainer = styled.div``;

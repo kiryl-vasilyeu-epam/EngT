@@ -4,6 +4,7 @@ import tasksSlice from './tasksSlice';
 import userAnswersSlice from './userAnswersSlice';
 import modalsControlSlice from './modalsControlSlice';
 import templateCreationSlice from './templateCreationSlice';
+import appConnectionSlice from './appConnectionSlice';
 
 export const logger = (store) => (next) => (action) => {
   console.group(`%c${action.type}`, 'color: #e3445f');
@@ -30,6 +31,7 @@ export default configureStore({
     userAnswers: userAnswersSlice.reducer,
     modal: modalsControlSlice.reducer,
     template: templateCreationSlice.reducer,
+    appConnection: appConnectionSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware(),

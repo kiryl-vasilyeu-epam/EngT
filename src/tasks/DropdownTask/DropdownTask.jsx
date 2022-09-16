@@ -8,6 +8,7 @@ const DropdownTask = ({
   task,
   creator,
   modalId,
+  viewOnly,
 }) => {
   const {
     id, questions, title, type, media, checked, userScore,
@@ -16,7 +17,7 @@ const DropdownTask = ({
   const dispatch = useDispatch();
 
   const onAnswerHandler = useCallback((questionId, wordId, userAnswer) => {
-    if (checked || creator) return;
+    if (checked || creator || viewOnly) return;
 
     dispatch(updateUserAnswer({
       taskId: id,
@@ -39,11 +40,12 @@ const DropdownTask = ({
         )),
       },
     }));
-  }, [checked, creator, task]);
+  }, [checked, creator, task, viewOnly]);
 
   const onCheckHandler = useCallback(() => {
+    if (viewOnly) return;
     dispatch(setChecked(id));
-  }, [id]);
+  }, [id, viewOnly]);
 
   return (
     <TaskContainer
@@ -56,7 +58,7 @@ const DropdownTask = ({
       checked={checked}
       setChecked={onCheckHandler}
       userScore={userScore}
-
+      viewOnly={viewOnly}
     >
       {questions.map((question, index) => (
         <Question
@@ -66,6 +68,7 @@ const DropdownTask = ({
           creator={creator}
           index={index}
           onAnswerHandler={onAnswerHandler}
+          viewOnly={viewOnly}
         />
       ))}
     </TaskContainer>

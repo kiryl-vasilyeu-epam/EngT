@@ -1,34 +1,23 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { ENDPOINT } from 'constants';
+import { createSlice } from '@reduxjs/toolkit';
 import {
   find, findIndex, uniqueId,
 } from 'lodash';
 
 const initialState = {
   list: [],
-  loading: null,
   id: '',
+  updatedBySocket: true,
 };
-
-const loadTasks = createAsyncThunk(
-  'tasks/loadTasks',
-  async () => {
-    try {
-      const tasksJson = await fetch(`${ENDPOINT}/tasks`);
-      const [id, tasksData] = await tasksJson.json();
-      const tasks = JSON.parse(tasksData);
-
-      return { tasks: tasks || [], id: id || '' };
-    } catch (e) {
-      return { tasks: [], id: '' };
-    }
-  },
-);
 
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
+    initTasks: (state, { payload: tasksData }) => ({
+      ...state,
+      ...tasksData,
+      updatedBySocket: true,
+    }),
     addTask: (state, { payload: task }) => ({
       ...state,
       id: uniqueId(Date.now()),
@@ -39,6 +28,7 @@ const tasksSlice = createSlice({
           id: uniqueId('task_'),
         },
       ],
+      updatedBySocket: false,
     }),
     rearrangeTasks: (state, { payload: { from, to } }) => {
       const list = state.list.filter(({ id }) => id !== from);
@@ -50,6 +40,7 @@ const tasksSlice = createSlice({
         ...state,
         id: uniqueId(Date.now()),
         list,
+        updatedBySocket: false,
       };
     },
     modifyTask: (state, { payload: task }) => ({
@@ -58,28 +49,18 @@ const tasksSlice = createSlice({
       list: state.list.map(
         (iTask) => (iTask.id === task.id ? task : iTask),
       ),
+      updatedBySocket: false,
     }),
     removeTask: (state, { payload: taskId }) => ({
       ...state,
       id: uniqueId(Date.now()),
       list: state.list.filter(({ id }) => id !== taskId),
-    }),
-  },
-  extraReducers: {
-    [loadTasks.pending]: (state) => ({
-      ...state,
-      loading: true,
-    }),
-    [loadTasks.fulfilled]: (state, { payload: { tasks, id } }) => ({
-      list: tasks,
-      id,
-      loading: false,
+      updatedBySocket: false,
     }),
   },
 });
 
 export const {
-  addTask, removeTask, modifyTask, rearrangeTasks,
+  addTask, removeTask, modifyTask, rearrangeTasks, initTasks,
 } = tasksSlice.actions;
-export { loadTasks };
 export default tasksSlice;

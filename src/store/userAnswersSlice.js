@@ -1,24 +1,5 @@
 import { createSlice, current } from '@reduxjs/toolkit';
-import { ENDPOINT } from 'constants';
 import { getScore } from './helpers';
-
-const updateUserAnswersCash = async (newState) => {
-  try {
-    await fetch(`${ENDPOINT}/updateUserAnswer/?username=${encodeURIComponent(newState.userName)}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ...newState,
-        tasks: JSON.stringify(newState.tasks),
-      }),
-    });
-  } finally {
-    // eslint-disable-next-line no-console
-    console.log('finish');
-  }
-};
 
 const initialState = {
   tasks: [],
@@ -30,15 +11,15 @@ const userAnswersSlice = createSlice({
   name: 'userAnswers',
   initialState,
   reducers: {
-    initUserAnswers: (state, { payload: answer }) => ({
+    initUserAnswers: (state, { payload: userAnswerData }) => ({
       ...initialState,
-      ...answer,
+      ...userAnswerData,
     }),
     setChecked: (state, { payload: id }) => {
       const tasks = current(state.tasks);
       let tasksChecked = 0;
       let scoreSum = 0;
-      const newState = {
+      return {
         ...state,
         tasks: tasks.map((task) => {
           if (task.id === id) {
@@ -62,17 +43,11 @@ const userAnswersSlice = createSlice({
         tasksUserScore: +(scoreSum / tasksChecked).toFixed(1),
         tasksChecked,
       };
-      updateUserAnswersCash(newState);
-      return newState;
     },
-    updateUserAnswer: (state, { payload: { taskId, userAnswer } }) => {
-      const newState = {
-        ...state,
-        tasks: state.tasks.map((task) => (task.id === taskId ? userAnswer : task)),
-      };
-      updateUserAnswersCash(newState);
-      return newState;
-    },
+    updateUserAnswer: (state, { payload: { taskId, userAnswer } }) => ({
+      ...state,
+      tasks: state.tasks.map((task) => (task.id === taskId ? userAnswer : task)),
+    }),
   },
 });
 

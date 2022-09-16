@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Tasks } from 'tasks';
 import Spinner from 'react-bootstrap/Spinner';
-import { UserNameModal } from 'features';
+import { UserNameModal, WebsocketProvider } from 'features';
 
 const TasksRoute = () => {
-  const [userName, setUserName] = useState(null);
-  const { loading } = useSelector((state) => state.tasks);
+  const { connected } = useSelector((state) => state.appConnection);
 
   return (
     <Content>
-      {(loading || !userName) ? (
-        <SpinnerContainer>
-          <Spinner animation="border" variant="primary" />
-        </SpinnerContainer>
-      ) : (
-        <Tasks />
-      )}
-      <UserNameModal setUserName={setUserName} />
+      <WebsocketProvider>
+        {connected ? (
+          <>
+            <Tasks />
+            <UserNameModal />
+          </>
+        ) : (
+          <SpinnerContainer>
+            <Spinner animation="border" variant="primary" />
+          </SpinnerContainer>
+        )}
+      </WebsocketProvider>
     </Content>
   );
 };

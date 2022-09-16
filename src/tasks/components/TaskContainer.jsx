@@ -15,6 +15,7 @@ const TaskContainer = ({
   checked,
   setChecked,
   userScore,
+  viewOnly,
 }) => (
   <Container>
     <Card.Header>
@@ -38,7 +39,7 @@ const TaskContainer = ({
           title={checked ? `Score: ${userScore}` : 'Check'}
           variant={checked ? 'light' : 'primary'}
           onClick={setChecked}
-          disabled={checked}
+          disabled={checked || viewOnly}
           fullWidth
         />
       )

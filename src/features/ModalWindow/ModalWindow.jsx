@@ -16,6 +16,7 @@ const ModalWindow = ({
   setModalId,
   withoutUserClose,
   id,
+  wide,
 }) => {
   const [modalId] = useState(id || uniqueId('modal_'));
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const ModalWindow = ({
 
   return (
     <Wrapper onClick={closeModal}>
-      <Content onClick={handleContentClick}>
+      <Content onClick={handleContentClick} $wide={wide}>
         <Header>
           <div style={{ width: 40 }}>
             {showBackButton && (
@@ -100,8 +101,8 @@ const Content = styled(Card)`
   position: relative;
   background: white;
 
-  width: 60%;
-  height: 80%;
+  width: ${({ $wide }) => ($wide ? '90%' : '60%')};
+  height: ${({ $wide }) => ($wide ? '90%' : '80%')};
   @media (max-width: 1100px) {
     width: 95%;
   };

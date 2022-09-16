@@ -13,6 +13,7 @@ const DragNDropTask = ({
   task,
   creator,
   modalId,
+  viewOnly,
 }) => {
   const {
     id, questions, title, type, answers, media, checked, userScore,
@@ -32,7 +33,7 @@ const DragNDropTask = ({
     currentUserAnswer,
     isRemove,
   }) => {
-    if (checked || creator) return;
+    if (checked || creator || viewOnly) return;
 
     setActiveWord(null);
     dispatch(updateUserAnswer({
@@ -57,11 +58,12 @@ const DragNDropTask = ({
         )),
       },
     }));
-  }, [task, creator, setActiveWord]);
+  }, [task, creator, setActiveWord, viewOnly]);
 
   const onCheckHandler = useCallback(() => {
+    if (viewOnly) return;
     dispatch(setChecked(id));
-  }, [id]);
+  }, [id, viewOnly]);
 
   const draggableWords = useMemo(() => getDraggableWords(questions), [questions]);
 
@@ -85,9 +87,9 @@ const DragNDropTask = ({
       checked={checked}
       setChecked={onCheckHandler}
       userScore={userScore}
-
+      viewOnly={viewOnly}
     >
-      {!!draggableWords.length && !creator && (
+      {!!draggableWords.length && !creator && !viewOnly && (
         <DraggableWords
           draggableWords={draggableWords}
           answers={answers}
@@ -106,6 +108,7 @@ const DragNDropTask = ({
           index={index}
           onAnswerHandler={onAnswerHandler}
           activeWord={activeWord}
+          viewOnly={viewOnly}
         />
       ))}
     </TaskContainer>

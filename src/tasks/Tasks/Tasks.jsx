@@ -1,44 +1,58 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import {
-  SELECT_TEMPLATE,
-  DROPDOWN_TEMPLATE,
-  DRAG_N_DROP_TEMPLATE,
-  FILL_TEMPLATE,
-} from 'constants';
-import { SelectTask } from '../SelectTask';
-import { FillTask } from '../FillTask';
-import { DropdownTask } from '../DropdownTask';
-import { DragNDropTask } from '../DragNDropTask';
-
-const COMPONENTS_VARIANT = {
-  [SELECT_TEMPLATE]: SelectTask,
-  [DROPDOWN_TEMPLATE]: DropdownTask,
-  [DRAG_N_DROP_TEMPLATE]: DragNDropTask,
-  [FILL_TEMPLATE]: FillTask,
-};
+import { SocketContext } from 'features/WebsocketProvider/WebsocketProvider';
+import Spinner from 'react-bootstrap/Spinner';
+import { initUserAnswers, initTasks } from 'store';
+import TasksComponent from './TasksComponent';
 
 const Tasks = ({
   creator, modalId,
 }) => {
-  const { tasks: userAnswers } = useSelector((state) => state.userAnswers);
-  const { list: tasks } = useSelector((state) => state.tasks);
+  const userAnswerState = useSelector((state) => state.userAnswers);
+  const { tasks: userAnswers } = userAnswerState;
+  const { list: tasks, id: tasksId, updatedBySocket } = useSelector((state) => state.tasks);
   const data = creator ? tasks : userAnswers;
+  const socket = useContext(SocketContext);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (userAnswerState?.userName) {
+      socket.emit('updateUserAnswers', JSON.stringify(userAnswerState));
+    }
+  }, [userAnswerState]);
+
+  useEffect(() => {
+    if (!updatedBySocket) {
+      socket.emit('updateTasks', JSON.stringify({ tasksId, tasks }));
+    }
+  }, [tasks, tasksId, updatedBySocket]);
+
+  useEffect(() => {
+    socket.on('loadUserAnswer', (userAnswerData) => {
+      const loadedUserAnswer = JSON.parse(userAnswerData);
+      dispatch(initUserAnswers(loadedUserAnswer));
+    });
+    socket.on('loadTasks', (tasksData) => {
+      const [id, loadedList] = tasksData;
+      const list = JSON.parse(loadedList);
+      dispatch(initTasks({ id, list }));
+    });
+  }, []);
 
   return (
     <Container>
-      {data.map((task) => {
-        const Component = COMPONENTS_VARIANT[task.type];
-        return (
-          <Component
-            key={`${task.id}_${creator}`}
-            task={task}
-            creator={creator}
-            modalId={modalId}
-          />
-        );
-      })}
+      {!data.length ? (
+        <SpinnerContainer>
+          <Spinner animation="border" variant="primary" />
+        </SpinnerContainer>
+      ) : (
+        <TasksComponent
+          data={data}
+          creator={creator}
+          modalId={modalId}
+        />
+      )}
     </Container>
   );
 };
@@ -46,6 +60,13 @@ const Tasks = ({
 const Container = styled.div`
   width: 100%;
   flex: 1;
+`;
+const SpinnerContainer = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 `;
 
 export default Tasks;

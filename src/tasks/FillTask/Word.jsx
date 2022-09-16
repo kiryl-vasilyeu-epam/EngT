@@ -8,7 +8,7 @@ import { normalizeString } from '../helpers';
 
 const Word = ({
   word, questionId, onAnswerHandler,
-  creator, checked,
+  creator, checked, viewOnly,
 }) => {
   const {
     title, isActive, userAnswer,
@@ -44,7 +44,7 @@ const Word = ({
               onChange={onChange}
               isValid={isCorrect}
               isInvalid={isIncorrect}
-              disabled={checked || creator}
+              disabled={checked || creator || viewOnly}
             />
           </div>
         </OverlayTrigger>

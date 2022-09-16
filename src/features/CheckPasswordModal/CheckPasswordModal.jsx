@@ -1,6 +1,9 @@
 import { ButtonText, Input } from 'components';
 import { P_VAL } from 'constants';
-import React, { useState, useEffect, useCallback } from 'react';
+import { SocketContext } from 'features/WebsocketProvider/WebsocketProvider';
+import React, {
+  useState, useEffect, useCallback, useContext,
+} from 'react';
 import { useDispatch } from 'react-redux';
 import { hideModal, showModal } from 'store';
 import styled from 'styled-components';
@@ -11,25 +14,33 @@ const CheckPasswordModal = ({ setPasswordChecked }) => {
   const [modalId, setModalId] = useState(null);
   const [isInvalid, setIsInvalid] = useState(false);
   const dispatch = useDispatch();
+  const socket = useContext(SocketContext);
 
   const onChange = useCallback((e) => {
     setIsInvalid(false);
     setInputValue(e);
   }, [setIsInvalid, setInputValue]);
 
-  useEffect(() => {
-    // const pass = sessionStorage.getItem('template');
-    // if (pass === P_VAL) {
+  const registerAdmin = useCallback(async () => {
+    socket.emit('registerAdmin');
     setPasswordChecked(true);
-    // } else {
-    //   dispatch(showModal({ modalId }));
-    // }
+  }, [setPasswordChecked]);
+
+  useEffect(() => {
+    if (modalId) {
+      const pass = sessionStorage.getItem('template');
+      if (pass === P_VAL) {
+        registerAdmin();
+      } else {
+        dispatch(showModal({ modalId }));
+      }
+    }
   }, [modalId, setPasswordChecked]);
 
   const onClick = useCallback(() => {
     if (inputValue === P_VAL) {
       sessionStorage.setItem('template', inputValue);
-      setPasswordChecked(true);
+      registerAdmin();
       dispatch(hideModal({ modalId }));
     } else {
       setIsInvalid(true);

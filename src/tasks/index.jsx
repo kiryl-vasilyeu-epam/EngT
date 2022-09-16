@@ -1,2 +1,2 @@
 export { SelectTask } from './SelectTask';
-export { Tasks } from './Tasks';
+export { Tasks, TasksComponent } from './Tasks';
