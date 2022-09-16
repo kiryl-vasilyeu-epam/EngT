@@ -44,7 +44,7 @@ const ControlPanel = () => {
         <Offcanvas.Title>Menu</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
-        <Accordion defaultActiveKey="1">
+        <Accordion>
           <Accordion.Item eventKey="0">
             <Accordion.Header>Tasks</Accordion.Header>
             <Accordion.Body>

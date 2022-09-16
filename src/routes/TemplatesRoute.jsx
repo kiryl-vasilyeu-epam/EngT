@@ -50,7 +50,10 @@ const Content = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
-  padding: 20px;
+  justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 300px;
+  width: 100%;
 `;
 
 const SpinnerContainer = styled.div`
@@ -61,6 +64,10 @@ const SpinnerContainer = styled.div`
   height: 100%;
 `;
 
-const TemplatesContainer = styled.div``;
+const TemplatesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+`;
 
 export default TemplatesRoute;

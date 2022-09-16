@@ -2,7 +2,8 @@ import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import Spinner from 'react-bootstrap/Spinner';
 import { ButtonText } from 'components';
-import { ENDPOINT } from 'constants';
+import { ENDPOINT, COLORS } from 'constants';
+import { TextField } from 'features';
 
 const CreatorsControls = ({
   tasks, id, loading, openModal,
@@ -40,20 +41,22 @@ const CreatorsControls = ({
   }, [tasks, id, setUploading]);
 
   return (
-    <Buttons>
-      <ButtonContainer>
-        <ButtonText
-          title="Download"
-          onClick={downloadState}
-          outline
-          fullWidth
-          disabled={loading}
-        />
-      </ButtonContainer>
+    <Controls>
+      <TextField creator />
+      <Buttons>
+        <ButtonContainer>
+          <ButtonText
+            title="Download"
+            onClick={downloadState}
+            outline
+            fullWidth
+            disabled={loading}
+          />
+        </ButtonContainer>
 
-      <ButtonContainer>
-        <ButtonText
-          title={
+        <ButtonContainer>
+          <ButtonText
+            title={
             uploading
               ? (
                 <Spinner
@@ -66,25 +69,34 @@ const CreatorsControls = ({
               )
               : 'Save'
           }
-          outline
-          onClick={uploadState}
-          disabled={loading || uploading}
-          fullWidth
-        />
-      </ButtonContainer>
+            outline
+            onClick={uploadState}
+            disabled={loading || uploading}
+            fullWidth
+          />
+        </ButtonContainer>
 
-      <ButtonContainer>
-        <ButtonText
-          title="Add task"
-          onClick={openModal}
-          disabled={loading}
-          fullWidth
-        />
-      </ButtonContainer>
-    </Buttons>
+        <ButtonContainer>
+          <ButtonText
+            title="Add task"
+            onClick={openModal}
+            disabled={loading}
+            fullWidth
+          />
+        </ButtonContainer>
+      </Buttons>
+    </Controls>
   );
 };
 
+const Controls = styled.div`
+  width: 80%;
+  bottom: 0;
+  padding-bottom: 20px;
+  position: absolute;
+  background-color: ${COLORS.BACKGROUND_COLOR};
+  z-index: 3;
+`;
 const Buttons = styled.div`
   display: flex;
   flex-direction: row;

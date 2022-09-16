@@ -6,3 +6,4 @@ export { CheckPasswordModal } from './CheckPasswordModal';
 export { ControlPanel } from './ControlPanel';
 export { UserNameModal } from './UserNameModal';
 export { WebsocketProvider } from './WebsocketProvider';
+export { TextField } from './TextField';
