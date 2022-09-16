@@ -14,6 +14,9 @@ const WebsocketProvider = ({ children }) => {
     socketio.on('connect', () => {
       dispatch(setConnection(true));
     });
+    socketio.on('disconnect', () => {
+      dispatch(setConnection(false));
+    });
   }, []);
   return (
     <SocketContext.Provider value={socketio}>

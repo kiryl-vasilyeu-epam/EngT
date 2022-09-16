@@ -11,6 +11,8 @@ import { UserAnswerModal } from 'features/UserAnswerModal';
 import CreatorsControls from './CreatorsControls';
 
 const TemplatesRoute = () => {
+  const { connected } = useSelector((state) => state.appConnection);
+
   const [modalId, handleModalId] = useState(null);
   const [passwordChecked, setPasswordChecked] = useState(null);
   const dispatch = useDispatch();
@@ -22,23 +24,28 @@ const TemplatesRoute = () => {
   return (
     <Content>
       <WebsocketProvider>
-        {(!passwordChecked) ? (
+        {connected ? (
+          <>
+            <CheckPasswordModal setPasswordChecked={setPasswordChecked} />
+            {passwordChecked && (
+              <>
+                <ControlPanel />
+                <TemplatesContainer>
+                  <Tasks
+                    creator
+                    modalId={modalId}
+                  />
+                  <CreatorsControls id={id} tasks={tasks} openModal={openModal} />
+                </TemplatesContainer>
+                <CreateTemplateModal handleModalId={handleModalId} />
+                <UserAnswerModal />
+              </>
+            )}
+          </>
+        ) : (
           <SpinnerContainer>
             <Spinner animation="border" variant="primary" />
           </SpinnerContainer>
-        ) : (
-          <>
-            <ControlPanel />
-            <TemplatesContainer>
-              <Tasks
-                creator
-                modalId={modalId}
-              />
-              <CreatorsControls id={id} tasks={tasks} openModal={openModal} />
-            </TemplatesContainer>
-            <CreateTemplateModal handleModalId={handleModalId} />
-            <UserAnswerModal />
-          </>
         )}
         <CheckPasswordModal setPasswordChecked={setPasswordChecked} />
       </WebsocketProvider>

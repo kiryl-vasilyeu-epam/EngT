@@ -10,7 +10,7 @@ const variants = {
 };
 
 const ColoredContainer = ({ correction, children }) => (
-  <Container border={variants[correction]} correction={correction}>
+  <Container border={variants[correction]}>
     <Body>
       {children}
     </Body>

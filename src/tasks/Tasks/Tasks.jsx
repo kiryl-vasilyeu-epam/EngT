@@ -10,17 +10,17 @@ const Tasks = ({
   creator, modalId,
 }) => {
   const userAnswerState = useSelector((state) => state.userAnswers);
-  const { tasks: userAnswers } = userAnswerState;
+  const { tasks: userAnswers, updatedBySocket: userUpdatedBySocket } = userAnswerState;
   const { list: tasks, id: tasksId, updatedBySocket } = useSelector((state) => state.tasks);
   const data = creator ? tasks : userAnswers;
   const socket = useContext(SocketContext);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (userAnswerState?.userName) {
+    if (userAnswerState?.userName && !userUpdatedBySocket) {
       socket.emit('updateUserAnswers', JSON.stringify(userAnswerState));
     }
-  }, [userAnswerState]);
+  }, [userAnswerState, userUpdatedBySocket]);
 
   useEffect(() => {
     if (!updatedBySocket) {

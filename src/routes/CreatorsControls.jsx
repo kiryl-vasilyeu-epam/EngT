@@ -1,14 +1,22 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import Spinner from 'react-bootstrap/Spinner';
 import { ButtonText } from 'components';
-import { ENDPOINT, COLORS } from 'constants';
+import { COLORS } from 'constants';
 import { TextField } from 'features';
+import { useFilePicker } from 'use-file-picker';
+import { SocketContext } from 'features/WebsocketProvider/WebsocketProvider';
+import { useDispatch } from 'react-redux';
+import { initTasks } from 'store';
 
 const CreatorsControls = ({
-  tasks, id, loading, openModal,
+  tasks, id, openModal,
 }) => {
-  const [uploading, setUploading] = useState(false);
+  const socket = useContext(SocketContext);
+  const dispatch = useDispatch();
+  const [openFileSelector, { filesContent, loading }] = useFilePicker({
+    accept: '.json',
+    multiple: false,
+  });
 
   const downloadState = useCallback(() => {
     const jsonString = `data:text/json;chatset=utf-8,${JSON.stringify({
@@ -21,24 +29,23 @@ const CreatorsControls = ({
 
     link.click();
   }, [tasks, id]);
+  const content = filesContent?.[0]?.content;
 
-  const uploadState = useCallback(async () => {
-    setUploading(true);
+  useEffect(() => {
+    if (loading || !content) return;
     try {
-      await fetch(`${ENDPOINT}/updateTasks`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          tasks,
-          id,
-        }),
-      });
-    } finally {
-      setUploading(false);
+      const { tasks: loadedTasks, id: loadedId } = JSON.parse(content);
+      if (loadedTasks && loadedId && id !== loadedId) {
+        dispatch(initTasks({
+          id: loadedId, list: loadedTasks,
+        }));
+        socket.emit('updateTasks', JSON.stringify({ tasksId: loadedId, tasks: loadedTasks }));
+      }
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('Wrong file format', e);
     }
-  }, [tasks, id, setUploading]);
+  }, [content, loading]);
 
   return (
     <Controls>
@@ -50,29 +57,16 @@ const CreatorsControls = ({
             onClick={downloadState}
             outline
             fullWidth
-            disabled={loading}
           />
         </ButtonContainer>
 
         <ButtonContainer>
           <ButtonText
-            title={
-            uploading
-              ? (
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-              )
-              : 'Save'
-          }
+            title="Upload"
             outline
-            onClick={uploadState}
-            disabled={loading || uploading}
+            onClick={openFileSelector}
             fullWidth
+            type="file"
           />
         </ButtonContainer>
 
@@ -80,7 +74,6 @@ const CreatorsControls = ({
           <ButtonText
             title="Add task"
             onClick={openModal}
-            disabled={loading}
             fullWidth
           />
         </ButtonContainer>
