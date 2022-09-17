@@ -1,32 +1,35 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { SocketContext } from 'features/WebsocketProvider/WebsocketProvider';
 import Spinner from 'react-bootstrap/Spinner';
 import { initUserAnswers, initTasks } from 'store';
+import { debounce } from 'lodash';
 import TasksComponent from './TasksComponent';
 
 const Tasks = ({
   creator, modalId,
 }) => {
   const userAnswerState = useSelector((state) => state.userAnswers);
-  const { tasks: userAnswers, updatedBySocket: userUpdatedBySocket } = userAnswerState;
-  const { list: tasks, id: tasksId, updatedBySocket } = useSelector((state) => state.tasks);
+  const {
+    tasks: userAnswers,
+    updatedBySocket: userUpdatedBySocket,
+    updateByCheck,
+  } = userAnswerState;
+  const { list: tasks } = useSelector((state) => state.tasks);
   const data = creator ? tasks : userAnswers;
   const socket = useContext(SocketContext);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (userAnswerState?.userName && !userUpdatedBySocket) {
-      socket.emit('updateUserAnswers', JSON.stringify(userAnswerState));
-    }
-  }, [userAnswerState, userUpdatedBySocket]);
+  const debounceAnswerUpdate = useCallback(debounce((answerState) => {
+    socket.emit('updateUserAnswers', JSON.stringify(answerState));
+  }, 500), []);
 
   useEffect(() => {
-    if (!updatedBySocket) {
-      socket.emit('updateTasks', JSON.stringify({ tasksId, tasks }));
+    if (userAnswerState?.userName && !userUpdatedBySocket && updateByCheck) {
+      debounceAnswerUpdate(userAnswerState);
     }
-  }, [tasks, tasksId, updatedBySocket]);
+  }, [userAnswerState, userUpdatedBySocket, updateByCheck, debounceAnswerUpdate]);
 
   useEffect(() => {
     socket.on('loadUserAnswer', (userAnswerData) => {
@@ -35,7 +38,7 @@ const Tasks = ({
     });
     socket.on('loadTasks', (tasksData) => {
       const [id, loadedList] = tasksData;
-      const list = JSON.parse(loadedList);
+      const list = JSON.parse(loadedList || '[]');
       dispatch(initTasks({ id, list }));
     });
   }, []);

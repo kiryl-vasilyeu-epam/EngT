@@ -20,7 +20,6 @@ const TemplatesRoute = () => {
     dispatch(showModal({ modalId }));
   }, [modalId]);
   const { list: tasks, id } = useSelector((state) => state.tasks);
-
   return (
     <Content>
       <WebsocketProvider>
@@ -47,7 +46,6 @@ const TemplatesRoute = () => {
             <Spinner animation="border" variant="primary" />
           </SpinnerContainer>
         )}
-        <CheckPasswordModal setPasswordChecked={setPasswordChecked} />
       </WebsocketProvider>
     </Content>
   );

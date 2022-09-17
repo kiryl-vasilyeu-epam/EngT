@@ -7,6 +7,7 @@ import { useFilePicker } from 'use-file-picker';
 import { SocketContext } from 'features/WebsocketProvider/WebsocketProvider';
 import { useDispatch } from 'react-redux';
 import { initTasks } from 'store';
+import { debounce } from 'lodash';
 
 const CreatorsControls = ({
   tasks, id, openModal,
@@ -17,6 +18,14 @@ const CreatorsControls = ({
     accept: '.json',
     multiple: false,
   });
+
+  const debounceTasksUpdate = useCallback(debounce((tasksState) => {
+    socket.emit('updateTasks', JSON.stringify(tasksState));
+  }, 500), []);
+
+  const onClick = useCallback(() => {
+    debounceTasksUpdate({ tasksId: id, tasks });
+  }, [debounceTasksUpdate, tasks]);
 
   const downloadState = useCallback(() => {
     const jsonString = `data:text/json;chatset=utf-8,${JSON.stringify({
@@ -72,6 +81,16 @@ const CreatorsControls = ({
 
         <ButtonContainer>
           <ButtonText
+            title="Save"
+            outline
+            onClick={onClick}
+            fullWidth
+            type="file"
+          />
+        </ButtonContainer>
+
+        <ButtonContainer>
+          <ButtonText
             title="Add task"
             onClick={openModal}
             fullWidth
@@ -88,7 +107,7 @@ const Controls = styled.div`
   padding-bottom: 20px;
   position: absolute;
   background-color: ${COLORS.BACKGROUND_COLOR};
-  z-index: 3;
+  z-index: 2;
 `;
 const Buttons = styled.div`
   display: flex;

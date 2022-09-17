@@ -7,6 +7,7 @@ const initialState = {
   userScore: 0,
   tasksChecked: 0,
   updatedBySocket: true,
+  updateByCheck: false,
 };
 const userAnswersSlice = createSlice({
   name: 'userAnswers',
@@ -16,6 +17,7 @@ const userAnswersSlice = createSlice({
       ...initialState,
       ...userAnswerData,
       updatedBySocket: true,
+      updateByCheck: false,
     }),
     setChecked: (state, { payload: id }) => {
       const tasks = current(state.tasks);
@@ -45,12 +47,14 @@ const userAnswersSlice = createSlice({
         tasksUserScore: +(scoreSum / tasksChecked).toFixed(1),
         tasksChecked,
         updatedBySocket: false,
+        updateByCheck: true,
       };
     },
     updateUserAnswer: (state, { payload: { taskId, userAnswer } }) => ({
       ...state,
       tasks: state.tasks.map((task) => (task.id === taskId ? userAnswer : task)),
       updatedBySocket: false,
+      updateByCheck: false,
     }),
   },
 });

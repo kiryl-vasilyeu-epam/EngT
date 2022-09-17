@@ -33,7 +33,7 @@ const TextField = ({ creator }) => {
               value={value}
               onChange={handleChange}
               disabled={!creator}
-              rows={20}
+              rows={10}
             />
           </Accordion.Body>
         </Accordion.Item>

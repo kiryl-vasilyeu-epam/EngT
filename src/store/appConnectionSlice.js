@@ -20,10 +20,16 @@ const appConnectionSlice = createSlice({
       ...state,
       activeUsers,
     }),
+    updateActiveUsers: (state, { payload: { userName, userAnswer } }) => ({
+      ...state,
+      activeUsers: state.activeUsers.map(
+        ([name, answer]) => [name, (name === userName ? userAnswer : answer)],
+      ),
+    }),
   },
 });
 
 export const {
-  setConnection, setOnlineUsers, setActiveUsers,
+  setConnection, setOnlineUsers, setActiveUsers, updateActiveUsers,
 } = appConnectionSlice.actions;
 export default appConnectionSlice;

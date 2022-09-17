@@ -92,7 +92,7 @@ const Wrapper = styled.div`
 
   animation: ${fadeIn} .2s;
 
-  z-index: 1;
+  z-index: 3;
 `;
 
 const Content = styled(Card)`

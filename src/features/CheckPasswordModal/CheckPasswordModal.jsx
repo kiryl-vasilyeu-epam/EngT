@@ -35,7 +35,7 @@ const CheckPasswordModal = ({ setPasswordChecked }) => {
         dispatch(showModal({ modalId }));
       }
     }
-  }, [modalId, setPasswordChecked]);
+  }, [modalId, registerAdmin]);
 
   const onClick = useCallback(() => {
     if (inputValue === P_VAL) {

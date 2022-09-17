@@ -56,7 +56,7 @@ const Controls = styled.div`
   padding-bottom: 20px;
   position: absolute;
   background-color: ${COLORS.BACKGROUND_COLOR};
-  z-index: 3;
+  z-index: 2;
 `;
 
 export default TasksRoute;

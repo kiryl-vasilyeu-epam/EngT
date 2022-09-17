@@ -7,6 +7,7 @@ import {
   initModal, hideModal, deleteModal,
   setOnlineUsers,
   setActiveUsers,
+  updateActiveUsers,
 } from 'store';
 import { CONTROL_PANEL } from 'constants';
 import { find } from 'lodash';
@@ -31,6 +32,9 @@ const ControlPanel = () => {
     socket.on('loadActiveUsers', (users) => {
       const activeUsers = JSON.parse(users);
       dispatch(setActiveUsers(activeUsers));
+    });
+    socket.on('updateActiveUsers', (user) => {
+      dispatch(updateActiveUsers(user));
     });
     dispatch(initModal(CONTROL_PANEL));
     return () => {
