@@ -82,7 +82,7 @@ const Margin = styled.div`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  font-size: 20px;
+  font-size: 16px;
 `;
 
 const InputMargin = styled.div`

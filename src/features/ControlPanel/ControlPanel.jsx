@@ -43,7 +43,7 @@ const ControlPanel = () => {
   }, []);
 
   return (
-    <Offcanvas show={visible} onHide={handleClose}>
+    <Offcanvas show={visible} onHide={handleClose} placement="end">
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>Menu</Offcanvas.Title>
       </Offcanvas.Header>

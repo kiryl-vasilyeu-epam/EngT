@@ -15,7 +15,7 @@ const Word = ({
     e.stopPropagation();
 
     divideWords(wordIndex, index);
-  }, [title]);
+  }, [title, divideWords]);
   const titleElement = useMemo(() => (
     <Title>
       {words.map((wordPart, index) => (

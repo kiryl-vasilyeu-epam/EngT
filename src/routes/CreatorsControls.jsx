@@ -48,7 +48,6 @@ const CreatorsControls = ({
         dispatch(initTasks({
           id: loadedId, list: loadedTasks,
         }));
-        socket.emit('updateTasks', JSON.stringify({ tasksId: loadedId, tasks: loadedTasks }));
       }
     } catch (e) {
       // eslint-disable-next-line no-console

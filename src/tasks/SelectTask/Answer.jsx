@@ -60,7 +60,7 @@ const Container = styled.div`
 const IconContainer = styled.div`
   width: 30px;
   height: 30px;
-  font-size: 25px;
+  font-size: 20px;
   color: ${({ correct }) => (correct ? 'limegreen' : 'red')}
 `;
 

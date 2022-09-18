@@ -1,10 +1,11 @@
+import { ENDPOINT } from 'constants';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
 import { setConnection } from 'store';
 
 export const SocketContext = React.createContext();
-const socketio = io('ws://localhost:1337', {
+const socketio = io(ENDPOINT, {
   reconnectionDelayMax: 10000,
 });
 

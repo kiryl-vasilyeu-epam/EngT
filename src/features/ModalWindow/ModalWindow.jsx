@@ -126,7 +126,7 @@ const Title = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   
-  font-size: 30px;
+  font-size: 25px;
 `;
 
 export default ModalWindow;

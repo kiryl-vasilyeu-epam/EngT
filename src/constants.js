@@ -40,7 +40,7 @@ export const OKTO_TOKEN = `${
 export const P_VAL = 'fynjykj[';
 
 export const NEW_LINE = '$NEW_LINE';
-export const ENDPOINT = 'http://localhost:1337';
+export const ENDPOINT = 'ws://localhost:1337';
 
 export const CONTROL_PANEL = 'CONTROL_PANEL';
 export const USER_NAME = 'USER_NAME';

@@ -51,7 +51,7 @@ const Question = ({
 };
 
 const Subtitle = styled.div`
-  font-size: 25px;
+  font-size: 20px;
 `;
 
 const AnswerContainer = styled.div`

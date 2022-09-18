@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Tasks } from 'tasks';
 import {
-  CreateTemplateModal, CheckPasswordModal, ControlPanel, WebsocketProvider,
+  CreateTemplateModal, CheckPasswordModal, ControlPanel, WebsocketProvider, Header,
 } from 'features';
 import { showModal } from 'store';
 import Spinner from 'react-bootstrap/Spinner';
@@ -21,35 +21,46 @@ const TemplatesRoute = () => {
   }, [modalId]);
   const { list: tasks, id } = useSelector((state) => state.tasks);
   return (
-    <Content>
-      <WebsocketProvider>
-        {connected ? (
-          <>
-            <CheckPasswordModal setPasswordChecked={setPasswordChecked} />
-            {passwordChecked && (
+    <>
+      <Header creator />
+      <ScrollContainer>
+
+        <Content>
+          <WebsocketProvider>
+            {connected ? (
               <>
-                <ControlPanel />
-                <TemplatesContainer>
-                  <Tasks
-                    creator
-                    modalId={modalId}
-                  />
-                  <CreatorsControls id={id} tasks={tasks} openModal={openModal} />
-                </TemplatesContainer>
-                <CreateTemplateModal handleModalId={handleModalId} />
-                <UserAnswerModal />
+                <CheckPasswordModal setPasswordChecked={setPasswordChecked} />
+                {passwordChecked && (
+                <>
+                  <ControlPanel />
+                  <TemplatesContainer>
+                    <Tasks
+                      creator
+                      modalId={modalId}
+                    />
+                    <CreatorsControls id={id} tasks={tasks} openModal={openModal} />
+                  </TemplatesContainer>
+                  <CreateTemplateModal handleModalId={handleModalId} />
+                  <UserAnswerModal />
+                </>
+                )}
               </>
+            ) : (
+              <SpinnerContainer>
+                <Spinner animation="border" variant="primary" />
+              </SpinnerContainer>
             )}
-          </>
-        ) : (
-          <SpinnerContainer>
-            <Spinner animation="border" variant="primary" />
-          </SpinnerContainer>
-        )}
-      </WebsocketProvider>
-    </Content>
+          </WebsocketProvider>
+        </Content>
+      </ScrollContainer>
+
+    </>
   );
 };
+
+const ScrollContainer = styled.div`
+  overflow: auto;
+`;
 
 const Content = styled.div`
   display: flex;
@@ -57,7 +68,7 @@ const Content = styled.div`
   flex-direction: row;
   justify-content: center;
   padding-top: 20px;
-  padding-bottom: 300px;
+  padding-bottom: 200px;
   width: 100%;
 `;
 

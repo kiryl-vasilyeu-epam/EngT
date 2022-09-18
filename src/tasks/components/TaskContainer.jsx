@@ -18,7 +18,7 @@ const TaskContainer = ({
   viewOnly,
 }) => (
   <Container>
-    <Card.Header>
+    <CardHeader>
       <Title
         id={id}
         modalId={modalId}
@@ -26,7 +26,7 @@ const TaskContainer = ({
         creator={creator}
         type={type}
       />
-    </Card.Header>
+    </CardHeader>
     <Card.Body>
       {media.map(({ id: mediaId, url }) => (
         <Media key={mediaId} src={url} />
@@ -50,8 +50,12 @@ const TaskContainer = ({
 
 const Container = styled(Card)`
   margin-bottom: 30px;
-  border-bottom-left-radius: 11px;
-  border-bottom-right-radius: 11px;
+  // border-radius: 0px;
+  // border: none;
+`;
+
+const CardHeader = styled(Card.Header)`
+  // background: white;
 `;
 
 export default TaskContainer;

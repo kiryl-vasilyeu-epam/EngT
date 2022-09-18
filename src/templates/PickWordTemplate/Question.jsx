@@ -101,7 +101,7 @@ const Margin = styled.div`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  font-size: 20px;
+  font-size: 16px;
   margin: 10px 0;
 `;
 

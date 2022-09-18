@@ -95,7 +95,7 @@ const ScrollableContainer = styled.div`
 
 const Title = styled.div`
   display: flex;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 500;
   margin-right: 10px;
 `;

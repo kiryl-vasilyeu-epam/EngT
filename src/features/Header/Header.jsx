@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { showModal } from 'store';
 import { ButtonText } from 'components';
 
-const Header = () => {
+const Header = ({ creator }) => {
   const { tasksUserScore, tasksChecked, userName } = useSelector((store) => store.userAnswers);
   const dispatch = useDispatch();
   const openControlModal = useCallback(() => {
@@ -23,7 +23,6 @@ const Header = () => {
     <Container>
       <NavBarElement bg="dark" variant="dark">
         <NavigationContainer>
-          <Toggle onClick={openControlModal} />
           <Navbar.Brand href="/EngT/">
             EngT
           </Navbar.Brand>
@@ -31,19 +30,25 @@ const Header = () => {
           <Link to="/templates">Templates</Link>
 
           <NavElementsContainer>
-            <Score>
-              {`Tasks checked: ${tasksChecked}`}
-            </Score>
-            <Score>
-              {`Global Score: ${tasksChecked ? tasksUserScore : 0}`}
-            </Score>
-            <ButtonText
-              title={userName}
-              onClick={openUserModal}
-              variant="light"
-              outline
-              size="sm"
-            />
+            {creator
+              ? (<Toggle onClick={openControlModal} />)
+              : (
+                <>
+                  <Score>
+                    {`Tasks checked: ${tasksChecked}`}
+                  </Score>
+                  <Score>
+                    {`Global Score: ${tasksChecked ? tasksUserScore : 0}`}
+                  </Score>
+                  <ButtonText
+                    title={userName}
+                    onClick={openUserModal}
+                    variant="light"
+                    outline
+                    size="sm"
+                  />
+                </>
+              )}
           </NavElementsContainer>
         </NavigationContainer>
       </NavBarElement>

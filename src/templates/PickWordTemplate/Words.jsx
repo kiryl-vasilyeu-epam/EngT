@@ -51,7 +51,7 @@ const Words = ({
     }, generateWordFromTitle(rightTitle.join(' ')));
 
     handleWordsChange(questionId, newWords);
-  }, [words]);
+  }, [words, handleWordsChange]);
 
   useUpdate(() => {
     handleWordsChange(questionId, generateWordsFromTitle(title));

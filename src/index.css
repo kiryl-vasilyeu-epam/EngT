@@ -10,7 +10,7 @@ html, body, #root {
   display: flex;
   flex: 1;
 
-  font-size: 20px;
+  font-size: 16px;
   font-family: 'Metropolis', Arial, Helvetica, sans-serif;
 }
 

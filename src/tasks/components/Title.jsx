@@ -50,7 +50,7 @@ const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 500;
 `;
 
