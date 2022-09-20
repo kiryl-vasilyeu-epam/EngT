@@ -49,10 +49,24 @@ const Media = ({ src }) => {
 };
 
 const Container = styled.div`
-  width: 100%;
+  /*Desktop Query*/
+  @media only screen and (min-width: 780px) {
+    height: 50vh;
+  }
+
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+  }
+
+  /*Tablet Query*/
+  @media only screen and (min-width: 481px) and (max-width:780px) {
+    width: 100%;
+  }
   aspect-ratio: 16 / 9;
   border-radius: 7px;
   overflow: hidden;
+  margin: auto;
   border: 2px solid ${COLORS.BORDER_COLOR}
 `;
 
