@@ -37,12 +37,12 @@ const Dropdown = ({
   ), [tooltip]);
 
   const Items = useMemo(() => values.map((val) => (
-    <BootstrapDropdown.Item
+    <StyledItem
       key={val.id}
       onClick={handleChange(val.title)}
     >
       {val.title}
-    </BootstrapDropdown.Item>
+    </StyledItem>
   )), [values, onChange]);
 
   // eslint-disable-next-line no-nested-ternary
@@ -88,12 +88,11 @@ const Dropdown = ({
 };
 
 const StyledDropdown = styled(BootstrapDropdown.Toggle)`
-  display: flex;
   outline: none !important;
   box-shadow: none !important;
-  padding: 0;
-  justify-content: center;
-  align-items: center;
+  padding: 0 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   &:after {
     display: none;
   };
@@ -111,6 +110,12 @@ const StyledDropdown = styled(BootstrapDropdown.Toggle)`
 
 const StyledMenu = styled(BootstrapDropdown.Menu)`
   min-width: 0;
+  max-width: 40vw;
+`;
+
+const StyledItem = styled(BootstrapDropdown.Item)`
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const SizeContainer = styled.div`

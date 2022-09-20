@@ -19,8 +19,10 @@ const Title = ({
   }, [dispatch, modalId, id]);
 
   return (
-    <TitleContainer>
-      {title}
+    <Container>
+      <TitleContainer>
+        {title}
+      </TitleContainer>
       {creator && (
       <CreatorButtons>
         <ButtonText
@@ -42,25 +44,37 @@ const Title = ({
       </CreatorButtons>
 
       )}
-    </TitleContainer>
+    </Container>
   );
 };
 
-const TitleContainer = styled.div`
+const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-size: 25px;
+  align-items: flex-start;
+  font-size: 23px;
+
+  @media only screen and (max-width: 480px) {
+    font-size: 20px;
+  }
+  
   font-weight: 500;
+  padding: 15px 0;
+`;
+
+const TitleContainer = styled.div`
+
 `;
 
 const CreatorButtons = styled.div`
+  margin-top: 3px;
   display: flex;
 `;
+
 const Margin = styled.div`
   display: flex;
   justify-content: center;
-  margin-left: 30px;
+  margin-left: 10px;
 `;
 
 export default Title;

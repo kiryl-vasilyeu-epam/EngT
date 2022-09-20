@@ -1,7 +1,6 @@
 import { RoundIconButton } from 'components';
 import { NEW_LINE } from 'constants';
-import { useUpdate } from 'hooks';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { generateWordsFromTitle, generateWordFromTitle, generateOption } from './helpers';
 
@@ -53,7 +52,7 @@ const Words = ({
     handleWordsChange(questionId, newWords);
   }, [words, handleWordsChange]);
 
-  useUpdate(() => {
+  useEffect(() => {
     handleWordsChange(questionId, generateWordsFromTitle(title));
   }, [title]);
 

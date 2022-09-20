@@ -41,13 +41,15 @@ const Order = () => {
     setWithHighlight(null);
   }, [currentDrag]);
 
+  const needToRenderHighlight = withHighlight !== currentDrag;
+
   return (
     <Container>
       {tasks.map(({ title, id }) => (
         <TaskContainer
           key={id}
           onDragOver={onDragOver}
-          withHighlight={withHighlight === id}
+          withHighlight={withHighlight === id && needToRenderHighlight}
           onDragEnter={onDragEnter(id)}
           onDrop={onDrop(id)}
         >
@@ -75,8 +77,8 @@ const TitleContainer = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border: 2px solid ${COLORS.BORDER_COLOR};
-  border-radius: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
 `;
 const TaskContainer = styled.div`
   display: block;

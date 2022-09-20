@@ -32,7 +32,10 @@ const Question = ({
 
   return (
     <ColoredContainer correction={correction}>
-      <Subtitle>{`${index + 1}. ${title}`}</Subtitle>
+      <Subtitle>
+        <Bold>{`${index + 1}.`}</Bold>
+        {title}
+      </Subtitle>
       <AnswerContainer>
         {answers.map((answer) => (
           <Answer
@@ -51,7 +54,12 @@ const Question = ({
 };
 
 const Subtitle = styled.div`
-  font-size: 20px;
+  display: flex;
+  font-size: 18px;
+`;
+const Bold = styled.div`
+  font-weight: 500;
+  margin-right: 6px;
 `;
 
 const AnswerContainer = styled.div`

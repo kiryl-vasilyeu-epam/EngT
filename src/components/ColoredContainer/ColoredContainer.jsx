@@ -18,14 +18,15 @@ const ColoredContainer = ({ correction, children }) => (
 );
 
 const Container = styled(Card)`
-  margin: 15px 0;
-  border-width: 2px;
+  margin: 20px 0;
+  border-width: 0px;
+  border-radius: 2px;
+  border-left-width: 3px;
 `;
 
 const Body = styled(Card.Body)`
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
 `;
 
 export default ColoredContainer;

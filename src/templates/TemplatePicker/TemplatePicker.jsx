@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TEMPLATES_LIST } from 'constants';
+import { TEMPLATES_LIST, COLORS } from 'constants';
 import { ButtonText } from 'components';
 
 const TemplatePicker = ({ onPick }) => (
@@ -11,8 +11,7 @@ const TemplatePicker = ({ onPick }) => (
           key={template.type}
           title={template.name}
           onClick={() => onPick(template)}
-          variant="secondary"
-          outline
+          variant="primary"
           withMargin
         />
       ))}
@@ -22,20 +21,20 @@ const TemplatePicker = ({ onPick }) => (
 
 const Container = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   overflow: auto;
+  background: ${COLORS.BG_GRADIENT};
 `;
 const Content = styled.div`
-  padding-top: 20px;
-  padding-bottom: 60px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 50%;
-  @media (max-width: 1100px) {
-    width: 80%;
-  };
+  /*Desktop Query*/
+  @media only screen and (min-width: 780px) {
+    width: 40%;
+  }
 `;
 
 export default TemplatePicker;

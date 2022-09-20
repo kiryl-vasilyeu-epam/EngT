@@ -50,6 +50,8 @@ const UserNameModal = () => {
       title="Enter user name"
       id={USER_NAME}
       onClose={closeModal}
+      size="small"
+      withoutUserClose={!defaultUserName}
     >
       <Container>
         <Form>
@@ -77,6 +79,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px 0;
 `;
 const Form = styled.div`
   display: flex;
@@ -86,7 +89,7 @@ const Form = styled.div`
   align-items: center;
 `;
 const Margin = styled.div`
-  margin: 20px;
+  margin-top: 20px;
 `;
 
 export default UserNameModal;

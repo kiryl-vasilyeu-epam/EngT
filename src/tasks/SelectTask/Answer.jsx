@@ -53,19 +53,23 @@ const Answer = ({
 
 const Container = styled.div`
   display: flex;
-  align-items: center;
-  margin: 3px 0;
+  align-items: flex-start;
+  margin: 10px 0;
 `;
 
 const IconContainer = styled.div`
-  width: 30px;
-  height: 30px;
+  display: flex;
+  align-items: center;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
   font-size: 20px;
-  color: ${({ correct }) => (correct ? 'limegreen' : 'red')}
+  color: ${({ correct }) => (correct ? 'limegreen' : 'red')};
+  margin-right: 3px;
 `;
 
 const Text = styled.div`
-  margin-left: 16px;
+  margin-left: 15px;
 `;
 
 export default Answer;

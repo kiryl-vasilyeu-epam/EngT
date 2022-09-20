@@ -7,6 +7,21 @@ import { IconButton } from 'components';
 import { initModal, hideModal, deleteModal } from 'store';
 import Card from 'react-bootstrap/Card';
 
+const MODAL_SIZE = {
+  small: {
+    width: 'auto',
+    height: 'auto',
+  },
+  medium: {
+    width: '60%',
+    height: '80%',
+  },
+  large: {
+    width: '90%',
+    height: '90%',
+  },
+};
+
 const ModalWindow = ({
   title = 'Title',
   children,
@@ -16,7 +31,7 @@ const ModalWindow = ({
   setModalId,
   withoutUserClose,
   id,
-  wide,
+  size = 'medium',
 }) => {
   const [modalId] = useState(id || uniqueId('modal_'));
   const dispatch = useDispatch();
@@ -43,26 +58,26 @@ const ModalWindow = ({
 
   return (
     <Wrapper onClick={closeModal}>
-      <Content onClick={handleContentClick} $wide={wide}>
+      <Content onClick={handleContentClick} $size={size}>
         <Header>
-          <div style={{ width: 40 }}>
+          <IconContainer>
             {showBackButton && (
               <IconButton
                 iconName="faArrowLeft"
                 onClick={onBackPress}
               />
             )}
-          </div>
+          </IconContainer>
           <Title>
             {title}
           </Title>
-          <div style={{ width: 40 }}>
+          <IconContainer>
             {
               !withoutUserClose && (
                 <IconButton onClick={closeModal} iconName="faXmark" />
               )
             }
-          </div>
+          </IconContainer>
         </Header>
         {children}
       </Content>
@@ -99,34 +114,55 @@ const Content = styled(Card)`
   display: flex;
   flex-direction: column;
   position: relative;
-  background: white;
 
-  width: ${({ $wide }) => ($wide ? '90%' : '60%')};
-  height: ${({ $wide }) => ($wide ? '90%' : '80%')};
-  @media (max-width: 1100px) {
-    width: 95%;
-  };
+  /*Desktop Query*/
+  @media only screen and (min-width: 780px) {
+    width: ${({ $size }) => MODAL_SIZE[$size].width};
+    height: ${({ $size }) => MODAL_SIZE[$size].height};
+    max-width: 1600px;
+  }
+  
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /*Tablet Query*/
+  @media only screen and (min-width: 481px) and (max-width:780px) {
+    width: 100%;
+    height: 100%;
+  }
 
   background: ${COLORS.BACKGROUND_COLOR};
-
   overflow: hidden;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  border: none;
+  border-radius: 2px;
+`;
 
-  box-shadow: 4px 3px 11px 0px rgba(66, 68, 90, 1);
+const IconContainer = styled.div`
+  width: 40px;
 `;
 
 const Header = styled(Card.Header)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: ${COLORS.PRIMARY_COLOR};
+  color: white;
+  border: none;
+  border-radius: 0 !important;
 `;
 
 const Title = styled.div`
-
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   
   font-size: 25px;
+
+  padding: 0 20px;
 `;
 
 export default ModalWindow;

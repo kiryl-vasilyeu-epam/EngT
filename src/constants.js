@@ -12,6 +12,7 @@ export const TEMPLATES_LIST = [
 
 export const COLORS = {
   BACKGROUND_COLOR: '#FBFBFB',
+  BG_GRADIENT: 'linear-gradient(133deg, rgba(250,250,250,1) 0%, rgba(231,241,254,1) 50%);',
   BORDER_COLOR: '#9FA6B2',
   PRIMARY_COLOR: '#2962FF',
   SUCCESS_COLOR: '#14A44D',

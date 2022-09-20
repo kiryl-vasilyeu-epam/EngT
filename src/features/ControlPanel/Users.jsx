@@ -31,7 +31,6 @@ const Users = ({ handleClose }) => {
 };
 
 const Container = styled.div`
-  
 `;
 const UserName = styled.div`
   display: flex;
@@ -41,10 +40,11 @@ const UserName = styled.div`
   cursor: pointer;
 `;
 const Online = styled.div`
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   border-radius: 12px;
-  margin-right: 10px;
+  margin-right: 5px;
+  margin-top: 4px;
   ${({ isOnline }) => isOnline && `background-color: ${COLORS.SUCCESS_COLOR};`}
 `;
 

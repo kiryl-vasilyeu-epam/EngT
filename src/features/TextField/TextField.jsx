@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import Accordion from 'react-bootstrap/Accordion';
-import { COLORS } from 'constants';
 import Form from 'react-bootstrap/Form';
 import { SocketContext } from 'features/WebsocketProvider/WebsocketProvider';
 
@@ -24,9 +23,9 @@ const TextField = ({ creator }) => {
 
   return (
     <Container>
-      <Accordion>
-        <Accordion.Item eventKey="1">
-          <Accordion.Header>Text field</Accordion.Header>
+      <Acc>
+        <Item eventKey="1">
+          <Header>Text field</Header>
           <Accordion.Body>
             <Input
               as="textarea"
@@ -36,20 +35,46 @@ const TextField = ({ creator }) => {
               rows={10}
             />
           </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
+        </Item>
+      </Acc>
     </Container>
   );
 };
 
+const Acc = styled(Accordion)`
+  overflow: hidden;
+`;
+
+const Header = styled(Accordion.Header)`
+`;
+
+const Item = styled(Accordion.Item)`
+  outline: none !important;
+  border: none;
+  box-shadow: none;
+`;
+
 const Container = styled.div`
-  border: 2px solid ${COLORS.BORDER_COLOR};
   margin: 10px;
   border-radius: 9px;
 `;
 
 const Input = styled(Form.Control)`
   width: 100%;
+  border: none;
+  outline: none;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
+    max-height: 20vh;
+
+  }
+  
+  /*Tablet Query*/
+  @media only screen and (min-width: 481px) and (max-width:768px) {
+    max-height: 20vh;
+  }
 `;
 
 export default TextField;

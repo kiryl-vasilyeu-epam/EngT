@@ -61,15 +61,22 @@ const Tasks = ({
 };
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   flex: 1;
+  padding-bottom: 150px;
+
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
+    padding-bottom: 200px;
+  }
 `;
 const SpinnerContainer = styled.div`
   display: flex;
   flex: 1;
   align-items: center;
   justify-content: center;
-  height: 100%;
 `;
 
 export default Tasks;

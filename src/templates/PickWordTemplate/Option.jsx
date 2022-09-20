@@ -38,13 +38,22 @@ const Option = ({
 const Margin = styled.div`
   flex: 1;
   margin-right: 30px;
-
-  @media (max-width: 1100px) {
+  
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
     margin-right: 0;
     margin-bottom: 10px;
     align-items: stretch;
     flex-direction: column;
-  };
+  }
+  
+  /*Tablet Query*/
+  @media only screen and (min-width: 481px) and (max-width:768px) {
+    margin-right: 0;
+    margin-bottom: 10px;
+    align-items: stretch;
+    flex-direction: column;
+  }
 `;
 
 const HorizontalContainer = styled.div`
@@ -55,10 +64,17 @@ const HorizontalContainer = styled.div`
   align-items: center;
   margin-bottom: 10px;
 
-  @media (max-width: 1100px) {
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
     align-items: stretch;
     flex-direction: column;
-  };
+  }
+  
+  /*Tablet Query*/
+  @media only screen and (min-width: 481px) and (max-width:768px) {
+    align-items: stretch;
+    flex-direction: column;
+  }
 `;
 
 export default Option;

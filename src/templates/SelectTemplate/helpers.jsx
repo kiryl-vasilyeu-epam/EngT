@@ -2,7 +2,7 @@ import { uniqueId } from 'lodash';
 
 export const createAnswer = (questionId) => ({
   title: '',
-  isCorrect: true,
+  isCorrect: false,
   id: uniqueId(`template_q${questionId}_answer_`),
 });
 

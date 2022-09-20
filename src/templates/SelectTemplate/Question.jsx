@@ -5,7 +5,6 @@ import Card from 'react-bootstrap/Card';
 import {
   Input, ButtonText,
 } from 'components';
-import { Row } from './common';
 import Answer from './Answer';
 
 const Question = ({
@@ -50,17 +49,17 @@ const Question = ({
             />
           </Row>
         </Margin>
+        Answers
+        {answers.map((answer) => (
+          <Answer
+            key={answer.id}
+            answer={answer}
+            questionId={id}
+            handleAnswerChange={handleAnswerChange}
+            deleteAnswer={deleteAnswer}
+          />
+        ))}
         <Margin>
-          Answers
-          {answers.map((answer) => (
-            <Answer
-              key={answer.id}
-              answer={answer}
-              questionId={id}
-              handleAnswerChange={handleAnswerChange}
-              deleteAnswer={deleteAnswer}
-            />
-          ))}
           <ButtonText
             size="sm"
             title="Add answer"
@@ -74,7 +73,17 @@ const Question = ({
   );
 };
 
+const Row = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+`;
+
 const CardElement = styled(Card)`
+  border: none;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
   margin-bottom: 30px;
 `;
 

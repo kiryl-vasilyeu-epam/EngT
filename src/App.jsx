@@ -15,7 +15,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: ${COLORS.BACKGROUND_COLOR};
+  background: ${COLORS.BG_GRADIENT};
 `;
 
 export default App;

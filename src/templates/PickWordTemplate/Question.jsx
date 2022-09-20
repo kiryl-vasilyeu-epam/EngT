@@ -2,6 +2,7 @@ import { Input, ButtonText } from 'components';
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import Card from 'react-bootstrap/Card';
+import { filter } from 'lodash';
 import Words from './Words';
 import ActiveWords from './ActiveWords';
 
@@ -26,6 +27,7 @@ const Question = ({
   const onPictureChange = useCallback((pictureLink) => {
     handlePictureChange(id, pictureLink);
   }, [handlePictureChange]);
+  const activeWords = filter(words, { isActive: true });
 
   return (
     <CardElement>
@@ -64,22 +66,26 @@ const Question = ({
           </Row>
         </Margin>
 
-        <Margin>
-          Pick words
-          <Words
-            words={words}
-            questionId={id}
-            title={title}
-            handleWordsChange={handleWordsChange}
-          />
-        </Margin>
+        {
+          !!title.length && (
+            <Margin>
+              Pick words
+              <Words
+                words={words}
+                questionId={id}
+                title={title}
+                handleWordsChange={handleWordsChange}
+              />
+            </Margin>
+          )
+        }
 
         {
-          withOptions && (
+          (withOptions && !!activeWords.length) && (
             <Margin>
               Options
               <ActiveWords
-                words={words}
+                activeWords={activeWords}
                 questionId={id}
                 handleOptionsChange={handleOptionsChange}
                 addOption={addOption}
@@ -94,6 +100,9 @@ const Question = ({
 };
 
 const CardElement = styled(Card)`
+  border: none;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
   margin-bottom: 30px;
 `;
 
@@ -109,13 +118,6 @@ const InputMargin = styled.div`
   margin-right: 30px;
   flex: 1;
   width: 100%;
-
-  @media (max-width: 1100px) {
-    margin-right: 0;
-    margin-bottom: 10px;
-    align-items: stretch;
-    flex-direction: column;
-  };
 `;
 
 export const Row = styled.div`
@@ -123,11 +125,6 @@ export const Row = styled.div`
   display: flex;
   align-items: center;
   margin: 10px 0;
-
-  @media (max-width: 1100px) {
-    align-items: stretch;
-    flex-direction: column;
-  };
 `;
 
 export default Question;

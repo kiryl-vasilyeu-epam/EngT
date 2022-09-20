@@ -11,7 +11,6 @@ export const createQuestion = () => {
 
   return {
     title: '',
-    multiline: false,
     words: [],
     id,
   };

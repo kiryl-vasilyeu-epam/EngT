@@ -2,6 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 
 import {
   USER_ANSWERS,
+  COLORS,
 } from 'constants';
 import { find } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,7 +26,7 @@ const UserAnswerModal = () => {
       title={params?.userName}
       id={USER_ANSWERS}
       onClose={handleClose}
-      wide
+      size="large"
     >
       <ScrollableContainer>
         <TasksComponent data={dataToRender} viewOnly />
@@ -38,8 +39,23 @@ const ScrollableContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 20px;
+  
+  /*Desktop Query*/
+  @media only screen and (min-width: 768px) {
+    padding: 20px;
+  }
+  
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
+    padding: 20px 5px;
+  }
+  
+  /*Tablet Query*/
+  @media only screen and (min-width: 481px) and (max-width:768px) {
+    padding: 20px 5px;
+  }
   overflow: auto;
+  background: ${COLORS.BG_GRADIENT};
 `;
 
 export default UserAnswerModal;

@@ -19,7 +19,7 @@ const Options = ({
     addOption(questionId, word.id);
   }, [questionId, word, addOption]);
   return (
-    <Card>
+    <CardElement>
       <Header>{word.title}</Header>
 
       <Card.Body>
@@ -42,13 +42,37 @@ const Options = ({
           />
         </OptionsContainer>
       </Card.Body>
-    </Card>
+    </CardElement>
   );
 };
 
+const CardElement = styled(Card)`
+  border: none;
+  border-radius: 2px !important;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+
+  /*Desktop Query*/
+  @media only screen and (min-width: 768px) {
+    margin: 15px 10px;
+  }
+
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
+    margin: 10px 0px;
+  }
+  
+  /*Tablet Query*/
+  @media only screen and (min-width: 481px) and (max-width:768px) {
+    margin: 10px 0px;
+  }
+`;
+
 const Header = styled(Card.Header)`
-  color: ${COLORS.PRIMARY_COLOR};
+  background: ${COLORS.PRIMARY_COLOR};
+  color: white;
   font-weight: 500;
+  border-radius: 2px !important;
+  font-size: 20px;
 `;
 
 const OptionsContainer = styled.div`

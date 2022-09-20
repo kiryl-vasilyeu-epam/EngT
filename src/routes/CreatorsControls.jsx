@@ -101,27 +101,53 @@ const CreatorsControls = ({
 };
 
 const Controls = styled.div`
-  width: 80%;
   bottom: 0;
-  padding-bottom: 20px;
   position: absolute;
-  background-color: ${COLORS.BACKGROUND_COLOR};
+  border-radius: 2px;
+  background: ${COLORS.BG_GRADIENT};
   z-index: 2;
+
+  /*Desktop Query*/
+  @media only screen and (min-width: 768px) {
+    width: 90%;
+    max-width: 2000px;
+    padding-bottom: 10px;
+  }
+  
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+    padding-bottom: 5px;
+  }
+  
+  /*Tablet Query*/
+  @media only screen and (min-width: 481px) and (max-width:768px) {
+    width: 100%;
+    padding-bottom: 5px;
+  }
 `;
 const Buttons = styled.div`
   display: flex;
   flex-direction: row;
-  @media (max-width: 1100px) {
-    flex-direction: column;
-  };
   width: 100%;
+
+  /*Desktop Query*/
+  @media only screen and (min-width: 768px) {
+  }
+  
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
+    flex-wrap: wrap;
+  }
+  
+  /*Tablet Query*/
+  @media only screen and (min-width: 481px) and (max-width:768px) {
+    flex-wrap: wrap;
+  }
 `;
 
 const ButtonContainer = styled.div`
-  margin: 10px 10px 0 10px;
-  @media (max-width: 1100px) {
-    margin: 5px;
-  };
+  margin: 5px;
   flex: 1;
 `;
 

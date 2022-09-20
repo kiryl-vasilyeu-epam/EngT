@@ -38,8 +38,8 @@ const TemplatesRoute = () => {
                       creator
                       modalId={modalId}
                     />
-                    <CreatorsControls id={id} tasks={tasks} openModal={openModal} />
                   </TemplatesContainer>
+                  <CreatorsControls id={id} tasks={tasks} openModal={openModal} />
                   <CreateTemplateModal handleModalId={handleModalId} />
                   <UserAnswerModal />
                 </>
@@ -53,13 +53,15 @@ const TemplatesRoute = () => {
           </WebsocketProvider>
         </Content>
       </ScrollContainer>
-
     </>
   );
 };
 
 const ScrollContainer = styled.div`
   overflow: auto;
+  display: flex;
+  flex: 1;
+  width: 100%;
 `;
 
 const Content = styled.div`
@@ -67,8 +69,7 @@ const Content = styled.div`
   flex: 1;
   flex-direction: row;
   justify-content: center;
-  padding-top: 20px;
-  padding-bottom: 200px;
+  padding-top: 30px;
   width: 100%;
 `;
 
@@ -77,13 +78,29 @@ const SpinnerContainer = styled.div`
   flex: 1;
   align-items: center;
   justify-content: center;
-  height: 100%;
 `;
 
 const TemplatesContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
+
+  /*Desktop Query*/
+  @media only screen and (min-width: 780px) {
+    width: 90%;
+    max-width: 2000px;
+  }
+  
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
+    width: 100%;
+    padding: 5px;
+  }
+  
+  /*Tablet Query*/
+  @media only screen and (min-width: 481px) and (max-width:780px) {
+    width: 100%;
+    padding: 5px;
+  }
 `;
 
 export default TemplatesRoute;
