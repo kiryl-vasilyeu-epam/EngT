@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { some } from 'lodash';
 
 const appConnectionSlice = createSlice({
   name: 'appConnection',
@@ -20,12 +21,21 @@ const appConnectionSlice = createSlice({
       ...state,
       activeUsers,
     }),
-    updateActiveUsers: (state, { payload: { userName, userAnswer } }) => ({
-      ...state,
-      activeUsers: state.activeUsers.map(
+    updateActiveUsers: (state, { payload: { userName, userAnswer } }) => {
+      const isUserExist = some(state.activeUsers, ([name]) => name === userName);
+      const activeUsers = state.activeUsers.map(
         ([name, answer]) => [name, (name === userName ? userAnswer : answer)],
-      ),
-    }),
+      );
+
+      if (!isUserExist) {
+        activeUsers.push([userName, userAnswer]);
+      }
+
+      return {
+        ...state,
+        activeUsers,
+      };
+    },
   },
 });
 
