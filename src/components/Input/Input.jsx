@@ -34,7 +34,9 @@ const Input = ({
         placeholder={placeholder}
         as={secure ? 'input' : 'textarea'}
         rows={1}
-        style={{ height, borderWidth: 2, overflow: 'hidden' }}
+        style={{
+          height, borderWidth: 2, overflow: 'hidden', zIndex: 2,
+        }}
         type="password"
         {...inputProps}
       />

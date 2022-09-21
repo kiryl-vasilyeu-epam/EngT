@@ -66,7 +66,7 @@ const Container = styled.div`
   aspect-ratio: 16 / 9;
   border-radius: 7px;
   overflow: hidden;
-  margin: auto;
+  margin: 15px auto;
   border: 2px solid ${COLORS.BORDER_COLOR}
 `;
 

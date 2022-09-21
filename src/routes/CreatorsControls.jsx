@@ -105,7 +105,7 @@ const Controls = styled.div`
   position: absolute;
   border-radius: 2px;
   background: ${COLORS.BG_GRADIENT};
-  z-index: 2;
+  z-index: 3;
 
   /*Desktop Query*/
   @media only screen and (min-width: 768px) {
