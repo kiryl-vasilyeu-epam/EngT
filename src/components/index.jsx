@@ -7,3 +7,5 @@ export { TemplateContainer } from './TemplateContainer';
 export { Dropdown } from './Dropdown';
 export { ColoredContainer } from './ColoredContainer';
 export { Media } from './Media';
+export { SpinnerContainer } from './SpinnerContainer';
+export { Lesson, CreateLesson } from './Lesson';

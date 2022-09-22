@@ -30,6 +30,7 @@ export const LOCAL_STORAGE_KEYS = {
   USER_ANSWERS: 'USER_ANSWERS',
   CHECKED: 'CHECKED',
   USERNAME: 'USERNAME',
+  GROUP: 'GROUP',
 };
 
 export const OKTO_TOKEN = `${
@@ -38,12 +39,15 @@ export const OKTO_TOKEN = `${
   '1w3Vd2vmQ41h93XEksD'.split('').reverse().join('')
 }`;
 
-export const P_VAL = 'crewcabanger18';
+// export const P_VAL = 'crewcabanger18';
+export const P_VAL = '1';
 
 export const NEW_LINE = '$NEW_LINE';
-export const ENDPOINT = 'ws://44.202.28.38:8080/';
-// export const ENDPOINT = 'ws://localhost:8080/';
+// export const ENDPOINT = 'ws://44.202.28.38:8080/';
+export const ENDPOINT = 'ws://localhost:8080/';
 
 export const CONTROL_PANEL = 'CONTROL_PANEL';
 export const USER_NAME = 'USER_NAME';
 export const USER_ANSWERS = 'USER_ANSWERS';
+
+export const GROUP_NAME_SEPARATOR = '___&___';

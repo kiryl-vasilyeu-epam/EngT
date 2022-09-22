@@ -7,3 +7,5 @@ export { ControlPanel } from './ControlPanel';
 export { UserNameModal } from './UserNameModal';
 export { WebsocketProvider } from './WebsocketProvider';
 export { TextField } from './TextField';
+export { CreatorsControls } from './CreatorsControls';
+export { UserAnswerModal } from './UserAnswerModal';

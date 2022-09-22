@@ -11,7 +11,8 @@ import { ModalWindow } from '../ModalWindow';
 
 const UserNameModal = () => {
   const { userName: defaultUserName } = useSelector((store) => store.userAnswers);
-  const { ws } = useSelector((store) => store.appConnection);
+  const { userRegistered } = useSelector((store) => store.appConnection);
+
   const socket = useContext(SocketContext);
   const [inputValue, setInputValue] = useState(defaultUserName);
   const dispatch = useDispatch();
@@ -20,16 +21,18 @@ const UserNameModal = () => {
     socket.emit('registerName', name);
     localStorage.setItem(LOCAL_STORAGE_KEYS.USERNAME, name);
     dispatch(hideModal({ modalId: USER_NAME }));
-  }, [ws]);
+  }, []);
 
   useEffect(() => {
-    const userName = localStorage.getItem(LOCAL_STORAGE_KEYS.USERNAME);
-    if (userName) {
-      registerName(userName);
-    } else {
-      dispatch(showModal({ modalId: USER_NAME }));
+    if (!userRegistered) {
+      const userName = localStorage.getItem(LOCAL_STORAGE_KEYS.USERNAME);
+      if (userName) {
+        registerName(userName);
+      } else {
+        dispatch(showModal({ modalId: USER_NAME }));
+      }
     }
-  }, []);
+  }, [userRegistered]);
 
   const closeModal = useCallback(() => {
     dispatch(hideModal({ modalId: USER_NAME }));

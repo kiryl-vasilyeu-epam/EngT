@@ -13,9 +13,9 @@ const ButtonText = ({
   ...props
 }) => {
   const ref = useRef(null);
-  const onClickHandler = useCallback(() => {
+  const onClickHandler = useCallback((e) => {
     ref?.current?.blur?.();
-    onClick();
+    onClick(e);
   }, [onClick]);
   return (
     <StyledButton

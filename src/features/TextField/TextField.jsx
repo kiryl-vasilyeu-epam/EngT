@@ -29,7 +29,7 @@ const TextField = ({ creator }) => {
           <Accordion.Body>
             <Input
               as="textarea"
-              value={value}
+              value={value || ''}
               onChange={handleChange}
               disabled={!creator}
               rows={10}

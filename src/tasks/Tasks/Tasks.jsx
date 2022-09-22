@@ -1,16 +1,31 @@
-import React, { useContext, useEffect, useCallback } from 'react';
+import React, {
+  useContext, useEffect, useCallback, useMemo,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { SocketContext } from 'features/WebsocketProvider/WebsocketProvider';
 import Spinner from 'react-bootstrap/Spinner';
 import { initUserAnswers, initTasks } from 'store';
-import { debounce } from 'lodash';
+import { debounce, find } from 'lodash';
+import { useParams } from 'react-router-dom';
+import { GROUP_NAME_SEPARATOR } from 'constants';
 import TasksComponent from './TasksComponent';
 
 const Tasks = ({
   creator, modalId,
 }) => {
+  const { sheetId } = useParams();
+
   const userAnswerState = useSelector((state) => state.userAnswers);
+  const { lessons } = useSelector((state) => state.appConnection);
+  const lessonName = useMemo(
+    () => find(
+      lessons,
+      (lesson) => +lesson.sheetId === +sheetId,
+    )?.title.split(GROUP_NAME_SEPARATOR)?.[0],
+    [lessons],
+  );
+
   const {
     tasks: userAnswers,
     updatedBySocket: userUpdatedBySocket,
@@ -32,6 +47,8 @@ const Tasks = ({
   }, [userAnswerState, userUpdatedBySocket, updateByCheck, debounceAnswerUpdate]);
 
   useEffect(() => {
+    socket.emit(creator ? 'adminJoinLesson' : 'userJoinLesson', sheetId);
+
     socket.on('loadUserAnswer', (userAnswerData) => {
       const loadedUserAnswer = JSON.parse(userAnswerData);
       dispatch(initUserAnswers(loadedUserAnswer));
@@ -41,10 +58,19 @@ const Tasks = ({
       const list = JSON.parse(loadedList || '[]');
       dispatch(initTasks({ id, list }));
     });
+
+    return () => {
+      socket.emit(creator ? 'adminLeaveLesson' : 'userLeaveLesson', sheetId);
+      dispatch(initTasks({ id: null, list: [] }));
+      dispatch(initUserAnswers({}));
+    };
   }, []);
 
   return (
     <Container>
+      <LessonName>
+        {lessonName}
+      </LessonName>
       {!data.length ? (
         <SpinnerContainer>
           <Spinner animation="border" variant="primary" />
@@ -59,6 +85,13 @@ const Tasks = ({
     </Container>
   );
 };
+
+const LessonName = styled.div`
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 30px;
+  text-align: center;
+`;
 
 const Container = styled.div`
   display: flex;

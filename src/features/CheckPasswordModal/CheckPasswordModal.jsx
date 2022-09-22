@@ -4,12 +4,14 @@ import { SocketContext } from 'features/WebsocketProvider/WebsocketProvider';
 import React, {
   useState, useEffect, useCallback, useContext,
 } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { hideModal, showModal } from 'store';
 import styled from 'styled-components';
 import { ModalWindow } from '../ModalWindow';
 
 const CheckPasswordModal = ({ setPasswordChecked }) => {
+  const { userRegistered } = useSelector((state) => state.appConnection);
+
   const [inputValue, setInputValue] = useState('');
   const [modalId, setModalId] = useState(null);
   const [isInvalid, setIsInvalid] = useState(false);
@@ -27,15 +29,19 @@ const CheckPasswordModal = ({ setPasswordChecked }) => {
   }, [setPasswordChecked]);
 
   useEffect(() => {
-    if (modalId) {
-      const pass = sessionStorage.getItem('template');
-      if (pass === P_VAL) {
-        registerAdmin();
-      } else {
-        dispatch(showModal({ modalId }));
+    if (!userRegistered) {
+      if (modalId) {
+        const pass = sessionStorage.getItem('template');
+        if (pass === P_VAL) {
+          registerAdmin();
+        } else {
+          dispatch(showModal({ modalId }));
+        }
       }
+    } else {
+      setPasswordChecked(true);
     }
-  }, [modalId, registerAdmin]);
+  }, [modalId, registerAdmin, userRegistered]);
 
   const onClick = useCallback(() => {
     if (inputValue === P_VAL) {

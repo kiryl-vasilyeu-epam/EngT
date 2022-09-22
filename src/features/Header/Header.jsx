@@ -36,13 +36,16 @@ const Header = ({ creator }) => {
                   <Score>
                     {`Global Score: ${tasksChecked ? tasksUserScore : 0}`}
                   </Score>
-                  <ButtonText
-                    title={userName}
-                    onClick={openUserModal}
-                    variant="light"
-                    outline
-                    size="sm"
-                  />
+                  {!!userName && (
+                    <ButtonText
+                      title={userName}
+                      onClick={openUserModal}
+                      variant="light"
+                      outline
+                      size="sm"
+                    />
+                  )}
+
                 </>
               )}
           </NavElementsContainer>

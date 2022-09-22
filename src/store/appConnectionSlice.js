@@ -5,13 +5,20 @@ const appConnectionSlice = createSlice({
   name: 'appConnection',
   initialState: {
     connected: false,
+    userRegistered: false,
     onlineUsers: [],
     activeUsers: [],
+    lessons: [],
   },
   reducers: {
     setConnection: (state, { payload: connected }) => ({
       ...state,
       connected,
+      userRegistered: false,
+    }),
+    setUserRegistered: (state, { payload: userRegistered = true }) => ({
+      ...state,
+      userRegistered,
     }),
     setOnlineUsers: (state, { payload: onlineUsers }) => ({
       ...state,
@@ -36,10 +43,41 @@ const appConnectionSlice = createSlice({
         activeUsers,
       };
     },
+    setLessons: (state, { payload: lessons }) => ({
+      ...state,
+      lessons,
+    }),
+    updateLesson: (state, { payload: { sheetId, title } }) => {
+      const isLessonExist = some(state.lessons, (lesson) => lesson.sheetId === sheetId);
+
+      const lessons = state.lessons.map(
+        (lesson) => (lesson.sheetId === sheetId
+          ? { sheetId, title }
+          : lesson),
+      );
+
+      if (!isLessonExist) {
+        lessons.push({ sheetId, title });
+      }
+
+      return {
+        ...state,
+        lessons,
+      };
+    },
+    deleteLesson: (state, { payload: sheetId }) => ({
+      ...state,
+      lessons: state.lessons.filter(
+        (lesson) => lesson.sheetId !== sheetId,
+      ),
+    }),
   },
 });
 
 export const {
-  setConnection, setOnlineUsers, setActiveUsers, updateActiveUsers,
+  setConnection, setUserRegistered,
+  setOnlineUsers,
+  setActiveUsers, updateActiveUsers,
+  setLessons, updateLesson, deleteLesson,
 } = appConnectionSlice.actions;
 export default appConnectionSlice;

@@ -1,41 +1,29 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Tasks } from 'tasks';
-import Spinner from 'react-bootstrap/Spinner';
 import {
-  Header, TextField, UserNameModal, WebsocketProvider,
+  TextField, UserNameModal,
 } from 'features';
 import { COLORS } from 'constants';
+import { useSelector } from 'react-redux';
+import { SpinnerContainer } from 'components';
+import RouteContainer from './RouteContainer';
 
 const TasksRoute = () => {
-  const { connected } = useSelector((state) => state.appConnection);
+  const { userRegistered } = useSelector((state) => state.appConnection);
 
   return (
-    <>
-      <Header />
-      <ScrollContainer>
-        <Content>
-          <WebsocketProvider>
-            {connected ? (
-              <>
-                <TasksContainer>
-                  <Tasks />
-                  <UserNameModal />
-                </TasksContainer>
-                <Controls>
-                  <TextField />
-                </Controls>
-              </>
-            ) : (
-              <SpinnerContainer>
-                <Spinner animation="border" variant="primary" />
-              </SpinnerContainer>
-            )}
-          </WebsocketProvider>
-        </Content>
-      </ScrollContainer>
-    </>
+    <RouteContainer>
+      <TasksContainer>
+        <SpinnerContainer showSpinner={!userRegistered}>
+          <Tasks />
+        </SpinnerContainer>
+      </TasksContainer>
+      <Controls>
+        <TextField />
+      </Controls>
+      <UserNameModal />
+    </RouteContainer>
   );
 };
 
@@ -63,29 +51,6 @@ const Controls = styled.div`
     width: 100%;
     padding: 5px;
   }
-`;
-
-const ScrollContainer = styled.div`
-  overflow: auto;
-  display: flex;
-  flex: 1;
-  width: 100%;
-`;
-
-const Content = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: center;
-  padding-top: 30px;
-  width: 100%;
-`;
-
-const SpinnerContainer = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
 `;
 
 const TasksContainer = styled.div`

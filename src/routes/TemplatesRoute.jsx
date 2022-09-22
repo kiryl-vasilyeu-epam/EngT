@@ -1,18 +1,21 @@
-import React, { useCallback, useState } from 'react';
+import React, {
+  useCallback, useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Tasks } from 'tasks';
 import {
-  CreateTemplateModal, CheckPasswordModal, ControlPanel, WebsocketProvider, Header,
+  CreateTemplateModal,
+  CheckPasswordModal,
+  ControlPanel,
+  UserAnswerModal,
+  CreatorsControls,
 } from 'features';
 import { showModal } from 'store';
-import Spinner from 'react-bootstrap/Spinner';
-import { UserAnswerModal } from 'features/UserAnswerModal';
-import CreatorsControls from './CreatorsControls';
+import { SpinnerContainer } from 'components';
+import RouteContainer from './RouteContainer';
 
 const TemplatesRoute = () => {
-  const { connected } = useSelector((state) => state.appConnection);
-
   const [modalId, handleModalId] = useState(null);
   const [passwordChecked, setPasswordChecked] = useState(null);
   const dispatch = useDispatch();
@@ -20,65 +23,32 @@ const TemplatesRoute = () => {
     dispatch(showModal({ modalId }));
   }, [modalId]);
   const { list: tasks, id } = useSelector((state) => state.tasks);
-  return (
-    <>
-      <Header creator />
-      <ScrollContainer>
+  const { userRegistered } = useSelector((state) => state.appConnection);
 
-        <Content>
-          <WebsocketProvider>
-            {connected ? (
-              <>
-                <CheckPasswordModal setPasswordChecked={setPasswordChecked} />
-                {passwordChecked && (
-                <>
-                  <ControlPanel />
-                  <TemplatesContainer>
-                    <Tasks
-                      creator
-                      modalId={modalId}
-                    />
-                  </TemplatesContainer>
-                  <CreatorsControls id={id} tasks={tasks} openModal={openModal} />
-                  <CreateTemplateModal handleModalId={handleModalId} />
-                  <UserAnswerModal />
-                </>
-                )}
-              </>
-            ) : (
-              <SpinnerContainer>
-                <Spinner animation="border" variant="primary" />
+  return (
+    <RouteContainer creator>
+      <CheckPasswordModal setPasswordChecked={setPasswordChecked} />
+      {
+        passwordChecked && (
+          <>
+            <ControlPanel />
+            <TemplatesContainer>
+              <SpinnerContainer showSpinner={!userRegistered}>
+                <Tasks
+                  creator
+                  modalId={modalId}
+                />
               </SpinnerContainer>
-            )}
-          </WebsocketProvider>
-        </Content>
-      </ScrollContainer>
-    </>
+            </TemplatesContainer>
+            <CreatorsControls id={id} tasks={tasks} openModal={openModal} />
+            <CreateTemplateModal handleModalId={handleModalId} />
+            <UserAnswerModal />
+          </>
+        )
+      }
+    </RouteContainer>
   );
 };
-
-const ScrollContainer = styled.div`
-  overflow: auto;
-  display: flex;
-  flex: 1;
-  width: 100%;
-`;
-
-const Content = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: center;
-  padding-top: 30px;
-  width: 100%;
-`;
-
-const SpinnerContainer = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
 
 const TemplatesContainer = styled.div`
   display: flex;
