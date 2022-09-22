@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import BootstrapDropdown from 'react-bootstrap/Dropdown';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const Dropdown = ({
   value, values,
@@ -74,7 +76,10 @@ const Dropdown = ({
             $isIncorrect={isIncorrect}
             ref={dropDownRef}
           >
-            {value || '\xa0'}
+            <Title>
+              {value || '\xa0'}
+            </Title>
+            <FontAwesomeIcon icon={faChevronDown} />
           </StyledDropdown>
 
           <StyledMenu>
@@ -87,12 +92,19 @@ const Dropdown = ({
   );
 };
 
+const Title = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+`;
+
 const StyledDropdown = styled(BootstrapDropdown.Toggle)`
+  display: flex;
+  align-items: center;
   outline: none !important;
   box-shadow: none !important;
   padding: 0 3px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
   &:after {
     display: none;
   };

@@ -37,6 +37,7 @@ const TemplateContainer = ({
               value={url}
               onChange={handleMediaChange(id)}
               placeholder="Paste the link"
+              oneLine
             />
             <DeleteContainer>
               <ButtonText

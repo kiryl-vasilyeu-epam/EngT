@@ -51,3 +51,4 @@ export const USER_NAME = 'USER_NAME';
 export const USER_ANSWERS = 'USER_ANSWERS';
 
 export const GROUP_NAME_SEPARATOR = '___&___';
+export const NONE_GROUP = 'none';

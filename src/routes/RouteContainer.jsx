@@ -7,30 +7,46 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   setUserRegistered, updateLesson, setLessons, deleteLesson,
 } from 'store';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const RouteContainer = ({ children, creator }) => {
+const RouteContainer = ({ children, creator, picker }) => {
+  const { sheetId } = useParams();
+  const navigate = useNavigate();
+
   const { connected } = useSelector((state) => state.appConnection);
   const dispatch = useDispatch();
   const socket = useContext(SocketContext);
 
   useEffect(() => {
-    socket.on('loadLessons', (data) => {
+    const onLoad = (data) => {
       const lessonsData = JSON.parse(data);
       dispatch(setLessons(lessonsData));
       dispatch(setUserRegistered());
-    });
-    socket.on('lessonUpdated', (data) => {
+    };
+    const onUpdate = (data) => {
       const lessonsData = JSON.parse(data);
       dispatch(updateLesson(lessonsData));
-    });
-    socket.on('lessonDeleted', (sheetId) => {
-      dispatch(deleteLesson(sheetId));
-    });
+    };
+    const onDelete = (deletedSheetId) => {
+      dispatch(deleteLesson(deletedSheetId));
+      if (deletedSheetId === +sheetId) {
+        navigate(creator ? '/admin_lessons' : '/');
+      }
+    };
+    socket.on('loadLessons', onLoad);
+    socket.on('lessonUpdated', onUpdate);
+    socket.on('lessonDeleted', onDelete);
+
+    return () => {
+      socket.off('loadLessons', onLoad);
+      socket.off('lessonUpdated', onUpdate);
+      socket.off('lessonDeleted', onDelete);
+    };
   }, []);
 
   return (
     <>
-      <Header creator={creator} />
+      <Header creator={creator} picker={picker} />
       <ScrollContainer>
         <Content>
           <SpinnerContainer showSpinner={!connected}>

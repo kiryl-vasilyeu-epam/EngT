@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 const Input = ({
-  value, onChange, placeholder, secure, ...inputProps
+  value, onChange, placeholder, oneLine, secure, ...inputProps
 }) => {
   const ref = useRef(null);
   const [height, setHeight] = useState('inherit');
@@ -14,7 +14,7 @@ const Input = ({
   }, [onChange]);
 
   useEffect(() => {
-    if (secure) return;
+    if (secure || oneLine) return;
     const actualHeight = ref.current.scrollHeight;
     if (actualHeight === height) return;
 
@@ -32,12 +32,12 @@ const Input = ({
         value={value}
         onChange={onChangeHandler}
         placeholder={placeholder}
-        as={secure ? 'input' : 'textarea'}
+        as={(secure || oneLine) ? 'input' : 'textarea'}
         rows={1}
         style={{
           height, borderWidth: 2, overflow: 'hidden', zIndex: 2,
         }}
-        type="password"
+        type={secure ? 'password' : undefined}
         {...inputProps}
       />
     </InputGroup>

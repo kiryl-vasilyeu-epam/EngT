@@ -41,6 +41,7 @@ const Question = ({
                 value={picture}
                 onChange={onPictureChange}
                 placeholder="Enter picture link"
+                oneLine
               />
             </InputMargin>
           </Row>

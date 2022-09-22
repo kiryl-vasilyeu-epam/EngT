@@ -4,7 +4,7 @@ import React, {
   useState, useEffect, useCallback, useContext,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { showModal, hideModal } from 'store';
+import { showModal, hideModal, setUserName } from 'store';
 import styled from 'styled-components';
 import { SocketContext } from '../WebsocketProvider/WebsocketProvider';
 import { ModalWindow } from '../ModalWindow';
@@ -20,6 +20,7 @@ const UserNameModal = () => {
   const registerName = useCallback(async (name) => {
     socket.emit('registerName', name);
     localStorage.setItem(LOCAL_STORAGE_KEYS.USERNAME, name);
+    dispatch(setUserName(name));
     dispatch(hideModal({ modalId: USER_NAME }));
   }, []);
 

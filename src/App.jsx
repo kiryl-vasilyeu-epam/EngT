@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { COLORS } from 'constants';
 
-import { Navigation } from 'features';
+import { Navigation, WebsocketProvider } from 'features';
 
 const App = () => (
   <Container>
-    <Navigation />
+    <WebsocketProvider>
+      <Navigation />
+    </WebsocketProvider>
   </Container>
 );
 

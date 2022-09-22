@@ -1,16 +1,16 @@
 import {
-  Lesson, CreateLesson, SpinnerContainer, Dropdown,
+  Lesson, CreateLesson, SpinnerContainer,
 } from 'components';
-import { LOCAL_STORAGE_KEYS, COLORS, GROUP_NAME_SEPARATOR } from 'constants';
-import { CheckPasswordModal, UserNameModal } from 'features';
-import React, { useMemo, useState, useCallback } from 'react';
+import { COLORS, GROUP_NAME_SEPARATOR } from 'constants';
+import { CheckPasswordModal } from 'features';
+import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import RouteContainer from './RouteContainer';
 
 const NONE_GROUP = 'none';
 
-const LessonPicker = ({ creator }) => {
+const TemplatesPickerRoute = () => {
   const [passwordChecked, setPasswordChecked] = useState(null);
   const { lessons } = useSelector((state) => state.appConnection);
   const lessonGroups = useMemo(() => {
@@ -29,26 +29,14 @@ const LessonPicker = ({ creator }) => {
     id: gr,
     title: gr,
   })), [lessonGroups]);
-  const [currentGroup, setCurrentGroup] = useState(
-    () => localStorage.getItem(LOCAL_STORAGE_KEYS.GROUP) || NONE_GROUP,
-  );
-  const handleGroupPick = useCallback((group) => {
-    setCurrentGroup(group);
-    localStorage.setItem(LOCAL_STORAGE_KEYS.GROUP, group);
-  }, []);
-
-  const showLessons = creator ? passwordChecked : true;
 
   return (
-    <RouteContainer>
-      {creator
-        ? (<CheckPasswordModal setPasswordChecked={setPasswordChecked} />)
-        : (<UserNameModal />)}
-      {showLessons && (
+    <RouteContainer creator picker>
+      <CheckPasswordModal setPasswordChecked={setPasswordChecked} />
+      {passwordChecked && (
         <SpinnerContainer showSpinner={!lessons.length}>
           <Container>
-            {creator ? (
-
+            {
               groupsList.map(({ title: groupTitle }) => (
                 <GroupContainer key={groupTitle}>
                   <GroupName>
@@ -62,41 +50,15 @@ const LessonPicker = ({ creator }) => {
                         key={sheetId}
                         title={title}
                         sheetId={sheetId}
-                        creator={creator}
+                        creator
                         lessons={lessons}
                       />
                     ))
                   }
                 </GroupContainer>
               ))
-            ) : (
-              <>
-                <GroupPicker>
-                  <GroupTitle>
-                    Group filter:
-                  </GroupTitle>
-                  <Dropdown
-                    values={groupsList}
-                    value={currentGroup}
-                    onChange={handleGroupPick}
-                  />
-                </GroupPicker>
-                {
-                  lessonGroups?.[currentGroup]?.map((
-                    { sheetId, title },
-                  ) => (
-                    <Lesson
-                      key={sheetId}
-                      title={title}
-                      sheetId={sheetId}
-                      creator={creator}
-                      lessons={lessons}
-                    />
-                  ))
-                }
-              </>
-            )}
-            <CreateLesson lessons={lessons} creator={creator} />
+            }
+            <CreateLesson lessons={lessons} />
           </Container>
         </SpinnerContainer>
       )}
@@ -135,13 +97,7 @@ const GroupContainer = styled.div`
   padding-top: 12px;
   margin: 10px 0;
 `;
-const GroupPicker = styled.div`
-  display: flex;
-  margin: 15px 0;
-`;
-const GroupTitle = styled.div`
-  margin-right: 10px;
-`;
+
 const GroupName = styled.div`
   position: absolute;
   top: -12px;
@@ -151,4 +107,4 @@ const GroupName = styled.div`
   padding: 0 10px;
 `;
 
-export default LessonPicker;
+export default TemplatesPickerRoute;

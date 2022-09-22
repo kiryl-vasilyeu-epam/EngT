@@ -9,6 +9,7 @@ const appConnectionSlice = createSlice({
     onlineUsers: [],
     activeUsers: [],
     lessons: [],
+    userName: '',
   },
   reducers: {
     setConnection: (state, { payload: connected }) => ({
@@ -19,6 +20,10 @@ const appConnectionSlice = createSlice({
     setUserRegistered: (state, { payload: userRegistered = true }) => ({
       ...state,
       userRegistered,
+    }),
+    setUserName: (state, { payload: userName }) => ({
+      ...state,
+      userName,
     }),
     setOnlineUsers: (state, { payload: onlineUsers }) => ({
       ...state,
@@ -76,6 +81,7 @@ const appConnectionSlice = createSlice({
 
 export const {
   setConnection, setUserRegistered,
+  setUserName,
   setOnlineUsers,
   setActiveUsers, updateActiveUsers,
   setLessons, updateLesson, deleteLesson,

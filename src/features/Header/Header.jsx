@@ -7,9 +7,12 @@ import { COLORS, CONTROL_PANEL, USER_NAME } from 'constants';
 import { useSelector, useDispatch } from 'react-redux';
 import { showModal } from 'store';
 import { ButtonText } from 'components';
+import { useNavigate } from 'react-router-dom';
 
-const Header = ({ creator }) => {
-  const { tasksUserScore, tasksChecked, userName } = useSelector((store) => store.userAnswers);
+const Header = ({ creator, picker }) => {
+  const navigate = useNavigate();
+  const { tasksUserScore, tasksChecked } = useSelector((store) => store.userAnswers);
+  const { userName } = useSelector((store) => store.appConnection);
   const dispatch = useDispatch();
   const openControlModal = useCallback(() => {
     dispatch(showModal({ modalId: CONTROL_PANEL }));
@@ -17,43 +20,51 @@ const Header = ({ creator }) => {
   const openUserModal = useCallback(() => {
     dispatch(showModal({ modalId: USER_NAME }));
   }, []);
+  const onBrandClick = useCallback(() => {
+    navigate(creator ? '/admin_lessons' : '/');
+  }, [creator]);
 
   return (
     <Container>
       <NavBarElement bg="primary" variant="dark">
         <NavigationContainer>
-          <Navbar.Brand href="/EngT/">
+          <Brand onClick={onBrandClick}>
             EngT
-          </Navbar.Brand>
+          </Brand>
           <NavElementsContainer>
-            {creator
-              ? (<Toggle onClick={openControlModal} />)
-              : (
-                <>
-                  <Score>
-                    {`Tasks checked: ${tasksChecked}`}
-                  </Score>
-                  <Score>
-                    {`Global Score: ${tasksChecked ? tasksUserScore : 0}`}
-                  </Score>
-                  {!!userName && (
-                    <ButtonText
-                      title={userName}
-                      onClick={openUserModal}
-                      variant="light"
-                      outline
-                      size="sm"
-                    />
-                  )}
-
-                </>
-              )}
+            {!picker && (
+              creator
+                ? (<Toggle onClick={openControlModal} />)
+                : (
+                  <>
+                    <Score>
+                      {`Tasks checked: ${tasksChecked}`}
+                    </Score>
+                    <Score>
+                      {`Global Score: ${tasksChecked ? tasksUserScore : 0}`}
+                    </Score>
+                  </>
+                )
+            )}
+            {!!userName && !creator && (
+              <ButtonText
+                title={userName}
+                onClick={openUserModal}
+                variant="light"
+                outline
+                size="sm"
+              />
+            )}
           </NavElementsContainer>
         </NavigationContainer>
       </NavBarElement>
     </Container>
   );
 };
+
+const Brand = styled(Navbar.Brand)`
+  cursor: pointer;
+`;
 
 const Container = styled(NavContainer)`
   display: flex;
@@ -97,12 +108,13 @@ const NavigationContainer = styled(NavContainer)`
 `;
 
 const Score = styled.div`
+  display: flex;
+  align-items: center;
   border: 1px solid ${COLORS.BACKGROUND_COLOR};
   color: ${COLORS.BACKGROUND_COLOR};
   border-radius: 7px;
   margin: 0 5px;
-  padding: 3px;
-  padding: 8px 16px;
+  padding: 1px 16px;
 
   @media only screen and (max-width: 480px) {
     display: none;

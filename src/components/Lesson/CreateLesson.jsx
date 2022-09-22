@@ -15,7 +15,7 @@ import {
   Group,
 } from './Lesson';
 
-const CreateLesson = ({ creator, lessons }) => {
+const CreateLesson = ({ lessons }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
@@ -60,7 +60,7 @@ const CreateLesson = ({ creator, lessons }) => {
     e.stopPropagation();
   }, []);
 
-  if (lessons.length === 190 || !creator) return null;
+  if (lessons.length === 190) return null;
 
   return (
     <Container onClick={toggleEdit}>

@@ -1,9 +1,11 @@
 import TasksRoute from './TasksRoute';
 import TemplatesRoute from './TemplatesRoute';
-import LessonPicker from './LessonPicker';
+import LessonsPickerRoute from './LessonsPickerRoute';
+import TemplatesPickerRoute from './TemplatesPickerRoute';
 
 export {
   TasksRoute,
   TemplatesRoute,
-  LessonPicker,
+  LessonsPickerRoute,
+  TemplatesPickerRoute,
 };
