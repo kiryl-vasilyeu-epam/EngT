@@ -33,7 +33,8 @@ const Content = styled.div`
   flex-direction: column;
   /*Desktop Query*/
   @media only screen and (min-width: 780px) {
-    width: 40%;
+    width: 80%;
+    max-width: 800px;
   }
 `;
 

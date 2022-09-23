@@ -79,7 +79,7 @@ const Dropdown = ({
             <Title>
               {value || '\xa0'}
             </Title>
-            <FontAwesomeIcon icon={faChevronDown} />
+            <FontAwesomeIcon size="xs" icon={faChevronDown} />
           </StyledDropdown>
 
           <StyledMenu>

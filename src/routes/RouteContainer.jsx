@@ -8,6 +8,7 @@ import {
   setUserRegistered, updateLesson, setLessons, deleteLesson,
 } from 'store';
 import { useParams, useNavigate } from 'react-router-dom';
+import { COLORS } from 'constants';
 
 const RouteContainer = ({ children, creator, picker }) => {
   const { sheetId } = useParams();
@@ -45,33 +46,39 @@ const RouteContainer = ({ children, creator, picker }) => {
   }, []);
 
   return (
-    <>
+    <Container>
       <Header creator={creator} picker={picker} />
-      <ScrollContainer>
-        <Content>
-          <SpinnerContainer showSpinner={!connected}>
+      <Scroll>
+        <SpinnerContainer showSpinner={!connected}>
+          <Content>
             {children}
-          </SpinnerContainer>
-        </Content>
-      </ScrollContainer>
-    </>
+          </Content>
+        </SpinnerContainer>
+      </Scroll>
+    </Container>
   );
 };
 
-const ScrollContainer = styled.div`
-  overflow: auto;
+const Container = styled.div`
+  width: 100%;
   display: flex;
+  flex-direction: column;
   flex: 1;
+  overflow: hidden;
+  background: ${COLORS.BG_GRADIENT};
+`;
+
+const Scroll = styled.div`
+  overflow: auto;
   width: 100%;
 `;
 
 const Content = styled.div`
+  width: 100%;
+  padding: 30px 0;
   display: flex;
   flex: 1;
-  flex-direction: row;
   justify-content: center;
-  padding-top: 30px;
-  width: 100%;
 `;
 
 export default RouteContainer;

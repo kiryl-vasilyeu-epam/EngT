@@ -83,40 +83,85 @@ const Lesson = ({
 
           )}
         </Title>
-        <Group>
-          {isEdit ? (
-            <Input
-              value={group}
-              onChange={onGroupChange}
-              onClick={stopPropagation}
-            />
-          ) : (
-            <GroupContainer>
-              {`Group: ${group || 'none'}`}
-            </GroupContainer>
-          )}
-        </Group>
-        {creator && (
-          <ButtonsContainer>
-            <ButtonText
-              size="sm"
-              title={isEdit ? 'Save name' : 'Edit name'}
-              onClick={toggleEdit}
-              outline
-            />
-            <ButtonText
-              size="sm"
-              title="Delete"
-              onClick={deleteHandler}
-              variant="danger"
-              outline
-            />
-          </ButtonsContainer>
-        )}
+        {
+          creator && (
+            <Controls>
+              <Group>
+                {isEdit ? (
+                  <Input
+                    value={group}
+                    onChange={onGroupChange}
+                    onClick={stopPropagation}
+                  />
+                ) : (
+                  <GroupContainer>
+                    {`Group: ${group || 'none'}`}
+                  </GroupContainer>
+                )}
+              </Group>
+              <Margin>
+                <ButtonText
+                  size="sm"
+                  title={isEdit ? 'Save' : 'Edit name'}
+                  onClick={toggleEdit}
+                  outline
+                />
+              </Margin>
+              <ButtonText
+                size="sm"
+                title="Delete"
+                onClick={deleteHandler}
+                variant="danger"
+                outline
+              />
+            </Controls>
+          )
+        }
       </Header>
     </Container>
   );
 };
+
+export const Container = styled(Card)`
+  margin: 10px 0;
+  border-radius: 2px;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+  cursor: pointer;
+  &: hover {
+    background: linear-gradient(133deg, rgba(231,241,254,1) 0%, rgba(201,201,254,1) 100%);
+  }
+`;
+
+export const Header = styled(Card.Header)`
+  display: flex;
+  /*Desktop Query*/
+  @media only screen and (min-width: 780px) {
+    align-items: center;
+  }
+
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
+    flex-direction: column;
+  }
+
+  /*Tablet Query*/
+  @media only screen and (min-width: 481px) and (max-width:780px) {
+    flex-direction: column;
+  }
+`;
+
+export const Title = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
+
+  /*Desktop Query*/
+  @media only screen and (min-width: 780px) {
+    margin-right: 10px;
+  }
+`;
 
 export const Input = styled.input`
   padding: 2px 10px;
@@ -134,9 +179,42 @@ const NameContainer = styled.div`
   text-overflow: ellipsis;
   border: 1px solid transparent;
 `;
-export const Group = styled.div`
-  width: 150px;
+
+const Controls = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
+    padding-top: 10px;
+  }
+
+  /*Tablet Query*/
+  @media only screen and (min-width: 481px) and (max-width:780px) {
+    padding-top: 10px;
+  }
 `;
+
+export const Group = styled.div`
+  flex: 1;
+
+  /*Desktop Query*/
+  @media only screen and (min-width: 780px) {
+    width: 150px;
+  }
+
+  /*Mobile Query*/
+  @media only screen and (max-width: 480px) {
+    margin-right: 10px;
+  }
+
+  /*Tablet Query*/
+  @media only screen and (min-width: 481px) and (max-width:780px) {
+    margin-right: 10px;
+  }
+`;
+
 const GroupContainer = styled.div`
   padding: 2px 10px;
   overflow: hidden;
@@ -145,35 +223,8 @@ const GroupContainer = styled.div`
   border: 1px solid transparent;
 `;
 
-const ButtonsContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 160px;
-  margin-left: 20px;
-`;
-
-export const Header = styled(Card.Header)`
-  display: flex;
-  align-items: center;
-`;
-
-export const Title = styled.div`
-  display: flex;
-  align-items: center;
-  flex: 1;
-  overflow: hidden;
-  margin-right: 10px;
-`;
-
-export const Container = styled(Card)`
-  margin: 10px 0;
-  border-radius: 2px;
-  border: none;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
-  cursor: pointer;
-  &: hover {
-    background: linear-gradient(133deg, rgba(231,241,254,1) 0%, rgba(201,201,254,1) 100%);
-  }
+const Margin = styled.div`
+  margin: 0 10px;
 `;
 
 export default Lesson;
